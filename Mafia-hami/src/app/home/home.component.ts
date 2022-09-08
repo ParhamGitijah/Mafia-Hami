@@ -1,7 +1,10 @@
+
 import { SlideOutComponent } from './../components/slide-out/slide-out.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { last, take } from 'rxjs';
-import { ReadService } from '../read.service';
+
+import { DBService } from '../db.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -10,10 +13,10 @@ import { ReadService } from '../read.service';
 })
 export class HomeComponent implements OnInit {
 @ViewChild(SlideOutComponent) slideOutComponent:SlideOutComponent | undefined;
-
+  showJoin:boolean=false;
   list:Array<string>=[];
-
-  constructor(private read: ReadService) {
+   newGameId:number | undefined;
+  constructor(private dbService: DBService,private router:Router) {
   
     
    }
@@ -25,15 +28,14 @@ export class HomeComponent implements OnInit {
     //     this.list.push(d.key);
     //   });
     // });
-    this.playMusic();
-    console.log(this.read.getPlayers());
-    console.log(this.read.setPlayers("Hami")); 
-    this.read.removePlayer("-NBSIB-Zif7imUeexznh");
+    // this.playMusic();
+
     
   }
 
   createNewGame(){
-    this.slideOutComponent?.open();
+    // this.slideOutComponent?.open();
+    this.router.navigate(['/init-dashboard']);
   }
 
 
@@ -43,5 +45,11 @@ export class HomeComponent implements OnInit {
     // audio.load();
     audio.play();
   }
+showJoinInput(){
+this.showJoin=true;
+}
 
+joinGame(){
+  console.log(this.newGameId+"!");
+}
 }

@@ -3,7 +3,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 @Injectable({
   providedIn: 'root'
 })
-export class ReadService {
+export class DBService {
 
   constructor(private db: AngularFireDatabase) { }
 
@@ -17,5 +17,12 @@ export class ReadService {
   }
   removePlayer(key:string){
     this.db.list('players').remove(key); 
+  }
+
+  initGame(){
+    var val = Math.floor(1000 + Math.random() * 9000);
+     const itemsRef = this.db.list('game');
+     itemsRef.set(val.toString(), { id:"1", Size: ''});
+     return val;
   }
 }

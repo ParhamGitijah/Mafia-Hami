@@ -1,4 +1,4 @@
-import { ReadService } from './read.service';
+
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,6 +16,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { SlideOutComponent } from './components/slide-out/slide-out.component';
 import { NewGameComponent } from './forms/new-game/new-game.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InitDashboardComponent } from './components/init-dashboard/init-dashboard.component';
 export const firebaseConfig={
   apiKey: "AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4",
   authDomain: "mafiahami.firebaseapp.com",
@@ -33,6 +34,7 @@ export const firebaseConfig={
     HomeComponent,
     SlideOutComponent,
     NewGameComponent,
+    InitDashboardComponent,
   ],
   imports: [
     BrowserModule,
