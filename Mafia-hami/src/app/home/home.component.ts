@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     //     this.list.push(d.key);
     //   });
     // });
-
+    this.playMusic();
     console.log(this.read.getPlayers());
     console.log(this.read.setPlayers("Hami")); 
     this.read.removePlayer("-NBSIB-Zif7imUeexznh");
@@ -34,6 +34,14 @@ export class HomeComponent implements OnInit {
 
   createNewGame(){
     this.slideOutComponent?.open();
+  }
+
+
+  playMusic(){
+    let audio=new Audio("../assets/Band.mp3");
+    // audio.src="../../assets/Band.mp3";
+    // audio.load();
+    audio.play();
   }
 
 }
