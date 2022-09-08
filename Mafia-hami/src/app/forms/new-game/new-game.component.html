@@ -1,0 +1,19 @@
+<form [formGroup]="this.newGameForm" (ngSubmit)="onSubmit()">
+  <legend>To start new Game fill this form!</legend>
+  <div class="mb-3">
+    <label for="name" class="form-label">How many players withouat god?</label>
+    <input
+      type="text"
+      id="name"
+      class="form-control"
+      placeholder="Disabled input"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="address" class="form-label">How many</label>
+    <select id="address" class="form-select">
+      <option>Disabled select</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Start!</button>
+</form>

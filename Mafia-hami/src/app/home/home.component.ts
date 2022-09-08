@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { SlideOutComponent } from './../components/slide-out/slide-out.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { last, take } from 'rxjs';
 import { ReadService } from '../read.service';
 
@@ -8,15 +9,17 @@ import { ReadService } from '../read.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+@ViewChild(SlideOutComponent) slideOutComponent:SlideOutComponent | undefined;
 
   list:Array<string>=[];
 
   constructor(private read: ReadService) {
-
+  
     
    }
 
   ngOnInit(): void {
+    
     // this.read.getPlayers().pipe().subscribe((x:Array<any>)=>{
     //   x.forEach(d => {
     //     this.list.push(d.key);
@@ -27,6 +30,10 @@ export class HomeComponent implements OnInit {
     console.log(this.read.setPlayers("Hami")); 
     this.read.removePlayer("-NBSIB-Zif7imUeexznh");
     
+  }
+
+  createNewGame(){
+    this.slideOutComponent?.open();
   }
 
 }

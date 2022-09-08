@@ -10,8 +10,12 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
-
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { SlideOutComponent } from './components/slide-out/slide-out.component';
+import { NewGameComponent } from './forms/new-game/new-game.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export const firebaseConfig={
   apiKey: "AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4",
   authDomain: "mafiahami.firebaseapp.com",
@@ -27,12 +31,17 @@ export const firebaseConfig={
   declarations: [
     AppComponent,
     HomeComponent,
+    SlideOutComponent,
+    NewGameComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule 
   ],
   providers: [
 

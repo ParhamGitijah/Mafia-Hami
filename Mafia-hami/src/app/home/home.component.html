@@ -1,1 +1,25 @@
-<div *ngFor="let item of list">{{item}}</div>
+<!-- <div *ngFor="let item of list">{{item}}</div> -->
+<div
+  class="container image"
+  style="background-image: url('../../assets/Mafia.jpg')"
+>
+  <div
+    class="row align-items-center justify-content-center"
+    style="height: 100vh; width: 100vw"
+  >
+    <div class="row justify-content-center">
+      <div class="m-3 d-flex justify-content-center">
+        <button class="btn btn-primary btn-lg" (click)="createNewGame()">
+          Start new Game
+        </button>
+      </div>
+      <div class="m-3 d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary btn-lg">
+          Join a Game
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-slide-out></app-slide-out>
