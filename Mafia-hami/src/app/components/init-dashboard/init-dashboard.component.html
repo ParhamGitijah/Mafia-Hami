@@ -1,11 +1,11 @@
 <div class="container" style="background-color: orange">
-  <div class="row text-center"></div>
   <div
+    *ngIf="!(this.playerList) || this.newGameStart"
     class="row align-items-center justify-content-center"
     style="height: 100vh; width: 100vw"
   >
     <div
-      class="d-flex align-items-center"
+      class="d-flex align-items-center justify-content-center"
       style="
         height: 100px;
         width: 75%;
@@ -20,4 +20,72 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="!this.newGameStart">
+    <div
+      class="d-flex m-3 align-items-center justify-content-center"
+      style="
+        height: auto;
+        width: auto;
+        background-color: green;
+        color: aliceblue;
+        border-radius: 25px;
+      "
+    >
+      <div class="row text-center">
+        <div>Ask other to join with your game ID:</div>
+        <div style="font-weight: bold; font-size: 20px">{{ this.gameId }}</div>
+      </div>
+    </div>
+    <div
+      class="col-4 m-3 p-2"
+      style="background-color: grey; color: aliceblue; border-radius: 25px"
+    >
+      Player joined:
+    </div>
+    <div
+      class="d-flex m-3 align-items-center justify-content-center"
+      style="
+        height: auto;
+        width: auto;
+        background-color: green;
+        color: aliceblue;
+        border-radius: 25px;
+      "
+      *ngFor="let item of this.playerList"
+    >
+      {{ item.name }}
+    </div>
+    <div
+      *ngIf="!isUserHost"
+      class="d-flex m-3 align-items-center justify-content-center"
+      style="
+        height: 100px;
+        width: auto;
+        background-color: black;
+        color: aliceblue;
+        border-radius: 25px;
+      "
+    >
+      Waiting for host to start the game
+    </div>
+    <div class="row align-items-center justify-content-center">
+      <button
+        *ngIf="isUserHost"
+        class="btn btn-primary"
+        style="height: auto; width: auto"
+        (click)="startTheGame()"
+      >
+        پخش شانسی کارت ها
+      </button>
+    </div>
+  </div>
+
+  <button
+    (click)="playerExit()"
+    class="btn btn-danger"
+    style="position: fixed; right: 10%; top: 90%"
+  >
+    خروج
+  </button>
 </div>

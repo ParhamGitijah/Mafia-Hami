@@ -26,17 +26,33 @@
     <div class="row justify-content-center" *ngIf="showJoin">
       <div class="m-3 d-flex justify-content-center">
         <div class="input-group has-validation">
-          <span class="input-group-text">GameID:</span>
+          <span class="input-group-text" style="width: 80px">GameId:</span>
           <div class="form-floating">
             <input
               [(ngModel)]="newGameId"
               type="text"
               class="form-control"
               id="floatingInputGroup2"
-              placeholder="Username"
+              placeholder="GameId"
               required
             />
             <label for="floatingInputGroup2">Enter Game Id:</label>
+          </div>
+        </div>
+      </div>
+      <div class="m-3 d-flex justify-content-center">
+        <div class="input-group has-validation">
+          <span class="input-group-text" style="width: 80px">Name:</span>
+          <div class="form-floating">
+            <input
+              [(ngModel)]="userName"
+              type="text"
+              class="form-control"
+              id="floatingInputGroup2"
+              placeholder="Username"
+              required
+            />
+            <label for="floatingInputGroup2">Enter your Name:</label>
           </div>
         </div>
       </div>
@@ -45,6 +61,7 @@
           type="button"
           class="btn btn-primary btn-lg col-12"
           (click)="joinGame()"
+          [disabled]="!(newGameId && userName)"
         >
           Join the Game
         </button>
@@ -54,4 +71,4 @@
   </div>
 </div>
 
-<app-slide-out></app-slide-out>
+

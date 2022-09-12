@@ -1,20 +1,15 @@
-<ng-template #content let-offcanvas>
+<ng-template #content let-offcanvas style="position: buttom">
   <div class="offcanvas-header">
-    <h4 class="offcanvas-title">Start a new Game</h4>
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="offcanvas.dismiss('Cross click')"
-    ></button>
+    <h4 class="offcanvas-title" style="font-size: 16px">
+      شب شد. همه ی بازیکنان چشم ها را ببندند
+    </h4>
   </div>
   <div class="offcanvas-body">
-    <app-new-game></app-new-game>
-
+    <app-night></app-night>
     <div class="text-end">
       <button
         type="button"
-        class="btn btn-outline-dark"
+        class="btn btn-outline-dark col-12"
         (click)="offcanvas.close('Close click')"
       >
         Close

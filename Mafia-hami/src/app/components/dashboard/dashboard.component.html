@@ -1,0 +1,46 @@
+<div class="container p-3" style="width: 100vw">
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">بازیکنان</th>
+          <th scope="col" class="text-center">نقش</th>
+          <th scope="col" class="text-center">حالت بازی</th>
+          <th scope="col" class="text-center">کیک بازیکن</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of this.playerList">
+          <th class="text-center" scope="row">{{ player.name }}</th>
+          <td class="text-center">
+            {{ this.showRoles == true ? player.role : "***" }}
+          </td>
+          <td
+            class="text-center"
+            [ngClass]="{ alive: player.alive, dead: !player.alive }"
+          >
+            {{ player.alive ? "زنده" : "کشته شد" }}
+          </td>
+          <td class="text-center">
+            <button class="btn btn-danger">کیک</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="container" style="width: 80vw">
+  <div class="row">
+    <button
+      class="col-12 btn btn-primary mb-3 mt-3"
+      (click)="showRoles = !showRoles"
+    >
+      {{
+        showRoles == true ? "مخفی کردن نقش بازیکنان" : "نشان دادن نقش بازیکنان"
+      }}
+    </button>
+    <button class="col-12 btn btn-primary" (click)="startNight()">شب شود</button>
+  </div>
+</div>
+<app-slide-out></app-slide-out>
