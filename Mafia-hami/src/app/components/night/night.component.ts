@@ -11,7 +11,9 @@ export class NightComponent implements OnInit {
   gameId = 2023;
   playerList: Array<Player> = new Array<Player>();
   faUser = faUserCheck;
-  constructor(private dBService: DBService) {}
+  constructor(private dBService: DBService) {
+   
+  }
 
   ngOnInit(): void {
     this.dBService.getPlayers(this.gameId).subscribe((x) => {

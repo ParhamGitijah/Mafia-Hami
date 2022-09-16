@@ -44,11 +44,17 @@ export class InitDashboardComponent implements OnInit {
     });
 
     this.dbService.getGame(this.gameId).subscribe((x) => {
+      console.log(x + '!');
       //Is Game started?
       if (x[0] == true) {
         if (this.isUserHost) {
           this.router.navigate(['dashboard', this.gameId]);
         } else {
+          this.router.navigate([
+            '/player-dashboard',
+            this.gameId,
+            this.playerId,
+          ]);
         }
       }
     });

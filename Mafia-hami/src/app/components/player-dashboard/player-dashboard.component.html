@@ -1,0 +1,48 @@
+<div *ngIf="(this.player | async)!.turn" dir="rtl">
+  <div>نقش شما {{ (this.player | async)!.role }} است</div>
+  <div
+    class="row justify-content-center"
+    style="position: relative; z-index: 999"
+  >
+    <div
+      *ngFor="let player of this.playerList"
+      (click)="selectPlayer(player)"
+      class="col-5 selectDiv text-center m-2 p-3"
+      [ngClass]="{ select: !player.selected }"
+    >
+      {{ player.name }}
+    </div>
+    <div class="row justify-content-center">
+      <button
+        [disabled]="!this.playerSelected"
+        class="btn m-3 btn-primary col-4"
+        (click)="sumbitSelect()"
+      >
+        انتخاب بازیکن
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="!(this.player | async)!.turn">Close</div>
+
+<div *ngIf="!waitingForNight" style="overflow-x: hidden; overflow-y: hidden">
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="height: 100vh"
+  >
+    <div>
+      <div
+        class="fade-in-text d-flex justify-content-center"
+        style="margin-left: 12px; margin-right: 12px"
+      >
+        <p>مافیا را پیدا کنید</p>
+      </div>
+      <div class="d-flex justify-content-center">
+        <app-sun></app-sun>
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/FindMafia.png" />
+      </div>
+    </div>
+  </div>
+</div>

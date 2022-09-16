@@ -22,6 +22,7 @@ export class DBService {
       name: player.name,
       alive: true,
       role: '',
+      turn: false,
     });
   }
   removePlayer(gameId: string, key: string) {

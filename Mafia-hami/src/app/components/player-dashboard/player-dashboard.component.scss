@@ -1,0 +1,95 @@
+.fade-in-text {
+    font-family: Arial;
+    font-size: 60px;
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+    -o-animation: fadeIn 5s;
+    -ms-animation: fadeIn 5s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+.image {
+    height: 50vh;
+    width: 50vw;
+    overflow-x: hidden;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+.container {
+    display: flexbox;
+    justify-content: center;
+    overflow: hidden;
+    padding-right: 0px;
+}
+
+.selectDiv{
+    position: relative;
+    background-color: #0d6efd;
+    border-radius: 15px;
+    z-index: 1;
+    color: white;
+}
+
+// .selectDiv:focus{
+//     color: white;
+//     background-color: rgb(235, 148, 8);
+// }
+ .select {
+        color: white;
+        background-color: rgb(105, 107, 104);
+    }

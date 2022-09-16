@@ -22,6 +22,8 @@ import { NightComponent } from './components/night/night.component';
 import {
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
+import { PlayerDashboardComponent } from './components/player-dashboard/player-dashboard.component';
+import { SunComponent } from './sun/sun.component';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4',
@@ -43,6 +45,8 @@ export const firebaseConfig = {
     InitDashboardComponent,
     DashboardComponent,
     NightComponent,
+    PlayerDashboardComponent,
+    SunComponent,
   ],
   imports: [
     BrowserModule,
