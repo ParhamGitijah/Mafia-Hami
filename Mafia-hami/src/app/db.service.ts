@@ -23,8 +23,12 @@ export class DBService {
       alive: true,
       role: '',
       turn: false,
+      mafia: false,
+      life: 0,
+      hasSelect: false,
     });
   }
+
   removePlayer(gameId: string, key: string) {
     this.db.list(`game/${gameId}/players`).remove(key);
   }
@@ -32,7 +36,11 @@ export class DBService {
   initGame() {
     var val = Math.floor(1000 + Math.random() * 9000);
     const itemsRef = this.db.list('game');
-    itemsRef.set(val.toString(), { id: '1', gameStarted: false });
+    itemsRef.set(val.toString(), {
+      id: '1',
+      gameStarted: false,
+      gameSummury: false,
+    });
     return val;
   }
 
@@ -40,10 +48,32 @@ export class DBService {
     const itemsRef = this.db.list('game');
     itemsRef.update(gameId.toString(), { gameStarted: true });
   }
+  updateGameSummary(gameId: any) {
+    const itemsRef = this.db.list(`game/${gameId}`);
+    itemsRef.update(gameId.toString(), {
+      gameSummury: true,
+    });
+  }
 
   updatePlayerRole(gameId: any, playerKey: any, playerRole: any) {
     const itemsRef = this.db.list(`game/${gameId}/players`);
     itemsRef.update(playerKey.toString(), { role: playerRole });
+  }
+  updatePlayerTurn(gameId: any, playerKey: any, turn: boolean) {
+    const itemsRef = this.db.list(`game/${gameId}/players`);
+    itemsRef.update(playerKey.toString(), { turn: turn });
+  }
+  updatePlayer(gameId: any, player: Player) {
+    const itemsRef = this.db.list(`game/${gameId}/players`);
+    itemsRef.update(player.id.toString(), {
+      alive: player.alive,
+      life: player.life,
+      id: player.id,
+      name: player.name,
+      role: player.role,
+      turn: player.turn,
+      hasSelect: player.hasSelect,
+    });
   }
 
   removeGame(gameId: string) {

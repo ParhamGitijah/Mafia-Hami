@@ -5,4 +5,10 @@ export class Player {
   role: string = '';
   turn!: boolean;
   selected!: boolean;
+  mafia!: boolean;
+  life!: number;
+  isSaved!: boolean;
+  selfsaved!: boolean;
+  numberGameSummary!: number;
+  hasSelect!: boolean;
 }

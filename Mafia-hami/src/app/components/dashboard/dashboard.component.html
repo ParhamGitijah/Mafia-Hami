@@ -40,7 +40,9 @@
         showRoles == true ? "مخفی کردن نقش بازیکنان" : "نشان دادن نقش بازیکنان"
       }}
     </button>
-    <button class="col-12 btn btn-primary" (click)="startNight()">شب شود</button>
+    <button class="col-12 btn btn-primary" (click)="startNight()">
+      شب شود
+    </button>
   </div>
 </div>
-<app-slide-out></app-slide-out>
+<app-slide-out [gameId]="gameId"></app-slide-out>

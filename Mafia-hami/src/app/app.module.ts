@@ -1,3 +1,4 @@
+import { MafiaPipe } from './pipes/mafia-pipe';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,11 +20,10 @@ import { InitDashboardComponent } from './components/init-dashboard/init-dashboa
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NightComponent } from './components/night/night.component';
 
-import {
-  FontAwesomeModule,
-} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PlayerDashboardComponent } from './components/player-dashboard/player-dashboard.component';
 import { SunComponent } from './sun/sun.component';
+import { CirtyPipe } from './pipes/city-pipe';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4',
@@ -47,6 +47,8 @@ export const firebaseConfig = {
     NightComponent,
     PlayerDashboardComponent,
     SunComponent,
+    MafiaPipe,
+    CirtyPipe,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,5 @@ export const firebaseConfig = {
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor() {
-
-  }
+  constructor() {}
 }

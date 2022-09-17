@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Input,
   OnChanges,
   ViewChild,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import { NgbOffcanvasConfig, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./slide-out.component.scss'],
 })
 export class SlideOutComponent implements AfterViewInit {
+  @Input() gameId: any;
   @ViewChild('content') elementRef: ElementRef | undefined;
   constructor(
     config: NgbOffcanvasConfig,
@@ -30,5 +32,9 @@ export class SlideOutComponent implements AfterViewInit {
       position: 'bottom',
       backdrop: false,
     });
+  }
+
+  close() {
+    this.offcanvasService.dismiss(this.elementRef);
   }
 }

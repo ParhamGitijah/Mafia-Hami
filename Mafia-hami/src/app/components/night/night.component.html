@@ -12,59 +12,35 @@
   >
     شهر
   </div>
-
   <ol dir="RTL" class="list-group list-group m-0 p-0">
-    <li class="list-group-item d-flex justify-content-start align-items-center">
+    <li
+      *ngFor="let player of playerList | city"
+      class="list-group-item d-flex justify-content-start align-items-center"
+    >
       <div class="p-0 m-0">
         <div class="fw-bold" style="font-size: 16px">
-          دکتر شهر بیدار شود و یکی را سیو کند
+          {{ player.role }} شهر بیدار شود
         </div>
-        <div>اسم بازیکن: Hami</div>
+        <div>اسم بازیکن: {{ player.name }}</div>
       </div>
       <div
-        class="badge bg-primary rounded-pill"
+        *ngIf="!player.turn && !player.hasSelect"
+        style="position: absolute; left: 5%"
+      >
+        <button (click)="startPlayerTurn(player)" class="btn btn-primary">
+          بیدار کن
+        </button>
+      </div>
+      <div
+        *ngIf="player.turn && !player.hasSelect"
+        class="waitningSelect badge bg-primary rounded-pill"
         style="position: absolute; left: 5%"
       >
         <fa-icon [icon]="faUser"></fa-icon>
       </div>
-    </li>
-    <li class="list-group-item d-flex justify-content-start align-items-center">
-      <div class="p-0 m-0 col-8">
-        <div class="fw-bold" style="font-size: 16px">
-          تک تیرنداز بیدار شود اگر میخواهد شلیک کند
-        </div>
-        <div>اسم بازیکن: Hami</div>
-      </div>
       <div
-        class="badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
-      >
-        <fa-icon [icon]="faUser"></fa-icon>
-      </div>
-    </li>
-    <li class="list-group-item d-flex justify-content-start align-items-center">
-      <div class="p-0 m-0">
-        <div class="fw-bold" style="font-size: 16px">
-          کاراگاه بیدار شود و استعلام بگیرد
-        </div>
-        <div>اسم بازیکن: Hami</div>
-      </div>
-      <div
-        class="badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
-      >
-        <fa-icon [icon]="faUser"></fa-icon>
-      </div>
-    </li>
-    <li class="list-group-item d-flex justify-content-start align-items-center">
-      <div class="p-0 m-0">
-        <div class="fw-bold" style="font-size: 16px">
-          جان سخت بیدار شود اگر استعلام میخواهد
-        </div>
-        <div>اسم بازیکن: Hami</div>
-      </div>
-      <div
-        class="badge bg-primary rounded-pill"
+        *ngIf="player.hasSelect"
+        class="hasSelected badge bg-primary rounded-pill"
         style="position: absolute; left: 5%"
       >
         <fa-icon [icon]="faUser"></fa-icon>
@@ -85,33 +61,35 @@
     مافیا بیدار شوند!
   </div>
   <ol dir="RTL" class="list-group list-group m-0 p-0">
-    <li class="list-group-item d-flex justify-content-start align-items-center">
+    <li
+      *ngFor="let player of playerList | mafia"
+      class="list-group-item d-flex justify-content-start align-items-center"
+    >
       <div class="p-0 m-0">
         <div class="fw-bold" style="font-size: 16px">
-          دکتر لکتر بیدار شود و یکی را سیو کند
+          {{ player.role }} انتخاب کن.
         </div>
-        <div>اسم بازیکن: Hami</div>
+        <div>اسم بازیکن: {{ player.name }}</div>
       </div>
-      <div
+      <div style="position: absolute; left: 5%">
+        <button class="btn btn-primary">بیدار کن</button>
+      </div>
+      <!-- <div
         class="badge bg-primary rounded-pill"
         style="position: absolute; left: 5%"
       >
+        <button class="btn btn-primary">بیدار کن</button>
         <fa-icon [icon]="faUser"></fa-icon>
-      </div>
-    </li>
-    <li class="list-group-item d-flex justify-content-start align-items-center">
-      <div class="p-0 m-0 col-8">
-        <div class="fw-bold" style="font-size: 16px">
-          گادفادر به چه کسی شلیک میکنی شلیک کند؟
-        </div>
-        <div>اسم بازیکن: Hami</div>
-      </div>
-      <div
-        class="badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
-      >
-        <fa-icon [icon]="faUser"></fa-icon>
-      </div>
+      </div> -->
     </li>
   </ol>
+  <div class="text-end">
+    <button
+      type="button"
+      class="btn btn-outline-dark col-12 mt-3"
+      (click)="EndNight()"
+    >
+      اتمام شب
+    </button>
+  </div>
 </div>

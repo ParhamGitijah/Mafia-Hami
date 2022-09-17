@@ -4,4 +4,5 @@ export class Game {
   id!: string;
   gameStarted!: boolean;
   players!: Array<Player>;
+  gameSummury!:false;
 }

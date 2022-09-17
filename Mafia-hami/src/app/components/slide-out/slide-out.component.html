@@ -5,15 +5,6 @@
     </h4>
   </div>
   <div class="offcanvas-body">
-    <app-night></app-night>
-    <!-- <div class="text-end">
-      <button
-        type="button"
-        class="btn btn-outline-dark col-12"
-        (click)="offcanvas.close('Close click')"
-      >
-        Close
-      </button>
-    </div> -->
+    <app-night [gameId]="gameId" (closeModal)="close()"></app-night>
   </div>
 </ng-template>

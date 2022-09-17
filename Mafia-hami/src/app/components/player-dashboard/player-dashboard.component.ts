@@ -50,6 +50,12 @@ export class PlayerDashboardComponent implements OnInit {
   }
 
   sumbitSelect() {
-    this.repo.submitSelect(this.player,this.playerSelected);
+    this.player.subscribe((player) => {
+      this.repo.submitSelect({
+        player,
+        selectedPlayer: this.playerSelected,
+        gameId: this.gameId,
+      });
+    });
   }
 }
