@@ -47,9 +47,6 @@ export class RepositoryService {
 
     //sniper
     if (player.role == 'sniper') {
-      console.log('!');
-      console.log(gameId);
-      console.log(player);
       if (selectedPlayer.mafia) {
         selectedPlayer.life = selectedPlayer.life - 1;
         this.dbService.updatePlayer(gameId, selectedPlayer);

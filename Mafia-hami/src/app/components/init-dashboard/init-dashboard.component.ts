@@ -36,7 +36,6 @@ export class InitDashboardComponent implements OnInit {
     });
 
     this.dbService.getPlayers(this.gameId).subscribe((x) => {
-      console.log(x);
       this.playerList = x;
       if (x.length > 0) {
         this.newGameStart = false;
@@ -44,7 +43,6 @@ export class InitDashboardComponent implements OnInit {
     });
 
     this.dbService.getGame(this.gameId).subscribe((x) => {
-      console.log(x + '!');
       //Is Game started?
       if (x[0] == true) {
         if (this.isUserHost) {

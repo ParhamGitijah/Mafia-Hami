@@ -1,15 +1,11 @@
 import { MafiaPipe } from './../../pipes/mafia-pipe';
 import { DBService } from './../../db.service';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  Pipe,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Player } from 'src/app/model/player';
-import { faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUserCheck,
+  faSkullCrossbones,
+} from '@fortawesome/free-solid-svg-icons';
 import { CirtyPipe } from 'src/app/pipes/city-pipe';
 
 @Component({
@@ -22,19 +18,32 @@ export class NightComponent implements OnInit {
   @Input() gameId: any;
   playerList: Array<Player> = new Array<Player>();
   faUser = faUserCheck;
+  faSkullCrossbones = faSkullCrossbones;
+  hasAllPlayersMoved: boolean = false;
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
   constructor(private dBService: DBService) {}
 
   ngOnInit(): void {
     this.dBService.getPlayers(this.gameId).subscribe((x) => {
-      console.log(x);
       this.playerList = x;
+      if (
+        this.playerList.filter(
+          (x) =>
+            x.hasSelect == false &&
+            x.role != 'مافیای ساده' &&
+            x.alive &&
+            x.role != 'شهروند ساده'
+        ).length == 0
+      ) {
+        this.hasAllPlayersMoved = true;
+      }
     });
   }
 
   EndNight() {
     this.playerList.forEach((player) => {
-      console.log(player);
+      player.hasSelect = false;
+      player.turn = false;
       if (player.life == 0 && player.isSaved == true) {
         player.life = 1;
         player.isSaved = false;
@@ -47,8 +56,16 @@ export class NightComponent implements OnInit {
       }
       this.dBService.updatePlayer(this.gameId, player);
     });
-    console.log(this.gameId);
     this.closeModal.emit();
+    if (
+      this.playerList.filter((x) => x.alive && x.mafia).length >=
+      this.playerList.filter((x) => x.alive && !x.mafia).length
+    ) {
+      this.dBService.endGame(this.gameId, 'مافیا');
+    }
+    if (this.playerList.filter((x) => x.alive && x.mafia).length <= 0) {
+      this.dBService.endGame(this.gameId, 'شهروندان');
+    }
   }
 
   startPlayerTurn(player: Player) {

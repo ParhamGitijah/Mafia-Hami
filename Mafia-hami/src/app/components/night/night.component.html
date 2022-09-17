@@ -21,29 +21,46 @@
         <div class="fw-bold" style="font-size: 16px">
           {{ player.role }} شهر بیدار شود
         </div>
-        <div>اسم بازیکن: {{ player.name }}</div>
+        <div>
+          اسم بازیکن:
+          <span [ngClass]="{ deadText: player.alive == false }">{{
+            player.name
+          }}</span>
+          <span class="deadText" *ngIf="player.alive == false"> کشته شده</span>
+        </div>
       </div>
       <div
         *ngIf="!player.turn && !player.hasSelect"
         style="position: absolute; left: 5%"
       >
-        <button (click)="startPlayerTurn(player)" class="btn btn-primary">
+        <button
+          *ngIf="player.alive"
+          (click)="startPlayerTurn(player)"
+          class="btn btn-primary"
+        >
           بیدار کن
         </button>
       </div>
       <div
-        *ngIf="player.turn && !player.hasSelect"
+        *ngIf="player.turn && !player.hasSelect && player.alive"
         class="waitningSelect badge bg-primary rounded-pill"
         style="position: absolute; left: 5%"
       >
         <fa-icon [icon]="faUser"></fa-icon>
       </div>
       <div
-        *ngIf="player.hasSelect"
+        *ngIf="player.hasSelect && player.alive"
         class="hasSelected badge bg-primary rounded-pill"
         style="position: absolute; left: 5%"
       >
         <fa-icon [icon]="faUser"></fa-icon>
+      </div>
+      <div
+        *ngIf="!player.alive"
+        class="dead badge bg-primary rounded-pill"
+        style="position: absolute; left: 5%"
+      >
+        <fa-icon [icon]="faSkullCrossbones"></fa-icon>
       </div>
     </li>
   </ol>
@@ -85,6 +102,7 @@
   </ol>
   <div class="text-end">
     <button
+      [disabled]="!hasAllPlayersMoved"
       type="button"
       class="btn btn-outline-dark col-12 mt-3"
       (click)="EndNight()"

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Player } from './model/player';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
@@ -14,6 +14,19 @@ export class DBService {
   }
   getGame(gameId: any): Observable<any> {
     return this.db.list('game/' + gameId).valueChanges();
+  }
+  getGameOver(gameId: any) {
+    return this.db
+      .list('game/' + gameId)
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({
+            key: c.payload.key,
+            value: c.payload.val(),
+          }))
+        )
+      );
   }
   setPlayers(gameId: number, player: Player) {
     const itemsRef = this.db.list('game/' + gameId + '/players');
@@ -40,6 +53,8 @@ export class DBService {
       id: '1',
       gameStarted: false,
       gameSummury: false,
+      gameOver: false,
+      winner: '',
     });
     return val;
   }
@@ -78,5 +93,10 @@ export class DBService {
 
   removeGame(gameId: string) {
     this.db.list('game').remove(gameId);
+  }
+
+  endGame(gameId: string, winner: string) {
+    const itemsRef = this.db.list(`game`);
+    itemsRef.update(gameId.toString(), { gameOver: true, winner: winner });
   }
 }

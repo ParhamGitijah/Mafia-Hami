@@ -12,6 +12,8 @@ import { SlideOutComponent } from '../slide-out/slide-out.component';
 export class DashboardComponent implements OnInit {
   gameId!: number;
   showRoles: boolean = false;
+  gameOver: boolean = false;
+  winner!: string;
   private sub: any;
   @ViewChild(SlideOutComponent) slideOutComponent:
     | SlideOutComponent
@@ -30,6 +32,13 @@ export class DashboardComponent implements OnInit {
 
     this.dbService.getPlayers(this.gameId).subscribe((x) => {
       this.playerList = x;
+    });
+    this.dbService.getGameOver(this.gameId).subscribe((x: Array<any>) => {
+      this.gameOver = x.find((c: any) => c.key == 'gameOver').value;
+      if (this.gameOver) {
+        this.winner = x.find((c: any) => c.key == 'winner').value;
+      }
+      console.log(this.winner);
     });
   }
   ngOnDestroy() {
