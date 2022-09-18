@@ -3,17 +3,30 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col" class="text-center">بازیکنان</th>
-          <th scope="col" class="text-center">نقش</th>
+          <th scope="col" class="text-center">حذف بازیکن</th>
           <th scope="col" class="text-center">حالت بازی</th>
-          <th scope="col" class="text-center">کیک بازیکن</th>
+          <th scope="col" class="text-center">نقش</th>
+          <th scope="col" class="text-center">بازیکنان</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let player of this.playerList">
-          <th class="text-center" scope="row">{{ player.name }}</th>
           <td class="text-center">
-            {{ this.showRoles == true ? player.role : "***" }}
+            <button
+              [disabled]="!player.alive"
+              class="btn btn-danger"
+              mwlConfirmationPopover
+              popoverTitle="آیا مطمعنی؟"
+              popoverMessage="آیا مطمعنی برای حذف بازیکن؟"
+              confirmText='حذف کن <i class="fas fa-times"></i>'
+              cancelText='خیر <i class="fas fa-check"></i>'
+              placement="right"
+              (confirm)="killPlayer(player)"
+              confirmButtonType="danger"
+              cancelButtonType="outline-secondary"
+            >
+              حذف
+            </button>
           </td>
           <td
             class="text-center"
@@ -22,8 +35,9 @@
             {{ player.alive ? "زنده" : "کشته شد" }}
           </td>
           <td class="text-center">
-            <button class="btn btn-danger">کیک</button>
+            {{ this.showRoles == true ? player.role : "***" }}
           </td>
+          <td class="text-center" scope="row">{{ player.name }}</td>
         </tr>
       </tbody>
     </table>

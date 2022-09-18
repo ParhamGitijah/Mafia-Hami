@@ -24,7 +24,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PlayerDashboardComponent } from './components/player-dashboard/player-dashboard.component';
 import { SunComponent } from './sun/sun.component';
 import { CirtyPipe } from './pipes/city-pipe';
-
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 export const firebaseConfig = {
   apiKey: 'AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4',
   authDomain: 'mafiahami.firebaseapp.com',
@@ -60,6 +60,10 @@ export const firebaseConfig = {
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    NgbModule,
+    ConfirmationPopoverModule.forRoot({
+      focusButton: 'confirm',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

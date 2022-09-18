@@ -1,5 +1,5 @@
 import { DBService } from './../../db.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/model/player';
 import { SlideOutComponent } from '../slide-out/slide-out.component';
@@ -10,6 +10,8 @@ import { SlideOutComponent } from '../slide-out/slide-out.component';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  trackByValue: TrackByFunction<string> = (index, value) => value;
+
   gameId!: number;
   showRoles: boolean = false;
   gameOver: boolean = false;
@@ -47,5 +49,9 @@ export class DashboardComponent implements OnInit {
 
   startNight() {
     this.slideOutComponent?.open();
+  }
+  killPlayer(player: Player) {
+    player.alive = false;
+    this.dbService.updatePlayer(this.gameId, player);
   }
 }

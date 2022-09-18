@@ -11,7 +11,9 @@ background-color: rgb(232, 12, 52);
     font-size: 18px;
     font-weight: bold;
 }
-
+// .popover-body{
+//     size: 2px !important;
+// }
 
 @mixin anim($name, $dur, $iterate) {
     animation-name: $name;
