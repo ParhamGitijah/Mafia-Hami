@@ -1,5 +1,31 @@
 <div *ngIf="this.turn" dir="rtl">
-  <div>نقش شما {{ (this.player | async)!.role }} است</div>
+  <!-- <div>نقش شما {{ (this.player | async)!.role }} است</div> -->
+  <div class="d-flex justify-content-center">
+    <div *ngIf="(this.player | async)!.role == 'detectiv'" class="row mt-3">
+      <div class="d-flex justify-content-center" style="font-size: 20px">
+        کاراگاه
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/FindMafia.png" />
+      </div>
+    </div>
+    <div *ngIf="(this.player | async)!.role == 'doctor'" class="row mt-3">
+      <div class="d-flex justify-content-center" style="font-size: 20px">
+        دکتر شهر
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/doctor.png" />
+      </div>
+    </div>
+    <div *ngIf="(this.player | async)!.role == 'diehard'" class="row mt-3">
+      <div class="d-flex justify-content-center" style="font-size: 20px">
+        جان سخت
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/diehard.png" />
+      </div>
+    </div>
+  </div>
   <div
     class="row justify-content-center"
     style="position: relative; z-index: 999"

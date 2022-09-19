@@ -60,15 +60,10 @@
 
 
 
-.image {
-    height: 50vh;
-    width: 50vw;
-    overflow-x: hidden;
-    position: absolute;
-    background-size: contain;
-    background-repeat: no-repeat;
+img {
+    max-width: 50%;
+    height: auto;
 }
-
 
 .container {
     display: flexbox;
