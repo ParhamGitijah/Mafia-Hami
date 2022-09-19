@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let player of this.playerList">
-          <td class="text-center">
+          <td class="text-center" style="vertical-align: middle">
             <button
               [disabled]="!player.alive"
               class="btn btn-danger"
@@ -28,16 +28,17 @@
               حذف
             </button>
           </td>
-          <td
-            class="text-center"
-            [ngClass]="{ alive: player.alive, dead: !player.alive }"
-          >
-            {{ player.alive ? "زنده" : "کشته شد" }}
+          <td class="text-center" style="color: white; vertical-align: middle">
+            <div [ngClass]="{ alive: player.alive, dead: !player.alive }">
+              {{ player.alive ? "زنده" : "کشته شد" }}
+            </div>
           </td>
-          <td class="text-center">
+          <td class="text-center" style="vertical-align: middle">
             {{ this.showRoles == true ? player.role : "***" }}
           </td>
-          <td class="text-center" scope="row">{{ player.name }}</td>
+          <td class="text-center" style="vertical-align: middle" scope="row">
+            {{ player.name }}
+          </td>
         </tr>
       </tbody>
     </table>

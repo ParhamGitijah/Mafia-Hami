@@ -1,6 +1,6 @@
 <div class="container" style="background-color: orange">
   <div
-    *ngIf="!(this.playerList) || this.newGameStart"
+    *ngIf="!this.playerList || this.newGameStart"
     class="row align-items-center justify-content-center"
     style="height: 100vh; width: 100vw"
   >
@@ -69,12 +69,21 @@
     >
       Waiting for host to start the game
     </div>
-    <div class="row align-items-center justify-content-center">
+    <div
+      *ngIf="isUserHost"
+      class="row align-items-center justify-content-center"
+    >
+      <div
+        *ngIf="this.playerList.length < 6"
+        style="height: auto; width: auto; margin-bottom: 12px; color: white"
+      >
+        حداقل تعداد بازیکنان برای شروع بازی 6 نفر است
+      </div>
       <button
-        *ngIf="isUserHost"
+        [disabled]="this.playerList.length < 6"
         class="btn btn-primary"
         style="height: auto; width: auto"
-        (click)="startTheGame()"
+        (click)="startTheGame(playerList)"
       >
         پخش شانسی کارت ها
       </button>

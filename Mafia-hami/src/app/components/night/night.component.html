@@ -84,20 +84,49 @@
     >
       <div class="p-0 m-0">
         <div class="fw-bold" style="font-size: 16px">
-          {{ player.role }} انتخاب کن.
+          {{ player.role }} انتخاب کن
         </div>
-        <div>اسم بازیکن: {{ player.name }}</div>
+        <div>
+          اسم بازیکن:
+          <span [ngClass]="{ deadText: player.alive == false }">{{
+            player.name
+          }}</span>
+          <span class="deadText" *ngIf="player.alive == false"> کشته شده</span>
+        </div>
       </div>
-      <div style="position: absolute; left: 5%">
-        <button class="btn btn-primary">بیدار کن</button>
-      </div>
-      <!-- <div
-        class="badge bg-primary rounded-pill"
+      <div
+        *ngIf="!player.turn && !player.hasSelect"
         style="position: absolute; left: 5%"
       >
-        <button class="btn btn-primary">بیدار کن</button>
+        <button
+          *ngIf="player.alive"
+          (click)="startPlayerTurn(player)"
+          class="btn btn-primary"
+        >
+          بیدار کن
+        </button>
+      </div>
+      <div
+        *ngIf="player.turn && !player.hasSelect && player.alive"
+        class="waitningSelect badge bg-primary rounded-pill"
+        style="position: absolute; left: 5%"
+      >
         <fa-icon [icon]="faUser"></fa-icon>
-      </div> -->
+      </div>
+      <div
+        *ngIf="player.hasSelect && player.alive"
+        class="hasSelected badge bg-primary rounded-pill"
+        style="position: absolute; left: 5%"
+      >
+        <fa-icon [icon]="faUser"></fa-icon>
+      </div>
+      <div
+        *ngIf="!player.alive"
+        class="dead badge bg-primary rounded-pill"
+        style="position: absolute; left: 5%"
+      >
+        <fa-icon [icon]="faSkullCrossbones"></fa-icon>
+      </div>
     </li>
   </ol>
   <div class="text-end">

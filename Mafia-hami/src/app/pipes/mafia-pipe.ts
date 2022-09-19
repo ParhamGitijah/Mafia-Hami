@@ -5,7 +5,7 @@ import { Player } from '../model/player';
 export class MafiaPipe implements PipeTransform {
   transform(allPlayers: Player[]) {
     return allPlayers.filter(
-      (player: Player) => player.mafia && player.role !== 'مافیا ساده'
+      (player: Player) => player.mafia && player.role !== 'mafia'
     );
   }
 }

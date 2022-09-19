@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Player } from 'src/app/model/player';
 import { Cards, randomEnum } from 'src/app/helper/randomCards-helper';
 import { ThisReceiver } from '@angular/compiler';
-import { Game } from 'src/app/model/game';
+import { Role } from 'src/app/model/role';
 
 @Component({
   selector: 'app-init-dashboard',
@@ -61,26 +61,48 @@ export class InitDashboardComponent implements OnInit {
     this.newGameStart = true;
     this.isUserHost = true;
     this.gameId = this.dbService.initGame();
+
+    for (let index = 0; index < 12; index++) {
+      var player = new Player();
+      player.id = crypto.randomUUID();
+      // this.player.name = this.userName!;
+      player.name = this.randomString(4);
+      this.dbService.setPlayers(this.gameId!, player);
+    }
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
+  randomString(length: number) {
+    var randomChars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    for (var i = 0; i < length; i++) {
+      result += randomChars.charAt(
+        Math.floor(Math.random() * randomChars.length)
+      );
+    }
+    return result;
+  }
+  startTheGame(playerList: Player[]) {
+    //Check number of player;
+    let array = this.fillCardsBasedOnNumberPlayers();
+    // let array = [
+    //   'تک تیرانداز',
+    //   'جان سخت',
+    //   'پدر خانده',
+    //   'کاراگاه',
+    //   'دکتر',
+    //   'دکتر لکتر',
+    // ];
 
-  startTheGame() {
-    let array = [
-      'sniper',
-      'direhard',
-      'godfather',
-      'detectiv',
-      'doctor',
-      'doctorLekter',
-    ];
     let rolesToAssign = this.shuffleCards(array);
     let i = 0;
     this.playerList.forEach((x) => {
       this.dbService.updatePlayerRole(this.gameId, x.id, rolesToAssign[i++]);
     });
     this.dbService.startGame(this.gameId);
+    this.router.navigate(['dashboard', this.gameId]);
   }
 
   playerExit() {
@@ -93,7 +115,34 @@ export class InitDashboardComponent implements OnInit {
     }
   }
 
-  shuffleCards(array: Array<string>) {
+  fillCardsBasedOnNumberPlayers(): Array<Role> {
+    let array = [
+      { role: 'sniper', mafia: false },
+      { role: 'diehard', mafia: false },
+      { role: 'godfather', mafia: true },
+      { role: 'detectiv', mafia: false },
+      { role: 'doctor', mafia: false },
+      { role: 'doctorLekter', mafia: true },
+    ];
+    for (let index = 6; index < this.playerList.length; index++) {
+      if (index == 8) {
+        array.push({ role: 'mafia', mafia: true });
+      } else {
+        if (index == 11) {
+          array.push({ role: 'mafia', mafia: true });
+        } else {
+          if (index == 14) {
+            array.push({ role: 'mafia', mafia: true });
+          } else {
+            array.push({ role: 'medborgare', mafia: false });
+          }
+        }
+      }
+    }
+    return array;
+  }
+
+  shuffleCards(array: Array<Role>) {
     var m = array.length,
       t,
       i;

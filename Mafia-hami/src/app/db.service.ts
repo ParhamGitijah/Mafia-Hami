@@ -3,6 +3,7 @@ import { Player } from './model/player';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Game } from './model/game';
+import { Role } from './model/role';
 @Injectable({
   providedIn: 'root',
 })
@@ -70,9 +71,12 @@ export class DBService {
     });
   }
 
-  updatePlayerRole(gameId: any, playerKey: any, playerRole: any) {
+  updatePlayerRole(gameId: any, playerKey: any, playerRole: Role) {
     const itemsRef = this.db.list(`game/${gameId}/players`);
-    itemsRef.update(playerKey.toString(), { role: playerRole });
+    itemsRef.update(playerKey.toString(), {
+      role: playerRole.role,
+      mafia: playerRole.mafia,
+    });
   }
   updatePlayerTurn(gameId: any, playerKey: any, turn: boolean) {
     const itemsRef = this.db.list(`game/${gameId}/players`);
@@ -87,6 +91,7 @@ export class DBService {
       name: player.name,
       role: player.role,
       turn: player.turn,
+      mafia: player.mafia,
       hasSelect: player.hasSelect,
     });
   }

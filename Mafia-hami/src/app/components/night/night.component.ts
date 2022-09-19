@@ -30,9 +30,9 @@ export class NightComponent implements OnInit {
         this.playerList.filter(
           (x) =>
             x.hasSelect == false &&
-            x.role != 'مافیای ساده' &&
+            x.role != 'mafia' &&
             x.alive &&
-            x.role != 'شهروند ساده'
+            x.role != 'medborgare'
         ).length == 0
       ) {
         this.hasAllPlayersMoved = true;
@@ -70,6 +70,7 @@ export class NightComponent implements OnInit {
 
   startPlayerTurn(player: Player) {
     player.turn = true;
+    console.log('!');
     this.dBService.updatePlayer(this.gameId, player);
   }
 }
