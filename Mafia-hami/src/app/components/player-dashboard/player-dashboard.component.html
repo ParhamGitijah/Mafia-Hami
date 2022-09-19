@@ -1,4 +1,4 @@
-<div *ngIf="(this.player | async)!.turn" dir="rtl">
+<div *ngIf="this.turn" dir="rtl">
   <div>نقش شما {{ (this.player | async)!.role }} است</div>
   <div
     class="row justify-content-center"
@@ -23,9 +23,9 @@
     </div>
   </div>
 </div>
-<div *ngIf="!(this.player | async)!.turn">Close</div>
+<div *ngIf="this.turn == false && isNight == true">Close!!!!!</div>
 
-<div *ngIf="!waitingForNight" style="overflow-x: hidden; overflow-y: hidden">
+<div *ngIf="isNight == false" style="overflow-x: hidden; overflow-y: hidden">
   <div
     class="d-flex justify-content-center align-items-center"
     style="height: 100vh"

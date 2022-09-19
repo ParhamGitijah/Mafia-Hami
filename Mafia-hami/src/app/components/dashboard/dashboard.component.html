@@ -13,7 +13,7 @@
         <tr *ngFor="let player of this.playerList">
           <td class="text-center" style="vertical-align: middle">
             <button
-              [disabled]="!player.alive"
+              [disabled]="!player.alive || this.gameOver"
               class="btn btn-danger"
               mwlConfirmationPopover
               popoverTitle="آیا مطمعنی؟"

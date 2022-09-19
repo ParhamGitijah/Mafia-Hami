@@ -41,6 +41,7 @@ export class NightComponent implements OnInit {
   }
 
   EndNight() {
+    this.dBService.updateNight(this.gameId, false);
     this.playerList.forEach((player) => {
       player.hasSelect = false;
       player.turn = false;

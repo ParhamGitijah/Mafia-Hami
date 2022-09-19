@@ -42,9 +42,10 @@ export class InitDashboardComponent implements OnInit {
       }
     });
 
-    this.dbService.getGame(this.gameId).subscribe((x) => {
+    this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
       //Is Game started?
-      if (x[0] == true) {
+      let isGameStarted = x.find((c: any) => c.key == 'gameStarted').value;
+      if (isGameStarted) {
         if (this.isUserHost) {
           this.router.navigate(['dashboard', this.gameId]);
         } else {
@@ -62,13 +63,13 @@ export class InitDashboardComponent implements OnInit {
     this.isUserHost = true;
     this.gameId = this.dbService.initGame();
 
-    for (let index = 0; index < 12; index++) {
-      var player = new Player();
-      player.id = crypto.randomUUID();
-      // this.player.name = this.userName!;
-      player.name = this.randomString(4);
-      this.dbService.setPlayers(this.gameId!, player);
-    }
+    // for (let index = 0; index < 12; index++) {
+    // var player = new Player();
+    // player.id = crypto.randomUUID();
+    // player.name = this.userName!;
+    // player.name = this.randomString(4);
+    // this.dbService.setPlayers(this.gameId!, player);
+    // }
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

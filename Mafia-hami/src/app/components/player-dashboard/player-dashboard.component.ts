@@ -18,11 +18,12 @@ export class PlayerDashboardComponent implements OnInit {
   ) {}
 
   playerList: Array<Player> = new Array();
-  waitingForNight: boolean = true;
   playerId!: string;
   playerSelected!: Player;
   player: Observable<Player> = new Observable<Player>();
   gameId!: number;
+  isNight!: boolean;
+  turn: boolean = false;
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params) => {
       this.gameId = +params['id']; // (+) converts string 'id' to a number
@@ -30,10 +31,15 @@ export class PlayerDashboardComponent implements OnInit {
     });
 
     this.dbService.getPlayers(this.gameId).subscribe((x: Player[]) => {
-      if (x.find((x) => x.id == this.playerId)) {
+      let player = x.find((x) => x.id == this.playerId);
+      if (player) {
         this.playerList = x;
-        this.player = of(x.find((x) => x.id == this.playerId)!);
+        this.turn = player.turn;
+        this.player = of(player);
       }
+    });
+    this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
+      this.isNight = x.find((c: any) => c.key == 'nightStarted').value;
     });
   }
 

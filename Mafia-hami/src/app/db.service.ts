@@ -14,9 +14,6 @@ export class DBService {
     return this.db.list('game/' + gameId + '/players').valueChanges();
   }
   getGame(gameId: any): Observable<any> {
-    return this.db.list('game/' + gameId).valueChanges();
-  }
-  getGameOver(gameId: any) {
     return this.db
       .list('game/' + gameId)
       .snapshotChanges()
@@ -29,6 +26,7 @@ export class DBService {
         )
       );
   }
+
   setPlayers(gameId: number, player: Player) {
     const itemsRef = this.db.list('game/' + gameId + '/players');
     return itemsRef.set(player.id, {
@@ -56,6 +54,7 @@ export class DBService {
       gameSummury: false,
       gameOver: false,
       winner: '',
+      nightStarted: false,
     });
     return val;
   }
@@ -65,12 +64,17 @@ export class DBService {
     itemsRef.update(gameId.toString(), { gameStarted: true });
   }
   updateGameSummary(gameId: any) {
-    const itemsRef = this.db.list(`game/${gameId}`);
+    const itemsRef = this.db.list(`game/`);
     itemsRef.update(gameId.toString(), {
       gameSummury: true,
     });
   }
-
+  updateNight(gameId: any, night: boolean) {
+    const itemsRef = this.db.list(`game/`);
+    itemsRef.update(gameId.toString(), {
+      nightStarted: night,
+    });
+  }
   updatePlayerRole(gameId: any, playerKey: any, playerRole: Role) {
     const itemsRef = this.db.list(`game/${gameId}/players`);
     itemsRef.update(playerKey.toString(), {

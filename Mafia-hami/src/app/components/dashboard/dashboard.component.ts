@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     this.dbService.getPlayers(this.gameId).subscribe((x) => {
       this.playerList = x;
     });
-    this.dbService.getGameOver(this.gameId).subscribe((x: Array<any>) => {
+    this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
       this.gameOver = x.find((c: any) => c.key == 'gameOver').value;
       if (this.gameOver) {
         this.winner = x.find((c: any) => c.key == 'winner').value;
@@ -48,6 +48,7 @@ export class DashboardComponent implements OnInit {
   }
 
   startNight() {
+    this.dbService.updateNight(this.gameId, true);
     this.slideOutComponent?.open();
   }
   killPlayer(player: Player) {

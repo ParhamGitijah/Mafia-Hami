@@ -7,4 +7,5 @@ export class Game {
   gameSummury!: false;
   gameOver!: false;
   winner!: string;
+  nightStarted!: boolean;
 }
