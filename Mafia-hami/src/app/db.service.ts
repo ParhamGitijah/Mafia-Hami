@@ -38,6 +38,7 @@ export class DBService {
       mafia: false,
       life: 0,
       hasSelect: false,
+      isSaved: false,
     });
   }
 
@@ -97,6 +98,7 @@ export class DBService {
       turn: player.turn,
       mafia: player.mafia,
       hasSelect: player.hasSelect,
+      isSaved: player.isSaved,
     });
   }
 

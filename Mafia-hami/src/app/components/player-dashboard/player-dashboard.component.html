@@ -25,6 +25,46 @@
         <img src="../../../assets/diehard.png" />
       </div>
     </div>
+    <div *ngIf="(this.player | async)!.role == 'sniper'" class="row mt-3">
+      <div class="d-flex justify-content-center" style="font-size: 20px">
+        تک تیرنداز
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/Sniper.png" />
+      </div>
+    </div>
+    <div *ngIf="(this.player | async)!.role == 'mafia'" class="row mt-3">
+      <div class="d-flex justify-content-center" style="font-size: 20px">
+        مافیا ساده
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/Mafia_Simple.png" />
+      </div>
+    </div>
+    <div *ngIf="(this.player | async)!.role == 'doctorLekter'" class="row mt-3">
+      <div class="d-flex justify-content-center" style="font-size: 20px">
+        دکتر لکتر مافیا
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/DoctorLekter.png" />
+      </div>
+    </div>
+    <div *ngIf="(this.player | async)!.role == 'godfather'" class="row mt-3">
+      <div class="d-flex justify-content-center" style="font-size: 20px">
+        پدرخوانده مافیا
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/GodFather.png" />
+      </div>
+    </div>
+    <div *ngIf="(this.player | async)!.role == 'medborgare'" class="row mt-3">
+      <div class="d-flex justify-content-center" style="font-size: 20px">
+        شهروند ساده
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="../../../assets/Medborgare.png" />
+      </div>
+    </div>
   </div>
   <div
     class="row justify-content-center"
@@ -36,7 +76,9 @@
       class="col-5 selectDiv text-center m-2 p-3"
       [ngClass]="{ select: !player.selected }"
     >
-      {{ player.name }}
+      <div *ngIf="player.alive && player.id != playerId">
+        {{ player.name }}
+      </div>
     </div>
     <div class="row justify-content-center">
       <button
@@ -49,7 +91,21 @@
     </div>
   </div>
 </div>
-<div *ngIf="this.turn == false && isNight == true">Close!!!!!</div>
+<div *ngIf="this.turn == false && isNight == true">
+  <div
+    class="d-flex flex-column justify-content-center align-items-center"
+    style="width: 100vw; height: 100vh"
+  >
+    <div
+      class="badge text-bg-danger p-3"
+      dir="RTL"
+      style="font-size: 18px; color: red"
+    >
+      چشمان خود را ببندید! خطر حذف شدن!
+    </div>
+    <img src="../../../assets/nolook.png" />
+  </div>
+</div>
 
 <div *ngIf="isNight == false" style="overflow-x: hidden; overflow-y: hidden">
   <div

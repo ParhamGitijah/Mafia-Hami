@@ -33,7 +33,9 @@ export class PlayerDashboardComponent implements OnInit {
     this.dbService.getPlayers(this.gameId).subscribe((x: Player[]) => {
       let player = x.find((x) => x.id == this.playerId);
       if (player) {
-        this.playerList = x;
+        this.playerList = x.filter(
+          (x) => x.alive == true && x.id != this.playerId
+        );
         this.turn = player.turn;
         this.player = of(player);
       }
