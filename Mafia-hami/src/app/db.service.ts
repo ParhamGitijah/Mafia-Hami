@@ -39,6 +39,7 @@ export class DBService {
       life: 0,
       hasSelect: false,
       isSaved: false,
+      selfsaved: false,
     });
   }
 
@@ -81,6 +82,7 @@ export class DBService {
     itemsRef.update(playerKey.toString(), {
       role: playerRole.role,
       mafia: playerRole.mafia,
+      life: playerRole.life,
     });
   }
   updatePlayerTurn(gameId: any, playerKey: any, turn: boolean) {
@@ -99,6 +101,7 @@ export class DBService {
       mafia: player.mafia,
       hasSelect: player.hasSelect,
       isSaved: player.isSaved,
+      selfsaved: player.selfsaved,
     });
   }
 

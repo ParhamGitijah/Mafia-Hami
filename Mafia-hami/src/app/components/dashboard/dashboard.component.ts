@@ -55,4 +55,7 @@ export class DashboardComponent implements OnInit {
     player.alive = false;
     this.dbService.updatePlayer(this.gameId, player);
   }
+  redirectToStartPage() {
+    this.router.navigate(['']);
+  }
 }

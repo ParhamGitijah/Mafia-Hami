@@ -76,10 +76,10 @@ export class RepositoryService {
     if (player.role == 'godfather') {
       if (selectedPlayer.role == 'diehard') {
         if (selectedPlayer.life > 1) {
-          selectedPlayer.life = selectedPlayer.life = -1;
+          selectedPlayer.life = selectedPlayer.life - 1;
         } else {
           if (selectedPlayer.isSaved == false) {
-            selectedPlayer.life = selectedPlayer.life = -1;
+            selectedPlayer.life = selectedPlayer.life-1;
           }
         }
       } else {

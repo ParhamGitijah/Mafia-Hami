@@ -1,130 +1,226 @@
-<div *ngIf="this.turn" dir="rtl">
-  <!-- <div>نقش شما {{ (this.player | async)!.role }} است</div> -->
-  <div class="d-flex justify-content-center">
-    <div *ngIf="(this.player | async)!.role == 'detectiv'" class="row mt-3">
-      <div class="d-flex justify-content-center" style="font-size: 20px">
-        کاراگاه
+<div *ngIf="!this.isGameFinished && this.playerAlive">
+  <div *ngIf="this.turn" dir="rtl">
+    <!-- <div>نقش شما {{ (this.player | async)!.role }} است</div> -->
+    <div class="d-flex justify-content-center">
+      <div *ngIf="(this.player | async)!.role == 'detectiv'" class="row mt-3">
+        <div class="d-flex justify-content-center" style="font-size: 20px">
+          کاراگاه
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/FindMafia.png" />
+        </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/FindMafia.png" />
+      <div *ngIf="(this.player | async)!.role == 'doctor'" class="row mt-3">
+        <div class="d-flex justify-content-center" style="font-size: 20px">
+          دکتر شهر
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/doctor.png" />
+        </div>
+      </div>
+      <div *ngIf="(this.player | async)!.role == 'diehard'" class="row mt-3">
+        <div class="d-flex justify-content-center" style="font-size: 20px">
+          جان سخت
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/diehard.png" />
+        </div>
+      </div>
+      <div *ngIf="(this.player | async)!.role == 'sniper'" class="row mt-3">
+        <div class="d-flex justify-content-center" style="font-size: 20px">
+          تک تیرنداز
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/Sniper.png" />
+        </div>
+      </div>
+      <div *ngIf="(this.player | async)!.role == 'mafia'" class="row mt-3">
+        <div class="d-flex justify-content-center" style="font-size: 20px">
+          مافیا ساده
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/Mafia_Simple.png" />
+        </div>
+      </div>
+      <div
+        *ngIf="(this.player | async)!.role == 'doctorLekter'"
+        class="row mt-3"
+      >
+        <div class="d-flex justify-content-center" style="font-size: 20px">
+          دکتر لکتر مافیا
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/DoctorLekter.png" />
+        </div>
+      </div>
+      <div *ngIf="(this.player | async)!.role == 'godfather'" class="row mt-3">
+        <div class="d-flex justify-content-center" style="font-size: 20px">
+          پدرخوانده مافیا
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/GodFather.png" />
+        </div>
+      </div>
+      <div *ngIf="(this.player | async)!.role == 'medborgare'" class="row mt-3">
+        <div class="d-flex justify-content-center" style="font-size: 20px">
+          شهروند ساده
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/Medborgare.png" />
+        </div>
       </div>
     </div>
-    <div *ngIf="(this.player | async)!.role == 'doctor'" class="row mt-3">
-      <div class="d-flex justify-content-center" style="font-size: 20px">
-        دکتر شهر
+    <div
+      class="row justify-content-center"
+      style="position: relative; z-index: 999"
+    >
+      <div *ngIf="selfRole != 'doctorLekter' && selfRole != 'doctor'">
+        <div
+          *ngFor="let player of this.playerList"
+          (click)="selectPlayer(player)"
+          class="col-5 selectDiv text-center m-2 p-3"
+          [ngClass]="{ select: !player.selected }"
+        >
+          <div *ngIf="player.alive && player.id != playerId">
+            {{ player.name }}
+          </div>
+        </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/doctor.png" />
+      <div *ngIf="selfRole == 'doctorLekter'">
+        <div
+          *ngFor="let player of this.playerList"
+          (click)="selectPlayer(player)"
+          class="col-5 selectDiv text-center m-2 p-3"
+          [ngClass]="{ select: !player.selected }"
+        >
+          <div
+            *ngIf="
+              player.alive == true && player.mafia == true && !player.selfsaved
+            "
+          >
+            {{ player.name }}
+          </div>
+        </div>
       </div>
-    </div>
-    <div *ngIf="(this.player | async)!.role == 'diehard'" class="row mt-3">
-      <div class="d-flex justify-content-center" style="font-size: 20px">
-        جان سخت
+      <div *ngIf="selfRole == 'doctor'">
+        <div
+          *ngFor="let player of this.playerList"
+          (click)="selectPlayer(player)"
+          class="col-5 selectDiv text-center m-2 p-3"
+          [ngClass]="{ select: !player.selected }"
+        >
+          <div *ngIf="player.alive == true">
+            <div *ngIf="!(player.role == 'doctor' && player.selfsaved)">
+              {{ player.name }}
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/diehard.png" />
-      </div>
-    </div>
-    <div *ngIf="(this.player | async)!.role == 'sniper'" class="row mt-3">
-      <div class="d-flex justify-content-center" style="font-size: 20px">
-        تک تیرنداز
-      </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/Sniper.png" />
-      </div>
-    </div>
-    <div *ngIf="(this.player | async)!.role == 'mafia'" class="row mt-3">
-      <div class="d-flex justify-content-center" style="font-size: 20px">
-        مافیا ساده
-      </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/Mafia_Simple.png" />
-      </div>
-    </div>
-    <div *ngIf="(this.player | async)!.role == 'doctorLekter'" class="row mt-3">
-      <div class="d-flex justify-content-center" style="font-size: 20px">
-        دکتر لکتر مافیا
-      </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/DoctorLekter.png" />
-      </div>
-    </div>
-    <div *ngIf="(this.player | async)!.role == 'godfather'" class="row mt-3">
-      <div class="d-flex justify-content-center" style="font-size: 20px">
-        پدرخوانده مافیا
-      </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/GodFather.png" />
-      </div>
-    </div>
-    <div *ngIf="(this.player | async)!.role == 'medborgare'" class="row mt-3">
-      <div class="d-flex justify-content-center" style="font-size: 20px">
-        شهروند ساده
-      </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/Medborgare.png" />
+      <div class="row justify-content-center">
+        <button
+          [disabled]="!this.playerSelected"
+          class="btn m-3 btn-primary col-4"
+          (click)="sumbitSelect()"
+        >
+          انتخاب بازیکن
+        </button>
       </div>
     </div>
   </div>
+  <div *ngIf="this.turn == false && isNight == true && this.playerAlive">
+    <div
+      class="d-flex flex-column justify-content-center align-items-center"
+      style="width: 100vw; height: 100vh"
+    >
+      <div
+        class="badge text-bg-danger p-3"
+        dir="RTL"
+        style="font-size: 18px; color: red"
+      >
+        چشمان خود را ببندید! خطر حذف شدن!
+      </div>
+      <img src="../../../assets/nolook.png" />
+    </div>
+  </div>
   <div
-    class="row justify-content-center"
-    style="position: relative; z-index: 999"
+    *ngIf="this.showPlayerRole"
+    style="
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: -100px;
+      z-index: 999;
+    "
+    class="d-flex justify-content-center align-items-center"
   >
     <div
-      *ngFor="let player of this.playerList"
-      (click)="selectPlayer(player)"
-      class="col-5 selectDiv text-center m-2 p-3"
-      [ngClass]="{ select: !player.selected }"
+      class="circular_image d-flex flex-column justify-content-center align-items-center"
     >
-      <div *ngIf="player.alive && player.id != playerId">
-        {{ player.name }}
+      <p class="redColor" style="font-size: 40px" *ngIf="this.isMafia">مافیا</p>
+      <img *ngIf="this.isMafia" class="" src="../../../assets/LikeBlack.png" />
+      <p class="greenColor" *ngIf="!this.isMafia">شهروند</p>
+      <img *ngIf="!this.isMafia" class="" src="../../../assets/DisLike.png" />
+    </div>
+  </div>
+  <div *ngIf="isNight == false" style="overflow-x: hidden; overflow-y: hidden">
+    <div
+      class="d-flex justify-content-center align-items-center"
+      style="height: 100vh"
+    >
+      <div>
+        <div
+          class="fade-in-text d-flex justify-content-center"
+          style="margin-left: 12px; margin-right: 12px"
+        >
+          <p>روز شد. مافیا را پیدا کنید</p>
+        </div>
+        <div class="d-flex justify-content-center">
+          <app-sun></app-sun>
+        </div>
+        <div class="d-flex justify-content-center">
+          <img src="../../../assets/FindMafia.png" />
+        </div>
       </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.isGameFinished">
+  <div>
+    <div><p>GAME OVER</p></div>
+    <div><p>برنده این بازی</p></div>
+    <div>
+      <p>{{ winner }}</p>
     </div>
     <div class="row justify-content-center">
       <button
-        [disabled]="!this.playerSelected"
-        class="btn m-3 btn-primary col-4"
-        (click)="sumbitSelect()"
+        type="button"
+        (click)="redirectToStartPage()"
+        class="col-3 align-self-center btn btn-outline-danger btn-lg btn-block"
+        style="padding: 0; margin: 0px"
       >
-        انتخاب بازیکن
+        شروع یک بازی جدید
       </button>
     </div>
   </div>
 </div>
-<div *ngIf="this.turn == false && isNight == true">
+<div *ngIf="!this.playerAlive && !this.isGameFinished">
   <div
     class="d-flex flex-column justify-content-center align-items-center"
-    style="width: 100vw; height: 100vh"
+    style="width: 100vw; height: 50vh"
   >
-    <div
-      class="badge text-bg-danger p-3"
-      dir="RTL"
-      style="font-size: 18px; color: red"
-    >
-      چشمان خود را ببندید! خطر حذف شدن!
+    <div dir="RTL" style="font-size: 33px; color: rgb(167, 0, 0)">
+      شما کشته شدید!
     </div>
-    <img src="../../../assets/nolook.png" />
+    <img style="width: 100%" src="../../../assets/blood.png" />
   </div>
-</div>
-
-<div *ngIf="isNight == false" style="overflow-x: hidden; overflow-y: hidden">
-  <div
-    class="d-flex justify-content-center align-items-center"
-    style="height: 100vh"
-  >
-    <div>
-      <div
-        class="fade-in-text d-flex justify-content-center"
-        style="margin-left: 12px; margin-right: 12px"
-      >
-        <p>مافیا را پیدا کنید</p>
-      </div>
-      <div class="d-flex justify-content-center">
-        <app-sun></app-sun>
-      </div>
-      <div class="d-flex justify-content-center">
-        <img src="../../../assets/FindMafia.png" />
-      </div>
-    </div>
+  <div class="row justify-content-center">
+    <button
+      type="button"
+      (click)="redirectToStartPage()"
+      class="col-4 align-self-center btn btn-outline-danger btn-lg btn-block"
+      style="padding: 0; margin: 0px"
+    >
+      شروع یک بازی جدید
+    </button>
   </div>
 </div>

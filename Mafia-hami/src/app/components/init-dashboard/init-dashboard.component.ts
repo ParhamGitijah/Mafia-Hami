@@ -63,13 +63,13 @@ export class InitDashboardComponent implements OnInit {
     this.isUserHost = true;
     this.gameId = this.dbService.initGame();
 
-    // for (let index = 0; index < 12; index++) {
-    // var player = new Player();
-    // player.id = crypto.randomUUID();
-    // player.name = this.userName!;
-    // player.name = this.randomString(4);
-    // this.dbService.setPlayers(this.gameId!, player);
-    // }
+    for (let index = 0; index < 6; index++) {
+      var player = new Player();
+      player.id = crypto.randomUUID();
+      // player.name = this.userName!;
+      player.name = this.randomString(4);
+      this.dbService.setPlayers(this.gameId!, player);
+    }
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -118,24 +118,24 @@ export class InitDashboardComponent implements OnInit {
 
   fillCardsBasedOnNumberPlayers(): Array<Role> {
     let array = [
-      { role: 'sniper', mafia: false },
-      { role: 'diehard', mafia: false },
-      { role: 'godfather', mafia: true },
-      { role: 'detectiv', mafia: false },
-      { role: 'doctor', mafia: false },
-      { role: 'doctorLekter', mafia: true },
+      { role: 'sniper', mafia: false, life: 1 },
+      { role: 'diehard', mafia: false, life: 2 },
+      { role: 'godfather', mafia: true, life: 1 },
+      { role: 'detectiv', mafia: false, life: 1 },
+      { role: 'doctor', mafia: false, life: 1 },
+      { role: 'doctorLekter', mafia: true, life: 1 },
     ];
     for (let index = 6; index < this.playerList.length; index++) {
       if (index == 8) {
-        array.push({ role: 'mafia', mafia: true });
+        array.push({ role: 'mafia', mafia: true, life: 1 });
       } else {
         if (index == 11) {
-          array.push({ role: 'mafia', mafia: true });
+          array.push({ role: 'mafia', mafia: true, life: 1 });
         } else {
           if (index == 14) {
-            array.push({ role: 'mafia', mafia: true });
+            array.push({ role: 'mafia', mafia: true, life: 1 });
           } else {
-            array.push({ role: 'medborgare', mafia: false });
+            array.push({ role: 'medborgare', mafia: false, life: 1 });
           }
         }
       }
