@@ -9,6 +9,6 @@ export class Player {
   life!: number;
   isSaved!: boolean;
   selfsaved!: boolean;
-  numberGameSummary!: number;
+
   hasSelect!: boolean;
 }

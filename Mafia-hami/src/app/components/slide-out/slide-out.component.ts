@@ -16,6 +16,8 @@ import { NgbOffcanvasConfig, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 export class SlideOutComponent implements AfterViewInit {
   @Input() gameId: any;
   @ViewChild('content') elementRef: ElementRef | undefined;
+  @Input() gameSummaryLeft!: number;
+
   constructor(
     config: NgbOffcanvasConfig,
     private offcanvasService: NgbOffcanvas

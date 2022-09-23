@@ -13,7 +13,7 @@
         <tr *ngFor="let player of this.playerList">
           <td class="text-center" style="vertical-align: middle">
             <button
-              [disabled]="!player.alive || this.gameOver"
+              [disabled]="!player.alive || this.game.gameOver"
               class="btn btn-danger"
               mwlConfirmationPopover
               popoverTitle="آیا مطمعنی؟"
@@ -56,7 +56,7 @@
       }}
     </button>
     <button
-      [disabled]="this.gameOver"
+      [disabled]="this.game.gameOver"
       class="col-12 btn btn-primary"
       (click)="startNight()"
     >
@@ -64,17 +64,20 @@
     </button>
   </div>
 </div>
-<app-slide-out [gameId]="gameId"></app-slide-out>
+<app-slide-out
+  [gameId]="gameId"
+  [gameSummaryLeft]="this.game.numberGameSummaryLeft"
+></app-slide-out>
 <br />
 <br />
 <br />
 <br />
-<div *ngIf="this.gameOver">
+<div *ngIf="this.game.gameOver">
   <div>
     <div><p>GAME OVER</p></div>
     <div><p>برنده این بازی</p></div>
     <div>
-      <p>{{ winner }}</p>
+      <p>{{ this.game.winner }}</p>
     </div>
     <div class="row justify-content-center">
       <button
@@ -85,6 +88,26 @@
       >
         شروع یک بازی جدید
       </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="game.gameSummury">
+  <div class="d-flex justify-content-center">
+    <img style="width: 80%" src="../../../assets/rapport.png" />
+  </div>
+  <div dir="RTL">
+    <div style="font-size: 34px">استعلام بازی</div>
+
+    <div class="container p-3">
+      <div class="row">
+        <div class="col-12" *ngFor="let player of this.playerList">
+          <div *ngIf="!player.alive">
+            <div class="p-3 m-2" style="border: 1px solid black">
+              از بازی ما یک {{ player.role }} .بیرون است
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

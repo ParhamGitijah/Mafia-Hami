@@ -3,6 +3,7 @@ import { Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/model/player';
 import { SlideOutComponent } from '../slide-out/slide-out.component';
+import { Game } from 'src/app/model/game';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,8 +15,8 @@ export class DashboardComponent implements OnInit {
 
   gameId!: number;
   showRoles: boolean = false;
-  gameOver: boolean = false;
-  winner!: string;
+  game: Game = new Game();
+
   private sub: any;
   @ViewChild(SlideOutComponent) slideOutComponent:
     | SlideOutComponent
@@ -36,11 +37,15 @@ export class DashboardComponent implements OnInit {
       this.playerList = x;
     });
     this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
-      this.gameOver = x.find((c: any) => c.key == 'gameOver').value;
-      if (this.gameOver) {
-        this.winner = x.find((c: any) => c.key == 'winner').value;
+      this.game.gameOver = x.find((c: any) => c.key == 'gameOver').value;
+      this.game.numberGameSummaryLeft = x.find(
+        (c: any) => c.key == 'numberGameSummaryLeft'
+      ).value;
+      this.game.gameSummury = x.find((c: any) => c.key == 'gameSummury').value;
+      if (this.game.gameOver) {
+        this.game.winner = x.find((c: any) => c.key == 'winner').value;
       }
-      console.log(this.winner);
+      console.log(this.game.winner);
     });
   }
   ngOnDestroy() {

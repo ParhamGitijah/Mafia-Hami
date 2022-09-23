@@ -8,4 +8,5 @@ export class Game {
   gameOver!: false;
   winner!: string;
   nightStarted!: boolean;
+  numberGameSummaryLeft!: number;
 }

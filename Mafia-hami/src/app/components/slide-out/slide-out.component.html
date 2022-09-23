@@ -5,6 +5,10 @@
     </h4>
   </div>
   <div class="offcanvas-body">
-    <app-night [gameId]="gameId" (closeModal)="close()"></app-night>
+    <app-night
+      [gameId]="gameId"
+      [gameSummaryLeft]="gameSummaryLeft"
+      (closeModal)="close()"
+    ></app-night>
   </div>
 </ng-template>

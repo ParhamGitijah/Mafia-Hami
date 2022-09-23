@@ -21,21 +21,32 @@ export class NightComponent implements OnInit {
   faSkullCrossbones = faSkullCrossbones;
   hasAllPlayersMoved: boolean = false;
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
+  @Input() gameSummaryLeft!: number;
   constructor(private dBService: DBService) {}
 
   ngOnInit(): void {
+    console.log(this.gameSummaryLeft);
     this.dBService.getPlayers(this.gameId).subscribe((x) => {
       this.playerList = x;
+      var diehard = this.playerList.find((x) => x.role == 'diehard');
       if (
         this.playerList.filter(
           (x) =>
             x.hasSelect == false &&
             x.role != 'mafia' &&
             x.alive &&
-            x.role != 'medborgare'
+            x.role != 'medborgare' &&
+            x.role != 'diehard'
         ).length == 0
       ) {
         this.hasAllPlayersMoved = true;
+      }
+      if (
+        diehard != undefined &&
+        this.gameSummaryLeft > 0 &&
+        !diehard.hasSelect
+      ) {
+        this.hasAllPlayersMoved = false;
       }
     });
   }
@@ -72,6 +83,16 @@ export class NightComponent implements OnInit {
   startPlayerTurn(player: Player) {
     player.turn = true;
     console.log('!');
+    this.dBService.updatePlayer(this.gameId, player);
+  }
+  updateGameStatus(player: Player, gameSummury: boolean) {
+    player.hasSelect = true;
+    this.gameSummaryLeft = this.gameSummaryLeft - 1;
+    this.dBService.updateGameSummary(this.gameId, true, this.gameSummaryLeft);
+    this.dBService.updatePlayer(this.gameId, player);
+  }
+  noSelect(player: Player) {
+    player.hasSelect = true;
     this.dBService.updatePlayer(this.gameId, player);
   }
 }

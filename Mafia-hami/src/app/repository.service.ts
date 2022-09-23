@@ -65,13 +65,6 @@ export class RepositoryService {
       }
     }
 
-    //dieHard
-    if (player.role == 'direhard') {
-      if (player.numberGameSummary > 0) {
-        this.dbService.updateGameSummary(gameId);
-      }
-    }
-
     //godfather
     if (player.role == 'godfather') {
       if (selectedPlayer.role == 'diehard') {
@@ -79,7 +72,7 @@ export class RepositoryService {
           selectedPlayer.life = selectedPlayer.life - 1;
         } else {
           if (selectedPlayer.isSaved == false) {
-            selectedPlayer.life = selectedPlayer.life-1;
+            selectedPlayer.life = selectedPlayer.life - 1;
           }
         }
       } else {

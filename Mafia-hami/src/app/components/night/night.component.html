@@ -30,7 +30,7 @@
         </div>
       </div>
       <div
-        *ngIf="!player.turn && !player.hasSelect"
+        *ngIf="!player.turn && !player.hasSelect && player.role !== 'diehard'"
         style="position: absolute; left: 5%"
       >
         <button
@@ -40,6 +40,28 @@
         >
           بیدار کن
         </button>
+      </div>
+      <div
+        *ngIf="!player.turn && !player.hasSelect && player.role == 'diehard'"
+        style="position: absolute; left: 5%"
+      >
+        <button
+          *ngIf="player.alive && gameSummaryLeft > 0"
+          (click)="updateGameStatus(player, true)"
+          class="btn btn-success m-3"
+        >
+          استعلام
+        </button>
+        <button
+          *ngIf="player.alive && gameSummaryLeft > 0"
+          (click)="noSelect(player)"
+          class="btn btn-secondary"
+        >
+          خیر
+        </button>
+        <div *ngIf="player.alive && gameSummaryLeft <= 0">
+          هیچ استعلامی نمانده
+        </div>
       </div>
       <div
         *ngIf="player.turn && !player.hasSelect && player.alive"

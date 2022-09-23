@@ -57,6 +57,7 @@ export class DBService {
       gameOver: false,
       winner: '',
       nightStarted: false,
+      numberGameSummaryLeft: 2,
     });
     return val;
   }
@@ -65,16 +66,22 @@ export class DBService {
     const itemsRef = this.db.list('game');
     itemsRef.update(gameId.toString(), { gameStarted: true });
   }
-  updateGameSummary(gameId: any) {
+  updateGameSummary(
+    gameId: any,
+    setGameSummary: boolean,
+    gameSummaryLeft: number
+  ) {
     const itemsRef = this.db.list(`game/`);
     itemsRef.update(gameId.toString(), {
-      gameSummury: true,
+      gameSummury: setGameSummary,
+      numberGameSummaryLeft: gameSummaryLeft,
     });
   }
   updateNight(gameId: any, night: boolean) {
     const itemsRef = this.db.list(`game/`);
     itemsRef.update(gameId.toString(), {
       nightStarted: night,
+      gameSummury: false,
     });
   }
   updatePlayerRole(gameId: any, playerKey: any, playerRole: Role) {
