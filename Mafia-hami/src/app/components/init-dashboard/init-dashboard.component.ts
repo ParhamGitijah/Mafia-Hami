@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { DBService } from './../../db.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,14 +26,20 @@ export class InitDashboardComponent implements OnInit {
   gameStarted: boolean = true;
   timeLeft: number = 6;
   interval: any;
-
+  dir!: string;
   constructor(
     private dbService: DBService,
     private activeRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    if (this.translate.currentLang == 'fa') {
+      this.dir = 'rtl';
+    } else {
+      this.dir = 'ltr';
+    }
     this.sub = this.activeRoute.params.subscribe((params) => {
       this.gameId = +params['id']; // (+) converts string 'id' to a number
       this.playerId = params['playerId'];
@@ -90,13 +97,13 @@ export class InitDashboardComponent implements OnInit {
     this.hostId = crypto.randomUUID();
     this.gameId = this.dbService.initGame(this.hostId);
 
-    // for (let index = 0; index < 6; index++) {
-    //   var player = new Player();
-    //   player.id = crypto.randomUUID();
-    //   // player.name = this.userName!;
-    //   player.name = this.randomString(4);
-    //   this.dbService.setPlayers(this.gameId!, player);
-    // }
+    for (let index = 0; index < 6; index++) {
+      var player = new Player();
+      player.id = crypto.randomUUID();
+      // player.name = this.userName!;
+      player.name = this.randomString(4);
+      this.dbService.setPlayers(this.gameId!, player);
+    }
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

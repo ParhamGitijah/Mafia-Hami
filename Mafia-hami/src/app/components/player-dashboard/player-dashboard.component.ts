@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/model/player';
@@ -15,7 +16,8 @@ export class PlayerDashboardComponent implements OnInit {
     private dbService: DBService,
     private activeRoute: ActivatedRoute,
     private repo: RepositoryService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   showPlayerRole = false;
@@ -32,7 +34,13 @@ export class PlayerDashboardComponent implements OnInit {
   doctoLekterList!: Array<Player>;
   selfRole!: string;
   winner!: string;
+  dir!: string;
   ngOnInit(): void {
+    if (this.translate.currentLang == 'fa') {
+      this.dir = 'rtl';
+    } else {
+      this.dir = 'ltr';
+    }
     this.activeRoute.params.subscribe((params) => {
       this.gameId = +params['id']; // (+) converts string 'id' to a number
       this.playerId = params['playerId'];

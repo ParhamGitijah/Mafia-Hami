@@ -1,194 +1,193 @@
-<div style="overflow: scroll; height: 100vh">
-  <div
-    translate="cityGroup"
-    dir="RTL"
-    class="d-flex justify-content-center align-items-center mb-3 p-3"
-    style="
-      border: 1px solid grey;
-      height: 35px;
-      background-color: rgb(61, 159, 0);
-      border-radius: 4px;
-      color: whitesmoke;
-      font-size: 18px;
-      font-weight: bold;
-    "
-  ></div>
-  <ol dir="RTL" class="list-group list-group m-0 p-0">
-    <li
-      *ngFor="let player of playerList | city"
-      class="list-group-item d-flex justify-content-start align-items-center"
-    >
-      <div class="p-0 m-0">
-        <div class="fw-bold" style="font-size: 16px">
-          {{ player.role | translate }} {{ "cityWakeUp" | translate }}
-        </div>
-        <div>
-          {{ "playerName" | translate }}
-          <span style="font-weight: bold">{{ player.name }}</span>
-          <span
-            class="deadText"
-            *ngIf="player.alive == false"
-            translate="dead"
-          ></span>
-        </div>
-      </div>
-      <div
-        *ngIf="
-          !player.turn &&
-          !player.hasSelect &&
-          player.role !== 'diehard' &&
-          player.role !== 'sniper'
-        "
-        style="position: absolute; left: 5%"
+<div [dir]="this.dir">
+  <div style="overflow: scroll; height: 100vh">
+    <div
+      translate="cityGroup"
+      class="d-flex justify-content-center align-items-center mb-3 p-3"
+      style="
+        border: 1px solid grey;
+        height: 35px;
+        background-color: rgb(61, 159, 0);
+        border-radius: 4px;
+        color: whitesmoke;
+        font-size: 18px;
+        font-weight: bold;
+      "
+    ></div>
+    <ol class="list-group list-group m-0 p-0">
+      <li
+        *ngFor="let player of playerList | city"
+        class="list-group-item d-flex justify-content-start align-items-center"
       >
-        <button
-          *ngIf="player.alive"
-          (click)="startPlayerTurn(player)"
-          class="btn btn-primary"
-          translate="wakeUpp"
-        ></button>
-      </div>
-      <div
-        *ngIf="!player.turn && !player.hasSelect && player.role == 'diehard'"
-        style="position: absolute; left: 5%"
-      >
-        <button
-          *ngIf="player.alive && gameSummaryLeft > 0"
-          (click)="updateGameStatus(player, true)"
-          class="btn btn-success m-3"
-          translate="utdrag"
-        ></button>
-        <button
-          *ngIf="player.alive && gameSummaryLeft > 0"
-          (click)="noSelect(player)"
-          class="btn btn-secondary"
-          translate="no"
-        ></button>
+        <div class="p-0 m-0">
+          <div class="fw-bold" style="font-size: 16px">
+            {{ player.role | translate }} {{ "cityWakeUp" | translate }}
+          </div>
+          <div>
+            {{ "playerName" | translate }}
+            <span style="font-weight: bold">{{ player.name }}</span>
+            <span
+              class="deadText"
+              *ngIf="player.alive == false"
+              translate="dead"
+            ></span>
+          </div>
+        </div>
         <div
-          *ngIf="player.alive && gameSummaryLeft <= 0"
-          translate="noUtdragLeft"
-        ></div>
-      </div>
-      <div
-        *ngIf="!player.turn && !player.hasSelect && player.role == 'sniper'"
-        style="position: absolute; left: 5%"
-      >
-        <button
-          *ngIf="player.alive && gameSummaryLeft > 0"
-          (click)="startPlayerTurn(player)"
-          class="btn btn-success m-3"
-          translate="shoot"
-        ></button>
-        <button
-          *ngIf="player.alive && gameSummaryLeft > 0"
-          (click)="noSelect(player)"
-          class="btn btn-secondary"
-          translate="no"
-        ></button>
-        <div
-          *ngIf="player.alive && gameSummaryLeft <= 0"
-          translate="noUtdragLeft"
-        ></div>
-      </div>
-      <div
-        *ngIf="player.turn && !player.hasSelect && player.alive"
-        class="waitningSelect badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
-      >
-        <fa-icon [icon]="faUser"></fa-icon>
-      </div>
-      <div
-        *ngIf="player.hasSelect && player.alive"
-        class="hasSelected badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
-      >
-        <fa-icon [icon]="faUser"></fa-icon>
-      </div>
-      <div
-        *ngIf="!player.alive"
-        class="dead badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
-      >
-        <fa-icon [icon]="faSkullCrossbones"></fa-icon>
-      </div>
-    </li>
-  </ol>
-  <div
-    dir="RTL"
-    class="d-flex justify-content-center align-items-center mt-3 p-3"
-    style="
-      border: 1px solid gray(147, 0, 0);
-      height: 35px;
-      background-color: rgb(159, 0, 0);
-      border-radius: 4px;
-      color: rgb(255, 255, 255);
-      font-family: bold;
-      font-size: 22px;
-    "
-    translate="wakeUppMafia"
-  ></div>
-  <ol dir="RTL" class="list-group list-group m-0 p-0">
-    <li
-      *ngFor="let player of playerList | mafia"
-      class="list-group-item d-flex justify-content-start align-items-center"
-    >
-      <div class="p-0 m-0">
-        <div class="fw-bold" style="font-size: 16px">
-          {{ player.role | translate }} {{ "choose" | translate }}
-        </div>
-        <div>
-          {{ "playerName" | translate }}
-          <span style="font-weight: bold">{{ player.name }}</span>
-          <span
-            class="deadText"
-            *ngIf="player.alive == false"
-            translate="dead"
-          ></span>
-        </div>
-      </div>
-      <div
-        *ngIf="!player.turn && !player.hasSelect"
-        style="position: absolute; left: 5%"
-      >
-        <button
-          *ngIf="player.alive"
-          (click)="startPlayerTurn(player)"
-          class="btn btn-primary"
+          *ngIf="
+            !player.turn &&
+            !player.hasSelect &&
+            player.role !== 'diehard' &&
+            player.role !== 'sniper'
+          "
+          style="position: absolute; left: 5%"
         >
-          بیدار کن
-        </button>
-      </div>
-      <div
-        *ngIf="player.turn && !player.hasSelect && player.alive"
-        class="waitningSelect badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
+          <button
+            *ngIf="player.alive"
+            (click)="startPlayerTurn(player)"
+            class="btn btn-primary"
+            translate="wakeUpp"
+          ></button>
+        </div>
+        <div
+          *ngIf="!player.turn && !player.hasSelect && player.role == 'diehard'"
+          style="position: absolute; left: 5%"
+        >
+          <button
+            *ngIf="player.alive && gameSummaryLeft > 0"
+            (click)="updateGameStatus(player, true)"
+            class="btn btn-success m-3"
+            translate="utdrag"
+          ></button>
+          <button
+            *ngIf="player.alive && gameSummaryLeft > 0"
+            (click)="noSelect(player)"
+            class="btn btn-secondary"
+            translate="no"
+          ></button>
+          <div
+            *ngIf="player.alive && gameSummaryLeft <= 0"
+            translate="noUtdragLeft"
+          ></div>
+        </div>
+        <div
+          *ngIf="!player.turn && !player.hasSelect && player.role == 'sniper'"
+          style="position: absolute; left: 5%"
+        >
+          <button
+            *ngIf="player.alive && gameSummaryLeft > 0"
+            (click)="startPlayerTurn(player)"
+            class="btn btn-success m-3"
+            translate="shoot"
+          ></button>
+          <button
+            *ngIf="player.alive && gameSummaryLeft > 0"
+            (click)="noSelect(player)"
+            class="btn btn-secondary"
+            translate="no"
+          ></button>
+          <div
+            *ngIf="player.alive && gameSummaryLeft <= 0"
+            translate="noUtdragLeft"
+          ></div>
+        </div>
+        <div
+          *ngIf="player.turn && !player.hasSelect && player.alive"
+          class="waitningSelect badge bg-primary rounded-pill"
+          style="position: absolute; left: 5%"
+        >
+          <fa-icon [icon]="faUser"></fa-icon>
+        </div>
+        <div
+          *ngIf="player.hasSelect && player.alive"
+          class="hasSelected badge bg-primary rounded-pill"
+          style="position: absolute; left: 5%"
+        >
+          <fa-icon [icon]="faUser"></fa-icon>
+        </div>
+        <div
+          *ngIf="!player.alive"
+          class="dead badge bg-primary rounded-pill"
+          style="position: absolute; left: 5%"
+        >
+          <fa-icon [icon]="faSkullCrossbones"></fa-icon>
+        </div>
+      </li>
+    </ol>
+    <div
+      class="d-flex justify-content-center align-items-center mt-3 p-3"
+      style="
+        border: 1px solid gray(147, 0, 0);
+        height: 35px;
+        background-color: rgb(159, 0, 0);
+        border-radius: 4px;
+        color: rgb(255, 255, 255);
+        font-family: bold;
+        font-size: 22px;
+      "
+      translate="wakeUppMafia"
+    ></div>
+    <ol class="list-group list-group m-0 p-0">
+      <li
+        *ngFor="let player of playerList | mafia"
+        class="list-group-item d-flex justify-content-start align-items-center"
       >
-        <fa-icon [icon]="faUser"></fa-icon>
-      </div>
-      <div
-        *ngIf="player.hasSelect && player.alive"
-        class="hasSelected badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
+        <div class="p-0 m-0">
+          <div class="fw-bold" style="font-size: 16px">
+            {{ player.role | translate }} {{ "choose" | translate }}
+          </div>
+          <div>
+            {{ "playerName" | translate }}
+            <span style="font-weight: bold">{{ player.name }}</span>
+            <span
+              class="deadText"
+              *ngIf="player.alive == false"
+              translate="dead"
+            ></span>
+          </div>
+        </div>
+        <div
+          *ngIf="!player.turn && !player.hasSelect"
+          style="position: absolute; left: 5%"
+        >
+          <button
+            *ngIf="player.alive"
+            (click)="startPlayerTurn(player)"
+            class="btn btn-primary"
+            translate="wakeUpp"
+          ></button>
+        </div>
+        <div
+          *ngIf="player.turn && !player.hasSelect && player.alive"
+          class="waitningSelect badge bg-primary rounded-pill"
+          style="position: absolute; left: 5%"
+        >
+          <fa-icon [icon]="faUser"></fa-icon>
+        </div>
+        <div
+          *ngIf="player.hasSelect && player.alive"
+          class="hasSelected badge bg-primary rounded-pill"
+          style="position: absolute; left: 5%"
+        >
+          <fa-icon [icon]="faUser"></fa-icon>
+        </div>
+        <div
+          *ngIf="!player.alive"
+          class="dead badge bg-primary rounded-pill"
+          style="position: absolute; left: 5%"
+        >
+          <fa-icon [icon]="faSkullCrossbones"></fa-icon>
+        </div>
+      </li>
+    </ol>
+    <div class="text-end">
+      <button
+        [disabled]="!hasAllPlayersMoved"
+        type="button"
+        class="btn btn-outline-dark col-12 mt-3"
+        (click)="EndNight()"
       >
-        <fa-icon [icon]="faUser"></fa-icon>
-      </div>
-      <div
-        *ngIf="!player.alive"
-        class="dead badge bg-primary rounded-pill"
-        style="position: absolute; left: 5%"
-      >
-        <fa-icon [icon]="faSkullCrossbones"></fa-icon>
-      </div>
-    </li>
-  </ol>
-  <div class="text-end">
-    <button
-      [disabled]="!hasAllPlayersMoved"
-      type="button"
-      class="btn btn-outline-dark col-12 mt-3"
-      (click)="EndNight()"
-    >
-      اتمام شب
-    </button>
+        اتمام شب
+      </button>
+    </div>
   </div>
 </div>

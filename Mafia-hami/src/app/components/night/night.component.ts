@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { MafiaPipe } from './../../pipes/mafia-pipe';
 import { DBService } from './../../db.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -16,16 +17,24 @@ import { CirtyPipe } from 'src/app/pipes/city-pipe';
 })
 export class NightComponent implements OnInit {
   @Input() gameId: any;
+  dir!: string;
   playerList: Array<Player> = new Array<Player>();
   faUser = faUserCheck;
   faSkullCrossbones = faSkullCrossbones;
   hasAllPlayersMoved: boolean = false;
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
   @Input() gameSummaryLeft!: number;
-  constructor(private dBService: DBService) {}
+  constructor(
+    private dBService: DBService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.gameSummaryLeft);
+    if (this.translate.currentLang == 'fa') {
+      this.dir = 'rtl';
+    } else {
+      this.dir = 'ltr';
+    }
     this.dBService.getPlayers(this.gameId).subscribe((x) => {
       this.playerList = x;
       var diehard = this.playerList.find((x) => x.role == 'diehard');

@@ -8,7 +8,7 @@
   "medborgare": "Citizen",
   "mafia": "Mafia",
   "choosePlayer": "Select Player",
-  "closeEyes": "Close your eyes or you will be kick!",
+  "closeEyes": "Close your eyes or you will be kicked!",
   "morning": "Find Mafia!",
   "isMafia": "Mafia",
   "isMedborgare": "Citizen",
@@ -37,7 +37,7 @@
   "noUtdragLeft": "No rapport left",
   "wakeUppMafia": "Wake up Mafia!",
   "choose": "Select",
-  "allPlayersCloseEyer": "Night has been started! All players need to close the eyes",
+  "allPlayersCloseEyer": "Night has been started! All players need to close thair eyes",
   "joinGame": "Join game",
   "gameId": "GameId",
   "enterGameId": "Enter gameId",
@@ -46,9 +46,10 @@
   "yourRoleWillShow": "Your role will be appear soon",
   "askJoinGameId": "Ask players to join with this GameId:",
   "waitingForHost": "Wait for host to start the game!",
-  "minPlayersReq": "Minimium number of players for this game is 6 players ",
+  "minPlayersReq": "Minimium number of players for this game is 6 players",
   "dealRolesSlump": "Deal all roles",
   "exit": "Exit",
   "youareDead": "You are dead!",
-  "shoot": "Shoot"
+  "shoot": "Shoot",
+  "endthenight": "End Night"
 }

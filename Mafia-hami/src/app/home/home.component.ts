@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   newGameId: number | undefined;
   userName: string | undefined;
   player: Player = new Player();
-
+  dir!: string;
   constructor(
     private dbService: DBService,
     private router: Router,
@@ -29,7 +29,13 @@ export class HomeComponent implements OnInit {
     private translate: TranslateService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.translate.currentLang == 'fa') {
+      this.dir = 'rtl';
+    } else {
+      this.dir = 'ltr';
+    }
+  }
 
   createNewGame() {
     // this.slideOutComponent?.open();

@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.translate.currentLang == 'fa') {
-      this.dir = 'rtl';
+      this.dir = 'ltr';
     } else {
       this.dir = 'ltr';
     }
