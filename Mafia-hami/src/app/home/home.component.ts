@@ -1,5 +1,6 @@
+import { TranslateService } from '@ngx-translate/core';
 import { SlideOutComponent } from './../components/slide-out/slide-out.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 
 import { DBService } from '../db.service';
 import { Router } from '@angular/router';
@@ -21,7 +22,12 @@ export class HomeComponent implements OnInit {
   userName: string | undefined;
   player: Player = new Player();
 
-  constructor(private dbService: DBService, private router: Router) {}
+  constructor(
+    private dbService: DBService,
+    private router: Router,
+    private ngZone: NgZone,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -79,5 +85,9 @@ export class HomeComponent implements OnInit {
       );
     }
     return result;
+  }
+
+  langChoosed(lang: string) {
+    this.ngZone.run(() => this.translate.use(lang));
   }
 }

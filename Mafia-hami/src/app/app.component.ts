@@ -11,7 +11,7 @@ export class AppComponent {
   faUserCheck = faUserCheck;
 
   constructor(private translate: TranslateService) {
-    translate.setDefaultLang('fa');
+    translate.setDefaultLang('en');
     translate.use('fa');
   }
 }

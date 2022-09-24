@@ -19,6 +19,22 @@
           translate="joinGame"
         ></button>
       </div>
+      <div class="input-group m-3 d-flex justify-content-center">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01"
+            >Language</label
+          >
+        </div>
+        <select
+          ngModel="fa"
+          (ngModelChange)="langChoosed($event)"
+          class="custom-select"
+          id="inputGroupSelect01"
+        >
+          <option value="fa">فارسی</option>
+          <option value="en">English</option>
+        </select>
+      </div>
     </div>
     <div class="row justify-content-center" *ngIf="showJoin">
       <div class="m-3 d-flex justify-content-center">

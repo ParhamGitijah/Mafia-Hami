@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { DBService } from './../../db.service';
 import { Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
   game: Game = new Game();
   hostId!: string;
   private sub: any;
+  dir!: string;
   @ViewChild(SlideOutComponent) slideOutComponent:
     | SlideOutComponent
     | undefined;
@@ -25,10 +27,17 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dbService: DBService,
     private activeRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    if (this.translate.currentLang == 'fa') {
+      this.dir = 'rtl';
+    } else {
+      this.dir = 'ltr';
+    }
+
     this.sub = this.activeRoute.params.subscribe((params) => {
       this.gameId = +params['id']; // (+) converts string 'id' to a number
       this.hostId = params['hostId']; // (+) converts string 'id' to a number
