@@ -29,6 +29,7 @@ export class PlayerDashboardComponent implements OnInit {
   isNight!: boolean;
   isGameFinished!: boolean;
   turn: boolean = false;
+  doctoLekterList!: Array<Player>;
   selfRole!: string;
   winner!: string;
   ngOnInit(): void {
@@ -42,6 +43,9 @@ export class PlayerDashboardComponent implements OnInit {
       if (player) {
         this.playerList = x.filter(
           (x) => x.alive == true && x.id != this.playerId
+        );
+        this.doctoLekterList = x.filter(
+          (x) => x.alive == true && x.mafia && !x.selfsaved
         );
         this.playerAlive = player.alive;
         this.selfRole = player.role;

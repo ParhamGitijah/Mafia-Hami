@@ -1,5 +1,5 @@
 <div *ngIf="!this.isGameFinished && this.playerAlive">
-  <div *ngIf="this.turn" dir="rtl">
+  <div class="container" *ngIf="this.turn" dir="rtl">
     <!-- <div>نقش شما {{ (this.player | async)!.role }} است</div> -->
     <div class="d-flex justify-content-center">
       <div *ngIf="(this.player | async)!.role == 'detectiv'" class="row mt-3">
@@ -74,7 +74,10 @@
       class="row justify-content-center"
       style="position: relative; z-index: 999"
     >
-      <div *ngIf="selfRole != 'doctorLekter' && selfRole != 'doctor'">
+      <div
+        *ngIf="selfRole != 'doctorLekter' && selfRole != 'doctor'"
+        style="display: contents"
+      >
         <div
           *ngFor="let player of this.playerList"
           (click)="selectPlayer(player)"
@@ -86,23 +89,25 @@
           </div>
         </div>
       </div>
-      <div *ngIf="selfRole == 'doctorLekter'">
+      <div *ngIf="selfRole == 'doctorLekter'" style="display: contents">
         <div
-          *ngFor="let player of this.playerList"
+          *ngFor="let player of this.doctoLekterList"
           (click)="selectPlayer(player)"
           class="col-5 selectDiv text-center m-2 p-3"
           [ngClass]="{ select: !player.selected }"
         >
-          <div
-            *ngIf="
-              player.alive == true && player.mafia == true && !player.selfsaved
-            "
-          >
-            {{ player.name }}
-          </div>
+          {{ player.name }}
         </div>
+
+        <button
+          *ngIf="this.doctoLekterList.length <= 0"
+          class="btn m-3 btn-primary col-7"
+          (click)="sumbitSelect()"
+        >
+          بازیکنی برای نجات وجود ندارد. برای کلیک کنید
+        </button>
       </div>
-      <div *ngIf="selfRole == 'doctor'">
+      <div *ngIf="selfRole == 'doctor'" style="display: contents">
         <div
           *ngFor="let player of this.playerList"
           (click)="selectPlayer(player)"

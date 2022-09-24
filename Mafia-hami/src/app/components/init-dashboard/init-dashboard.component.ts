@@ -19,6 +19,11 @@ export class InitDashboardComponent implements OnInit {
   newGameStart: boolean = false;
   isUserHost: boolean = false;
   playerId!: string;
+  player!: Player;
+  showPlayerRole: boolean = false;
+  gameStarted: boolean = true;
+  timeLeft: number = 6;
+  interval: any;
   constructor(
     private dbService: DBService,
     private activeRoute: ActivatedRoute,
@@ -37,6 +42,7 @@ export class InitDashboardComponent implements OnInit {
 
     this.dbService.getPlayers(this.gameId).subscribe((x) => {
       this.playerList = x;
+      this.player = this.playerList.find((x) => x.id == this.playerId)!;
       if (x.length > 0) {
         this.newGameStart = false;
       }
@@ -44,16 +50,31 @@ export class InitDashboardComponent implements OnInit {
 
     this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
       //Is Game started?
-      let isGameStarted = x.find((c: any) => c.key == 'gameStarted').value;
-      if (isGameStarted) {
+      this.gameStarted = x.find((c: any) => c.key == 'gameStarted').value;
+      if (this.gameStarted) {
         if (this.isUserHost) {
           this.router.navigate(['dashboard', this.gameId]);
         } else {
-          this.router.navigate([
-            '/player-dashboard',
-            this.gameId,
-            this.playerId,
-          ]);
+          var promise = new Promise((resolve) => {
+            this.interval = setInterval(() => {
+              if (this.timeLeft > 0) {
+                this.timeLeft--;
+              } else {
+                this.showPlayerRole = true;
+              }
+            }, 1000);
+
+            setTimeout(() => {
+              resolve(this.showPlayerRole);
+            }, 10000);
+          });
+          promise.then((x) => {
+            this.router.navigate([
+              '/player-dashboard',
+              this.gameId,
+              this.playerId,
+            ]);
+          });
         }
       }
     });

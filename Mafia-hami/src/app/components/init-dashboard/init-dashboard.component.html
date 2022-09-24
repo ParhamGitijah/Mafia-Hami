@@ -1,4 +1,8 @@
-<div class="container" style="background-color: orange">
+<div
+  *ngIf="!this.showPlayerRole && !gameStarted"
+  class="container"
+  style="background-color: orange"
+>
   <div
     *ngIf="!this.playerList || this.newGameStart"
     class="row align-items-center justify-content-center"
@@ -97,4 +101,88 @@
   >
     خروج
   </button>
+</div>
+<div
+  *ngIf="!this.showPlayerRole && this.gameStarted"
+  class="d-flex flex-column justify-content-center align-items-center"
+  style="height: 100vh; font-size: 25px"
+>
+  <div>نقش شما بزودی نمایش داده میشود</div>
+  <div style="font-weight: bold">
+    {{ timeLeft }}
+  </div>
+</div>
+<div *ngIf="this.showPlayerRole" class="anim d-flex justify-content-center">
+  <div class="cardRole row mt-3">
+    <p class="d-flex justify-content-center mt-5">کاراگاه</p>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/FindMafia.png" />
+    </div>
+  </div>
+</div>
+<div *ngIf="this.showPlayerRole" class="d-flex justify-content-center">
+  <div *ngIf="this.player.role == 'detectiv'" class="row mt-3">
+    <div class="d-flex justify-content-center" style="font-size: 20px">
+      کاراگاه
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/FindMafia.png" />
+    </div>
+  </div>
+  <div *ngIf="this.player.role == 'doctor'" class="row mt-3">
+    <div class="d-flex justify-content-center" style="font-size: 20px">
+      دکتر شهر
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/doctor.png" />
+    </div>
+  </div>
+  <div *ngIf="this.player.role == 'diehard'" class="row mt-3">
+    <div class="d-flex justify-content-center" style="font-size: 20px">
+      جان سخت
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/diehard.png" />
+    </div>
+  </div>
+  <div *ngIf="this.player.role == 'sniper'" class="row mt-3">
+    <div class="d-flex justify-content-center" style="font-size: 20px">
+      تک تیرنداز
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/Sniper.png" />
+    </div>
+  </div>
+  <div *ngIf="this.player.role == 'mafia'" class="row mt-3">
+    <div class="d-flex justify-content-center" style="font-size: 20px">
+      مافیا ساده
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/Mafia_Simple.png" />
+    </div>
+  </div>
+  <div *ngIf="this.player.role == 'doctorLekter'" class="row mt-3">
+    <div class="d-flex justify-content-center" style="font-size: 20px">
+      دکتر لکتر مافیا
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/DoctorLekter.png" />
+    </div>
+  </div>
+  <div *ngIf="this.player.role == 'godfather'" class="row mt-3">
+    <div class="d-flex justify-content-center" style="font-size: 20px">
+      پدرخوانده مافیا
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/GodFather.png" />
+    </div>
+  </div>
+  <div *ngIf="this.player.role == 'medborgare'" class="row mt-3">
+    <div class="d-flex justify-content-center" style="font-size: 20px">
+      شهروند ساده
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="../../../assets/Medborgare.png" />
+    </div>
+  </div>
 </div>
