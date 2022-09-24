@@ -25,6 +25,12 @@ import { PlayerDashboardComponent } from './components/player-dashboard/player-d
 import { SunComponent } from './sun/sun.component';
 import { CirtyPipe } from './pipes/city-pipe';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+
+// import ngx-translate and the http loader
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4',
   authDomain: 'mafiahami.firebaseapp.com',
@@ -60,6 +66,17 @@ export const firebaseConfig = {
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    BrowserModule,
+
+    // ngx-translate and the loader module
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
     NgbModule,
     ConfirmationPopoverModule.forRoot({
       focusButton: 'confirm',
@@ -70,4 +87,8 @@ export const firebaseConfig = {
 })
 export class AppModule {
   constructor() {}
+}
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
 }

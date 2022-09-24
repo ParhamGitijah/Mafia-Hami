@@ -41,12 +41,18 @@ export class PlayerDashboardComponent implements OnInit {
     this.dbService.getPlayers(this.gameId).subscribe((x: Player[]) => {
       let player = x.find((x) => x.id == this.playerId);
       if (player) {
-        this.playerList = x.filter(
-          (x) => x.alive == true && x.id != this.playerId
-        );
+        if (player.role == 'doctor' && !player.selfsaved) {
+          this.playerList = x.filter((x) => x.alive == true);
+        } else {
+          this.playerList = x.filter(
+            (x) => x.alive == true && x.id != this.playerId
+          );
+        }
+
         this.doctoLekterList = x.filter(
           (x) => x.alive == true && x.mafia && !x.selfsaved
         );
+
         this.playerAlive = player.alive;
         this.selfRole = player.role;
         this.turn = player.turn;
@@ -54,9 +60,11 @@ export class PlayerDashboardComponent implements OnInit {
       }
     });
     this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
-      this.isNight = x.find((c: any) => c.key == 'nightStarted').value;
-      this.isGameFinished = x.find((c: any) => c.key == 'gameOver').value;
-      this.winner = x.find((c: any) => c.key == 'winner').value;
+      if (x.length !== 0) {
+        this.isNight = x.find((c: any) => c.key == 'nightStarted').value;
+        this.isGameFinished = x.find((c: any) => c.key == 'gameOver').value;
+        this.winner = x.find((c: any) => c.key == 'winner').value;
+      }
     });
   }
 
@@ -67,6 +75,17 @@ export class PlayerDashboardComponent implements OnInit {
         this.playerList[index].selected = false;
       } else {
         this.playerList[index].selected = true;
+      }
+    }
+  }
+
+  selectPlayerDocLek(player: Player) {
+    this.playerSelected = player;
+    for (let index = 0; index < this.doctoLekterList.length; index++) {
+      if (this.doctoLekterList[index].id != player.id) {
+        this.doctoLekterList[index].selected = false;
+      } else {
+        this.doctoLekterList[index].selected = true;
       }
     }
   }

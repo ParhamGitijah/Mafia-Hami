@@ -77,7 +77,7 @@ export class RepositoryService {
         }
       } else {
         if (selectedPlayer.isSaved == false) {
-          selectedPlayer.life = selectedPlayer.life = -1;
+          selectedPlayer.life = selectedPlayer.life - 1;
         }
       }
       this.dbService.updatePlayer(gameId, selectedPlayer);

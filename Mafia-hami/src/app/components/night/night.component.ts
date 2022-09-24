@@ -43,6 +43,7 @@ export class NightComponent implements OnInit {
       }
       if (
         diehard != undefined &&
+        diehard.alive &&
         this.gameSummaryLeft > 0 &&
         !diehard.hasSelect
       ) {
@@ -58,7 +59,6 @@ export class NightComponent implements OnInit {
       player.turn = false;
       if (player.life == 0 && player.isSaved == true) {
         player.life = 1;
-        player.isSaved = false;
       }
       if (player.life == 0 && player.isSaved == false) {
         player.alive = false;
@@ -66,6 +66,7 @@ export class NightComponent implements OnInit {
       if (player.life < 0) {
         player.alive = false;
       }
+      player.isSaved = false;
       this.dBService.updatePlayer(this.gameId, player);
     });
     this.closeModal.emit();

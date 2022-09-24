@@ -1,72 +1,17 @@
 <div *ngIf="!this.isGameFinished && this.playerAlive">
   <div class="container" *ngIf="this.turn" dir="rtl">
-    <!-- <div>نقش شما {{ (this.player | async)!.role }} است</div> -->
     <div class="d-flex justify-content-center">
-      <div *ngIf="(this.player | async)!.role == 'detectiv'" class="row mt-3">
-        <div class="d-flex justify-content-center" style="font-size: 20px">
-          کاراگاه
+      <div class="row mt-3">
+        <div
+          class="d-flex justify-content-center"
+          style="font-size: 20px; padding-right: 30px"
+        >
+          {{ (this.player | async)!.role | translate }}
         </div>
         <div class="d-flex justify-content-center">
-          <img src="../../../assets/FindMafia.png" />
-        </div>
-      </div>
-      <div *ngIf="(this.player | async)!.role == 'doctor'" class="row mt-3">
-        <div class="d-flex justify-content-center" style="font-size: 20px">
-          دکتر شهر
-        </div>
-        <div class="d-flex justify-content-center">
-          <img src="../../../assets/doctor.png" />
-        </div>
-      </div>
-      <div *ngIf="(this.player | async)!.role == 'diehard'" class="row mt-3">
-        <div class="d-flex justify-content-center" style="font-size: 20px">
-          جان سخت
-        </div>
-        <div class="d-flex justify-content-center">
-          <img src="../../../assets/diehard.png" />
-        </div>
-      </div>
-      <div *ngIf="(this.player | async)!.role == 'sniper'" class="row mt-3">
-        <div class="d-flex justify-content-center" style="font-size: 20px">
-          تک تیرنداز
-        </div>
-        <div class="d-flex justify-content-center">
-          <img src="../../../assets/Sniper.png" />
-        </div>
-      </div>
-      <div *ngIf="(this.player | async)!.role == 'mafia'" class="row mt-3">
-        <div class="d-flex justify-content-center" style="font-size: 20px">
-          مافیا ساده
-        </div>
-        <div class="d-flex justify-content-center">
-          <img src="../../../assets/Mafia_Simple.png" />
-        </div>
-      </div>
-      <div
-        *ngIf="(this.player | async)!.role == 'doctorLekter'"
-        class="row mt-3"
-      >
-        <div class="d-flex justify-content-center" style="font-size: 20px">
-          دکتر لکتر مافیا
-        </div>
-        <div class="d-flex justify-content-center">
-          <img src="../../../assets/DoctorLekter.png" />
-        </div>
-      </div>
-      <div *ngIf="(this.player | async)!.role == 'godfather'" class="row mt-3">
-        <div class="d-flex justify-content-center" style="font-size: 20px">
-          پدرخوانده مافیا
-        </div>
-        <div class="d-flex justify-content-center">
-          <img src="../../../assets/GodFather.png" />
-        </div>
-      </div>
-      <div *ngIf="(this.player | async)!.role == 'medborgare'" class="row mt-3">
-        <div class="d-flex justify-content-center" style="font-size: 20px">
-          شهروند ساده
-        </div>
-        <div class="d-flex justify-content-center">
-          <img src="../../../assets/Medborgare.png" />
+          <img
+            [src]="'../../../assets/' + (this.player | async)!.role + '.png'"
+          />
         </div>
       </div>
     </div>
@@ -92,7 +37,7 @@
       <div *ngIf="selfRole == 'doctorLekter'" style="display: contents">
         <div
           *ngFor="let player of this.doctoLekterList"
-          (click)="selectPlayer(player)"
+          (click)="selectPlayerDocLek(player)"
           class="col-5 selectDiv text-center m-2 p-3"
           [ngClass]="{ select: !player.selected }"
         >
@@ -123,12 +68,11 @@
       </div>
       <div class="row justify-content-center">
         <button
+          translate="choosePlayer"
           [disabled]="!this.playerSelected"
-          class="btn m-3 btn-primary col-4"
+          class="btn m-3 btn-primary col-4 shadow-lg p-2 mb-5 rounded"
           (click)="sumbitSelect()"
-        >
-          انتخاب بازیکن
-        </button>
+        ></button>
       </div>
     </div>
   </div>
@@ -138,12 +82,11 @@
       style="width: 100vw; height: 100vh"
     >
       <div
+        translate="closeEyes"
         class="badge text-bg-danger p-3"
         dir="RTL"
         style="font-size: 18px; color: red"
-      >
-        چشمان خود را ببندید! خطر حذف شدن!
-      </div>
+      ></div>
       <img src="../../../assets/nolook.png" />
     </div>
   </div>
@@ -161,9 +104,14 @@
     <div
       class="circular_image d-flex flex-column justify-content-center align-items-center"
     >
-      <p class="redColor" style="font-size: 40px" *ngIf="this.isMafia">مافیا</p>
+      <p
+        class="redColor"
+        style="font-size: 40px"
+        *ngIf="this.isMafia"
+        translate="isMafia"
+      ></p>
       <img *ngIf="this.isMafia" class="" src="../../../assets/LikeBlack.png" />
-      <p class="greenColor" *ngIf="!this.isMafia">شهروند</p>
+      <p class="greenColor" *ngIf="!this.isMafia" translate="isMedborgare"></p>
       <img *ngIf="!this.isMafia" class="" src="../../../assets/DisLike.png" />
     </div>
   </div>
@@ -177,7 +125,7 @@
           class="fade-in-text d-flex justify-content-center"
           style="margin-left: 12px; margin-right: 12px"
         >
-          <p>روز شد. مافیا را پیدا کنید</p>
+          <div class="textDiv" translate="morning"></div>
         </div>
         <div class="d-flex justify-content-center">
           <app-sun></app-sun>
@@ -190,21 +138,23 @@
   </div>
 </div>
 <div *ngIf="this.isGameFinished">
-  <div>
-    <div><p>GAME OVER</p></div>
-    <div><p>برنده این بازی</p></div>
+  <div
+    class="d-flex flex-column justify-content-center align-items-center"
+    style="width: 100vw; height: 50vh"
+  >
+    <div><p class="animP">GAME OVER</p></div>
+    <div><p class="animP" translate="winnerIs"></p></div>
     <div>
-      <p>{{ winner }}</p>
+      <p class="animP">{{ winner }}</p>
     </div>
     <div class="row justify-content-center">
       <button
+        translate="startNewGame"
         type="button"
         (click)="redirectToStartPage()"
-        class="col-3 align-self-center btn btn-outline-danger btn-lg btn-block"
+        class="col-12 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg m-3 p-3 bg-white rounded"
         style="padding: 0; margin: 0px"
-      >
-        شروع یک بازی جدید
-      </button>
+      ></button>
     </div>
   </div>
 </div>
@@ -213,19 +163,20 @@
     class="d-flex flex-column justify-content-center align-items-center"
     style="width: 100vw; height: 50vh"
   >
-    <div dir="RTL" style="font-size: 33px; color: rgb(167, 0, 0)">
-      شما کشته شدید!
-    </div>
+    <div
+      dir="RTL"
+      style="font-size: 33px; color: rgb(167, 0, 0)"
+      translate="youareDead"
+    ></div>
     <img style="width: 100%" src="../../../assets/blood.png" />
   </div>
   <div class="row justify-content-center">
     <button
+      translate="startNewGame"
       type="button"
       (click)="redirectToStartPage()"
-      class="col-4 align-self-center btn btn-outline-danger btn-lg btn-block"
+      class="col-6 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg p-3 mb-5 bg-white rounded"
       style="padding: 0; margin: 0px"
-    >
-      شروع یک بازی جدید
-    </button>
+    ></button>
   </div>
 </div>

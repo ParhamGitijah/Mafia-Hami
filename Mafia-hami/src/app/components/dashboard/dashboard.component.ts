@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   gameId!: number;
   showRoles: boolean = false;
   game: Game = new Game();
-
+  hostId!: string;
   private sub: any;
   @ViewChild(SlideOutComponent) slideOutComponent:
     | SlideOutComponent
@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this.activeRoute.params.subscribe((params) => {
       this.gameId = +params['id']; // (+) converts string 'id' to a number
+      this.hostId = params['hostId']; // (+) converts string 'id' to a number
     });
 
     this.dbService.getPlayers(this.gameId).subscribe((x) => {
@@ -38,6 +39,10 @@ export class DashboardComponent implements OnInit {
     });
     this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
       this.game.gameOver = x.find((c: any) => c.key == 'gameOver').value;
+      this.game.hostId = x.find((c: any) => c.key == 'hostId').value;
+      if (this.game.hostId !== this.hostId) {
+        this.redirectToStartPage();
+      }
       this.game.numberGameSummaryLeft = x.find(
         (c: any) => c.key == 'numberGameSummaryLeft'
       ).value;
@@ -54,6 +59,11 @@ export class DashboardComponent implements OnInit {
 
   startNight() {
     this.dbService.updateNight(this.gameId, true);
+    this.dbService.updateGameSummary(
+      this.gameId,
+      false,
+      this.game.numberGameSummaryLeft
+    );
     this.slideOutComponent?.open();
   }
   killPlayer(player: Player) {

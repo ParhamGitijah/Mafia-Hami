@@ -3,10 +3,10 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col" class="text-center">حذف بازیکن</th>
-          <th scope="col" class="text-center">حالت بازی</th>
-          <th scope="col" class="text-center">نقش</th>
-          <th scope="col" class="text-center">بازیکنان</th>
+          <th scope="col" class="text-center" translate="kickPlayer"></th>
+          <th scope="col" class="text-center" translate="mode"></th>
+          <th scope="col" class="text-center" translate="role"></th>
+          <th scope="col" class="text-center" translate="players"></th>
         </tr>
       </thead>
       <tbody>
@@ -16,25 +16,24 @@
               [disabled]="!player.alive || this.game.gameOver"
               class="btn btn-danger"
               mwlConfirmationPopover
-              popoverTitle="آیا مطمعنی؟"
-              popoverMessage="آیا مطمعنی برای حذف بازیکن؟"
-              confirmText='حذف کن <i class="fas fa-times"></i>'
-              cancelText='خیر <i class="fas fa-check"></i>'
+              popoverTitle="{{ 'uSure' | translate }}"
+              popoverMessage="{{ 'uSureKick' | translate }}"
+              confirmText="{{ 'doKick' | translate }}"
+              cancelText="{{ 'no' | translate }}"
               placement="right"
               (confirm)="killPlayer(player)"
               confirmButtonType="danger"
               cancelButtonType="outline-secondary"
-            >
-              حذف
-            </button>
+              translate="kick"
+            ></button>
           </td>
           <td class="text-center" style="color: white; vertical-align: middle">
             <div [ngClass]="{ alive: player.alive, dead: !player.alive }">
-              {{ player.alive ? "زنده" : "کشته شد" }}
+              {{ player.alive ? ("alive" | translate) : ("dead" | translate) }}
             </div>
           </td>
           <td class="text-center" style="vertical-align: middle">
-            {{ this.showRoles == true ? player.role : "***" }}
+            {{ this.showRoles == true ? (player.role | translate) : "***" }}
           </td>
           <td class="text-center" style="vertical-align: middle" scope="row">
             {{ player.name }}
@@ -52,16 +51,17 @@
       (click)="showRoles = !showRoles"
     >
       {{
-        showRoles == true ? "مخفی کردن نقش بازیکنان" : "نشان دادن نقش بازیکنان"
+        showRoles == true
+          ? ("hideRoles" | translate)
+          : ("showRoles" | translate)
       }}
     </button>
     <button
+      translate="startNight"
       [disabled]="this.game.gameOver"
-      class="col-12 btn btn-primary"
+      class="col-12 btn btn-primary shadow-lg rounded"
       (click)="startNight()"
-    >
-      شب شود
-    </button>
+    ></button>
   </div>
 </div>
 <app-slide-out
@@ -75,35 +75,34 @@
 <div *ngIf="this.game.gameOver">
   <div>
     <div><p>GAME OVER</p></div>
-    <div><p>برنده این بازی</p></div>
+    <div><p translate="winnerIs"></p></div>
     <div>
       <p>{{ this.game.winner }}</p>
     </div>
     <div class="row justify-content-center">
       <button
+        translate="startNewGame"
         type="button"
         (click)="redirectToStartPage()"
-        class="col-3 align-self-center btn btn-outline-danger btn-lg btn-block"
+        class="col-6 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg rounded"
         style="padding: 0; margin: 0px"
-      >
-        شروع یک بازی جدید
-      </button>
+      ></button>
     </div>
   </div>
 </div>
-<div *ngIf="game.gameSummury">
+<div class="m-3" *ngIf="game.gameSummury">
   <div class="d-flex justify-content-center">
     <img style="width: 80%" src="../../../assets/rapport.png" />
   </div>
   <div dir="RTL">
-    <div style="font-size: 34px">استعلام بازی</div>
+    <div style="font-size: 34px" translate="gameRapport"></div>
 
     <div class="container p-3">
       <div class="row">
         <div class="col-12" *ngFor="let player of this.playerList">
           <div *ngIf="!player.alive">
             <div class="p-3 m-2" style="border: 1px solid black">
-              از بازی ما یک {{ player.role }} .بیرون است
+              از بازی ما یک {{ player.role | translate }} بیرون است
             </div>
           </div>
         </div>

@@ -18,12 +18,14 @@ export class InitDashboardComponent implements OnInit {
   private sub: any;
   newGameStart: boolean = false;
   isUserHost: boolean = false;
+  hostId!: string;
   playerId!: string;
   player!: Player;
   showPlayerRole: boolean = false;
   gameStarted: boolean = true;
   timeLeft: number = 6;
   interval: any;
+
   constructor(
     private dbService: DBService,
     private activeRoute: ActivatedRoute,
@@ -50,10 +52,13 @@ export class InitDashboardComponent implements OnInit {
 
     this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
       //Is Game started?
+      if (x.length == 0) {
+        this.router.navigate(['']);
+      }
       this.gameStarted = x.find((c: any) => c.key == 'gameStarted').value;
       if (this.gameStarted) {
         if (this.isUserHost) {
-          this.router.navigate(['dashboard', this.gameId]);
+          this.router.navigate(['dashboard', this.gameId, this.hostId]);
         } else {
           var promise = new Promise((resolve) => {
             this.interval = setInterval(() => {
@@ -66,7 +71,7 @@ export class InitDashboardComponent implements OnInit {
 
             setTimeout(() => {
               resolve(this.showPlayerRole);
-            }, 10000);
+            }, 13000);
           });
           promise.then((x) => {
             this.router.navigate([
@@ -82,7 +87,8 @@ export class InitDashboardComponent implements OnInit {
   createNewGame() {
     this.newGameStart = true;
     this.isUserHost = true;
-    this.gameId = this.dbService.initGame();
+    this.hostId = crypto.randomUUID();
+    this.gameId = this.dbService.initGame(this.hostId);
 
     for (let index = 0; index < 6; index++) {
       var player = new Player();

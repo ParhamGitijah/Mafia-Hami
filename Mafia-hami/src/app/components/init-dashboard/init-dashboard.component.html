@@ -1,188 +1,129 @@
 <div
-  *ngIf="!this.showPlayerRole && !gameStarted"
-  class="container"
-  style="background-color: orange"
+  *ngIf="!this.gameStarted"
+  dir="rtl"
+  style="
+    position: absolute;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    top: 35%;
+    left: 0;
+    right: 0;
+    text-align: center;
+  "
+  [ngClass]="{ playerJoined: this.playerList.length > 0 }"
 >
   <div
-    *ngIf="!this.playerList || this.newGameStart"
-    class="row align-items-center justify-content-center"
-    style="height: 100vh; width: 100vw"
+    class="align-items-center justify-content-center"
+    style="background-color: green; color: aliceblue; border-radius: 25px"
   >
-    <div
-      class="d-flex align-items-center justify-content-center"
-      style="
-        height: 100px;
-        width: 75%;
-        background-color: green;
-        color: aliceblue;
-        border-radius: 25px;
-      "
-    >
-      <div class="row text-center">
-        <div>Ask other to join with your game ID:</div>
-        <div style="font-weight: bold; font-size: 20px">{{ this.gameId }}</div>
-      </div>
+    <div class="row text-center">
+      <div translate="askJoinGameId"></div>
+      <div style="font-weight: bold; font-size: 20px">{{ this.gameId }}</div>
     </div>
   </div>
+</div>
 
+<div
+  *ngIf="!this.gameStarted"
+  dir="rtl"
+  style="
+    position: absolute;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    top: 15%;
+    left: 0;
+    right: 0;
+    text-align: center;
+  "
+>
   <div *ngIf="!this.newGameStart">
     <div
-      class="d-flex m-3 align-items-center justify-content-center"
+      class="mt-3 row d-flex align-items-center justify-content-center"
       style="
-        height: auto;
-        width: auto;
-        background-color: green;
-        color: aliceblue;
-        border-radius: 25px;
-      "
-    >
-      <div class="row text-center">
-        <div>Ask other to join with your game ID:</div>
-        <div style="font-weight: bold; font-size: 20px">{{ this.gameId }}</div>
-      </div>
-    </div>
-    <div
-      class="col-4 m-3 p-2"
-      style="background-color: grey; color: aliceblue; border-radius: 25px"
-    >
-      Player joined:
-    </div>
-    <div
-      class="d-flex m-3 align-items-center justify-content-center"
-      style="
-        height: auto;
-        width: auto;
-        background-color: green;
-        color: aliceblue;
-        border-radius: 25px;
+        border-radius: 15px;
+        background-color: rgb(0, 139, 177);
+        color: white;
+        font-size: 16px;
+        width: 75%;
+        font-weight: bold;
+        height: 50px;
+        margin-left: auto;
+        margin-right: auto;
       "
       *ngFor="let item of this.playerList"
     >
       {{ item.name }}
     </div>
-    <div
-      *ngIf="!isUserHost"
-      class="d-flex m-3 align-items-center justify-content-center"
-      style="
-        height: 100px;
-        width: auto;
-        background-color: black;
-        color: aliceblue;
-        border-radius: 25px;
-      "
-    >
-      Waiting for host to start the game
-    </div>
-    <div
-      *ngIf="isUserHost"
-      class="row align-items-center justify-content-center"
-    >
-      <div
-        *ngIf="this.playerList.length < 6"
-        style="height: auto; width: auto; margin-bottom: 12px; color: white"
-      >
-        حداقل تعداد بازیکنان برای شروع بازی 6 نفر است
-      </div>
-      <button
-        [disabled]="this.playerList.length < 6"
-        class="btn btn-primary"
-        style="height: auto; width: auto"
-        (click)="startTheGame(playerList)"
-      >
-        پخش شانسی کارت ها
-      </button>
-    </div>
   </div>
-
-  <button
-    (click)="playerExit()"
-    class="btn btn-danger"
-    style="position: fixed; right: 10%; top: 90%"
+  <div
+    *ngIf="!isUserHost"
+    class="d-flex m-1 align-items-center justify-content-center"
+    style="color: rgb(0, 0, 0); font-size: 22px; font-weight: bold"
+    translate="waitingForHost"
+  ></div>
+  <div
+    *ngIf="isUserHost && this.playerList.length > 0"
+    class="row align-items-center justify-content-center"
   >
-    خروج
-  </button>
+    <div
+      class="d-flex align-items-center justify-content-center m-3"
+      *ngIf="this.playerList.length < 6"
+      style="color: rgb(0, 0, 0)"
+      translate="minPlayersReq"
+    ></div>
+    <button
+      [disabled]="this.playerList.length < 6"
+      class="btn btn-primary m-3"
+      style="
+        width: 45%;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+      "
+      (click)="startTheGame(playerList)"
+      translate="dealRolesSlump"
+    ></button>
+  </div>
 </div>
+
+<button
+  *ngIf="!this.gameStarted"
+  (click)="playerExit()"
+  class="btn btn-danger"
+  style="
+    position: absolute;
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    top: 85%;
+    left: 0;
+    right: 0;
+    text-align: center;
+  "
+  translate="exit"
+></button>
+
 <div
   *ngIf="!this.showPlayerRole && this.gameStarted"
   class="d-flex flex-column justify-content-center align-items-center"
   style="height: 100vh; font-size: 25px"
 >
-  <div>نقش شما بزودی نمایش داده میشود</div>
+  <div translate="yourRoleWillShow"></div>
   <div style="font-weight: bold">
     {{ timeLeft }}
   </div>
 </div>
 <div *ngIf="this.showPlayerRole" class="anim d-flex justify-content-center">
   <div class="cardRole row mt-3">
-    <p class="d-flex justify-content-center mt-5">کاراگاه</p>
+    <p class="d-flex justify-content-center mt-5">
+      {{ player.role | translate }}
+    </p>
     <div class="d-flex justify-content-center">
-      <img src="../../../assets/FindMafia.png" />
-    </div>
-  </div>
-</div>
-<div *ngIf="this.showPlayerRole" class="d-flex justify-content-center">
-  <div *ngIf="this.player.role == 'detectiv'" class="row mt-3">
-    <div class="d-flex justify-content-center" style="font-size: 20px">
-      کاراگاه
-    </div>
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/FindMafia.png" />
-    </div>
-  </div>
-  <div *ngIf="this.player.role == 'doctor'" class="row mt-3">
-    <div class="d-flex justify-content-center" style="font-size: 20px">
-      دکتر شهر
-    </div>
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/doctor.png" />
-    </div>
-  </div>
-  <div *ngIf="this.player.role == 'diehard'" class="row mt-3">
-    <div class="d-flex justify-content-center" style="font-size: 20px">
-      جان سخت
-    </div>
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/diehard.png" />
-    </div>
-  </div>
-  <div *ngIf="this.player.role == 'sniper'" class="row mt-3">
-    <div class="d-flex justify-content-center" style="font-size: 20px">
-      تک تیرنداز
-    </div>
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/Sniper.png" />
-    </div>
-  </div>
-  <div *ngIf="this.player.role == 'mafia'" class="row mt-3">
-    <div class="d-flex justify-content-center" style="font-size: 20px">
-      مافیا ساده
-    </div>
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/Mafia_Simple.png" />
-    </div>
-  </div>
-  <div *ngIf="this.player.role == 'doctorLekter'" class="row mt-3">
-    <div class="d-flex justify-content-center" style="font-size: 20px">
-      دکتر لکتر مافیا
-    </div>
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/DoctorLekter.png" />
-    </div>
-  </div>
-  <div *ngIf="this.player.role == 'godfather'" class="row mt-3">
-    <div class="d-flex justify-content-center" style="font-size: 20px">
-      پدرخوانده مافیا
-    </div>
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/GodFather.png" />
-    </div>
-  </div>
-  <div *ngIf="this.player.role == 'medborgare'" class="row mt-3">
-    <div class="d-flex justify-content-center" style="font-size: 20px">
-      شهروند ساده
-    </div>
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/Medborgare.png" />
+      <img [src]="'../../../assets/' + player.role + '.png'" />
     </div>
   </div>
 </div>

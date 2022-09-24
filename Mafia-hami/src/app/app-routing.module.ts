@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'init-dashboard', component: InitDashboardComponent },
   { path: 'init-dashboard/:id/:playerId', component: InitDashboardComponent },
-  { path: 'dashboard/:id', component: DashboardComponent },
+  { path: 'dashboard/:id/:hostId', component: DashboardComponent },
   {
     path: 'player-dashboard/:id/:playerId',
     component: PlayerDashboardComponent,

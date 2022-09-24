@@ -1,173 +1,180 @@
 .fade-in-text {
-    font-family: Arial;
-    font-size: 60px;
-    animation: fadeIn 5s;
-    -webkit-animation: fadeIn 5s;
-    -moz-animation: fadeIn 5s;
-    -o-animation: fadeIn 5s;
-    -ms-animation: fadeIn 5s;
+  font-family: Arial;
+  font-size: 60px;
+  animation: fadeIn 5s;
+  -webkit-animation: fadeIn 5s;
+  -moz-animation: fadeIn 5s;
+  -o-animation: fadeIn 5s;
+  -ms-animation: fadeIn 5s;
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-moz-keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-o-keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-ms-keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
-
-
 img {
-    max-width: 50%;
-    height: auto;
+  max-width: 50%;
+  height: auto;
 }
 
 .container {
-    display: flexbox;
-    justify-content: center;
-    overflow: hidden;
-    padding-right: 0px;
+  display: flexbox;
+  justify-content: center;
+  overflow: hidden;
+  padding-right: 0px;
 }
 
-.selectDiv{
-    position: relative;
-    background-color: #0d6efd;
-    border-radius: 15px;
-    z-index: 1;
-    color: white;
+.selectDiv {
+  position: relative;
+  background-color: #0d6efd;
+  border-radius: 15px;
+  z-index: 1;
+  color: white;
 }
 
 // .selectDiv:focus{
 //     color: white;
 //     background-color: rgb(235, 148, 8);
 // }
- .select {
-        color: white;
-        background-color: rgb(105, 107, 104);
-    }
+.select {
+  color: white;
+  background-color: rgb(105, 107, 104);
+}
 
-
-    .circular_image {
-     
+.circular_image {
   width: 400px;
   height: 400px;
   border-radius: 50%;
   overflow: hidden;
   background-color: rgb(211, 211, 211);
 
-  display:inline-block;
-  vertical-align:middle;
+  display: inline-block;
+  vertical-align: middle;
 }
-.circular_image img{
-  width:100%;
+.circular_image img {
+  width: 100%;
 }
 .circular_image p {
-    font-size: 31px;
+  font-size: 31px;
 }
 
-.greenColor{
-    color: green;
+.greenColor {
+  color: green;
 }
 
-.redColor{
-    color: red;
+.redColor {
+  color: red;
 }
 
 @mixin anim($name, $dur, $iterate) {
-    animation-name: $name;
-    animation-duration: $dur;
-    animation-iteration-count: $iterate;
+  animation-name: $name;
+  animation-duration: $dur;
+  animation-iteration-count: $iterate;
 }
 
+.textDiv {
+  font-family: "VT323";
+  font-size: 40px;
+  text-align: center;
+}
 
-p {
-    font-family: 'VT323', ;
-    font-size: 3em;
-    text-align: center;
-    @include anim(example, 1s, infinite);
+@mixin anim($name, $dur, $iterate) {
+  animation-name: $name;
+  animation-duration: $dur;
+  animation-iteration-count: $iterate;
+}
+
+.animP {
+  font-family: "VT323";
+  font-size: 3em;
+  text-align: center;
+  @include anim(example, 1s, infinite);
 }
 
 @keyframes example {
-    0% {
-        color: lime;
-        text-shadow: 0 0 20px green
-    }
+  0% {
+    color: lime;
+    text-shadow: 0 0 20px green;
+  }
 
-    25% {
-        color: green;
-        text-shadow: 2px 2px 2px lime;
-        transform: translate(-2px, 1px)
-    }
+  25% {
+    color: green;
+    text-shadow: 2px 2px 2px lime;
+    transform: translate(-2px, 1px);
+  }
 
-    40% {
-        color: lime;
-        text-shadow: none;
-        transform: translate(0, 0)
-    }
+  40% {
+    color: lime;
+    text-shadow: none;
+    transform: translate(0, 0);
+  }
 
-    50% {
-        color: green;
-        text-shadow: 5px 5px 2px blue, -5px -5px 2px red;
-        transform: translate(0px, 5px)
-    }
+  50% {
+    color: green;
+    text-shadow: 5px 5px 2px blue, -5px -5px 2px red;
+    transform: translate(0px, 5px);
+  }
 
-    70% {
-        color: lime;
-        text-shadow: none;
-        transform: translate(0, 0)
-    }
+  70% {
+    color: lime;
+    text-shadow: none;
+    transform: translate(0, 0);
+  }
 
-    80% {
-        color: lime;
-        text-shadow: 0 0 20px green;
-        transform: translate(-2px, 1px)
-    }
+  80% {
+    color: lime;
+    text-shadow: 0 0 20px green;
+    transform: translate(-2px, 1px);
+  }
 
-    100% {
-        color: lime;
-        text-shadow: none;
-    }
+  100% {
+    color: lime;
+    text-shadow: none;
+  }
 }

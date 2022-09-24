@@ -47,7 +47,7 @@ export class DBService {
     this.db.list(`game/${gameId}/players`).remove(key);
   }
 
-  initGame() {
+  initGame(hostId: any) {
     var val = Math.floor(1000 + Math.random() * 9000);
     const itemsRef = this.db.list('game');
     itemsRef.set(val.toString(), {
@@ -58,6 +58,7 @@ export class DBService {
       winner: '',
       nightStarted: false,
       numberGameSummaryLeft: 2,
+      hostId: hostId,
     });
     return val;
   }
@@ -81,7 +82,6 @@ export class DBService {
     const itemsRef = this.db.list(`game/`);
     itemsRef.update(gameId.toString(), {
       nightStarted: night,
-      gameSummury: false,
     });
   }
   updatePlayerRole(gameId: any, playerKey: any, playerRole: Role) {

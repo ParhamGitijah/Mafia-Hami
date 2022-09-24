@@ -9,4 +9,5 @@ export class Game {
   winner!: string;
   nightStarted!: boolean;
   numberGameSummaryLeft!: number;
+  hostId!: string;
 }

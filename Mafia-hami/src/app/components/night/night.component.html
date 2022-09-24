@@ -1,17 +1,18 @@
 <div style="overflow: scroll; height: 100vh">
   <div
+    translate="cityGroup"
     dir="RTL"
-    class="d-flex justify-content-start align-items-center mb-3 p-3"
+    class="d-flex justify-content-center align-items-center mb-3 p-3"
     style="
       border: 1px solid grey;
       height: 35px;
-      background-color: gray;
+      background-color: rgb(61, 159, 0);
       border-radius: 4px;
       color: whitesmoke;
+      font-size: 18px;
+      font-weight: bold;
     "
-  >
-    شهر
-  </div>
+  ></div>
   <ol dir="RTL" class="list-group list-group m-0 p-0">
     <li
       *ngFor="let player of playerList | city"
@@ -19,27 +20,33 @@
     >
       <div class="p-0 m-0">
         <div class="fw-bold" style="font-size: 16px">
-          {{ player.role }} شهر بیدار شود
+          {{ player.role | translate }} {{ "cityWakeUp" | translate }}
         </div>
         <div>
-          اسم بازیکن:
-          <span [ngClass]="{ deadText: player.alive == false }">{{
-            player.name
-          }}</span>
-          <span class="deadText" *ngIf="player.alive == false"> کشته شده</span>
+          {{ "playerName" | translate }}
+          <span style="font-weight: bold">{{ player.name }}</span>
+          <span
+            class="deadText"
+            *ngIf="player.alive == false"
+            translate="dead"
+          ></span>
         </div>
       </div>
       <div
-        *ngIf="!player.turn && !player.hasSelect && player.role !== 'diehard'"
+        *ngIf="
+          !player.turn &&
+          !player.hasSelect &&
+          player.role !== 'diehard' &&
+          player.role !== 'sniper'
+        "
         style="position: absolute; left: 5%"
       >
         <button
           *ngIf="player.alive"
           (click)="startPlayerTurn(player)"
           class="btn btn-primary"
-        >
-          بیدار کن
-        </button>
+          translate="wakeUpp"
+        ></button>
       </div>
       <div
         *ngIf="!player.turn && !player.hasSelect && player.role == 'diehard'"
@@ -49,19 +56,39 @@
           *ngIf="player.alive && gameSummaryLeft > 0"
           (click)="updateGameStatus(player, true)"
           class="btn btn-success m-3"
-        >
-          استعلام
-        </button>
+          translate="utdrag"
+        ></button>
         <button
           *ngIf="player.alive && gameSummaryLeft > 0"
           (click)="noSelect(player)"
           class="btn btn-secondary"
-        >
-          خیر
-        </button>
-        <div *ngIf="player.alive && gameSummaryLeft <= 0">
-          هیچ استعلامی نمانده
-        </div>
+          translate="no"
+        ></button>
+        <div
+          *ngIf="player.alive && gameSummaryLeft <= 0"
+          translate="noUtdragLeft"
+        ></div>
+      </div>
+      <div
+        *ngIf="!player.turn && !player.hasSelect && player.role == 'sniper'"
+        style="position: absolute; left: 5%"
+      >
+        <button
+          *ngIf="player.alive && gameSummaryLeft > 0"
+          (click)="startPlayerTurn(player)"
+          class="btn btn-success m-3"
+          translate="shoot"
+        ></button>
+        <button
+          *ngIf="player.alive && gameSummaryLeft > 0"
+          (click)="noSelect(player)"
+          class="btn btn-secondary"
+          translate="no"
+        ></button>
+        <div
+          *ngIf="player.alive && gameSummaryLeft <= 0"
+          translate="noUtdragLeft"
+        ></div>
       </div>
       <div
         *ngIf="player.turn && !player.hasSelect && player.alive"
@@ -88,17 +115,18 @@
   </ol>
   <div
     dir="RTL"
-    class="d-flex justify-content-start align-items-center mt-3 p-3"
+    class="d-flex justify-content-center align-items-center mt-3 p-3"
     style="
-      border: 1px solid grey;
+      border: 1px solid gray(147, 0, 0);
       height: 35px;
-      background-color: gray;
+      background-color: rgb(159, 0, 0);
       border-radius: 4px;
-      color: whitesmoke;
+      color: rgb(255, 255, 255);
+      font-family: bold;
+      font-size: 22px;
     "
-  >
-    مافیا بیدار شوند!
-  </div>
+    translate="wakeUppMafia"
+  ></div>
   <ol dir="RTL" class="list-group list-group m-0 p-0">
     <li
       *ngFor="let player of playerList | mafia"
@@ -106,14 +134,16 @@
     >
       <div class="p-0 m-0">
         <div class="fw-bold" style="font-size: 16px">
-          {{ player.role }} انتخاب کن
+          {{ player.role | translate }} {{ "choose" | translate }}
         </div>
         <div>
-          اسم بازیکن:
-          <span [ngClass]="{ deadText: player.alive == false }">{{
-            player.name
-          }}</span>
-          <span class="deadText" *ngIf="player.alive == false"> کشته شده</span>
+          {{ "playerName" | translate }}
+          <span style="font-weight: bold">{{ player.name }}</span>
+          <span
+            class="deadText"
+            *ngIf="player.alive == false"
+            translate="dead"
+          ></span>
         </div>
       </div>
       <div
