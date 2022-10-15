@@ -30,6 +30,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4',
@@ -80,6 +81,12 @@ export const firebaseConfig = {
     NgbModule,
     ConfirmationPopoverModule.forRoot({
       focusButton: 'confirm',
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
   providers: [],
