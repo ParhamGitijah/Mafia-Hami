@@ -32,7 +32,7 @@ export class PlayerDashboardComponent implements OnInit {
   isGameFinished!: boolean;
   turn: boolean = false;
   doctoLekterList!: Array<Player>;
-  selfRole!: string;
+  selfRole: string | undefined ;
   winner!: string;
   dir!: string;
   ngOnInit(): void {

@@ -9,9 +9,9 @@
           >
             {{ (this.player | async)!.role | translate }}
           </div>
-          <div class="d-flex justify-content-center">
+          <div *ngIf="selfRole" class="d-flex justify-content-center">
             <img
-              [src]="'../../../assets/' + (this.player | async)!.role + '.png'"
+              [src]="'../../../assets/' + selfRole + '.png'"
             />
           </div>
         </div>
