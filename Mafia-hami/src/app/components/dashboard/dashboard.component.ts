@@ -1,9 +1,10 @@
+import { NightraportComponent } from './../slide-out/night-raport/nightraport/nightraport.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DBService } from './../../db.service';
 import { Component, OnInit, TrackByFunction, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/model/player';
-import { SlideOutComponent } from '../slide-out/slide-out.component';
+import { SlideOutComponent } from '../slide-out/night/slide-out.component';
 import { Game } from 'src/app/model/game';
 
 @Component({
@@ -22,6 +23,10 @@ export class DashboardComponent implements OnInit {
   dir!: string;
   @ViewChild(SlideOutComponent) slideOutComponent:
     | SlideOutComponent
+    | undefined;
+
+  @ViewChild(NightraportComponent) nightRaportComponent:
+    | NightraportComponent
     | undefined;
   playerList: Array<Player> = new Array<Player>();
   constructor(
@@ -59,7 +64,6 @@ export class DashboardComponent implements OnInit {
       if (this.game.gameOver) {
         this.game.winner = x.find((c: any) => c.key == 'winner').value;
       }
-      console.log(this.game.winner);
     });
   }
   ngOnDestroy() {
@@ -73,7 +77,12 @@ export class DashboardComponent implements OnInit {
       false,
       this.game.numberGameSummaryLeft
     );
+    this.dbService.createNewNight(this.gameId);
     this.slideOutComponent?.open();
+  }
+
+  showNightsRaport() {
+    this.nightRaportComponent?.open(this.gameId.toString());
   }
   killPlayer(player: Player) {
     player.alive = false;

@@ -27,6 +27,7 @@ export class InitDashboardComponent implements OnInit {
   timeLeft: number = 6;
   interval: any;
   dir!: string;
+  yourMatesMafia: Array<Player> = new Array<Player>();
   constructor(
     private dbService: DBService,
     private activeRoute: ActivatedRoute,
@@ -67,6 +68,14 @@ export class InitDashboardComponent implements OnInit {
         if (this.isUserHost) {
           this.router.navigate(['dashboard', this.gameId, this.hostId]);
         } else {
+          this.dbService.getPlayers(this.gameId).subscribe((x) => {
+            this.playerList = x;
+            this.playerList.forEach((player) => {
+              if (player.mafia && player.id != this.player.id) {
+                this.yourMatesMafia.push(player);
+              }
+            });
+          });
           var promise = new Promise((resolve) => {
             this.interval = setInterval(() => {
               if (this.timeLeft > 0) {
@@ -78,7 +87,7 @@ export class InitDashboardComponent implements OnInit {
 
             setTimeout(() => {
               resolve(this.showPlayerRole);
-            }, 13000);
+            }, 15000);
           });
           promise.then((x) => {
             this.router.navigate([

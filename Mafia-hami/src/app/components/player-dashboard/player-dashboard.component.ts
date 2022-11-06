@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
+import { interval, Observable, of, startWith, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/model/player';
 import { Component, OnInit } from '@angular/core';
@@ -24,7 +24,7 @@ export class PlayerDashboardComponent implements OnInit {
   playerList: Array<Player> = new Array();
   playerId!: string;
   isMafia: boolean | undefined;
-  playerSelected!: Player;
+  playerSelected: Player | undefined;
   player: Observable<Player> = new Observable<Player>();
   playerAlive: boolean = true;
   gameId!: number;
@@ -32,7 +32,7 @@ export class PlayerDashboardComponent implements OnInit {
   isGameFinished!: boolean;
   turn: boolean = false;
   doctoLekterList!: Array<Player>;
-  selfRole: string | undefined ;
+  selfRole: string | undefined;
   winner!: string;
   dir!: string;
   ngOnInit(): void {
@@ -41,39 +41,45 @@ export class PlayerDashboardComponent implements OnInit {
     } else {
       this.dir = 'ltr';
     }
-    this.activeRoute.params.subscribe((params) => {
-      this.gameId = +params['id']; // (+) converts string 'id' to a number
-      this.playerId = params['playerId'];
-    });
-
-    this.dbService.getPlayers(this.gameId).subscribe((x: Player[]) => {
-      let player = x.find((x) => x.id == this.playerId);
-      if (player) {
-        if (player.role == 'doctor' && !player.selfsaved) {
-          this.playerList = x.filter((x) => x.alive == true);
-        } else {
-          this.playerList = x.filter(
-            (x) => x.alive == true && x.id != this.playerId
-          );
-        }
-
-        this.doctoLekterList = x.filter(
-          (x) => x.alive == true && x.mafia && !x.selfsaved
-        );
-
-        this.playerAlive = player.alive;
-        this.selfRole = player.role;
-        this.turn = player.turn;
-        this.player = of(player);
-      }
-    });
-    this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
-      if (x.length !== 0) {
-        this.isNight = x.find((c: any) => c.key == 'nightStarted').value;
-        this.isGameFinished = x.find((c: any) => c.key == 'gameOver').value;
-        this.winner = x.find((c: any) => c.key == 'winner').value;
-      }
-    });
+    interval(5000)
+      .pipe(
+        startWith(0),
+        switchMap(() => this.activeRoute.params)
+      )
+      .subscribe((params) => {
+        this.gameId = +params['id']; // (+) converts string 'id' to a number
+        this.playerId = params['playerId'];
+        this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
+          if (this.playerSelected === undefined) {
+            if (x.length !== 0) {
+              this.isNight = x.find((c: any) => c.key == 'nightStarted').value;
+              this.isGameFinished = x.find(
+                (c: any) => c.key == 'gameOver'
+              ).value;
+              this.winner = x.find((c: any) => c.key == 'winner').value;
+            }
+            this.dbService.getPlayers(this.gameId).subscribe((x: Player[]) => {
+              let player = x.find((x) => x.id == this.playerId);
+              if (player) {
+                if (player.role == 'doctor' && !player.selfsaved) {
+                  this.playerList = x.filter((x) => x.alive == true);
+                } else {
+                  this.playerList = x.filter(
+                    (x) => x.alive == true && x.id != this.playerId
+                  );
+                }
+                this.doctoLekterList = x.filter(
+                  (x) => x.alive == true && x.mafia && !x.selfsaved
+                );
+                this.playerAlive = player.alive;
+                this.selfRole = player.role;
+                this.turn = player.turn;
+                this.player = of(player);
+              }
+            });
+          }
+        });
+      });
   }
 
   selectPlayer(player: Player) {
@@ -102,7 +108,7 @@ export class PlayerDashboardComponent implements OnInit {
     this.player.subscribe((player) => {
       this.isMafia = this.repo.submitSelect({
         player,
-        selectedPlayer: this.playerSelected,
+        selectedPlayer: this.playerSelected!,
         gameId: this.gameId,
       });
       if (this.isMafia != undefined) {
@@ -119,6 +125,7 @@ export class PlayerDashboardComponent implements OnInit {
           }, timer);
         });
       }
+      this.playerSelected = undefined;
     });
   }
   redirectToStartPage() {

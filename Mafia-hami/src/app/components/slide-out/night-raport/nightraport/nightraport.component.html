@@ -1,0 +1,48 @@
+<ng-template #nightraport let-offcanvas style="position: buttom">
+  <div [dir]="this.dir" style="overflow: scroll">
+    <button
+      class="btn btn-primary"
+      style="position: absolute; top: 12px; left: 12px"
+      translate="close"
+      (click)="closeCanvas()"
+    ></button>
+    <div class="offcanvas-header d-flex justify-content-center mt-3">
+      <p
+        class="offcanvas-title"
+        style="font-size: 20px; font-weight: bold"
+        translate="nightraports"
+      ></p>
+    </div>
+    <div class="offcanvas-body">
+      <div *ngFor="let night of sortArray(nightList); let i = index">
+        <p translate="{{ stringName(i) }}" style="font-weight: bold"></p>
+        <table class="table mb-5">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center" translate="players"></th>
+              <th scope="col" class="text-center" translate="role"></th>
+              <th
+                scope="col"
+                class="text-center"
+                translate="selectedplayer"
+              ></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let action of night!.actions">
+              <td class="text-center" style="vertical-align: middle">
+                {{ action.player.name }}
+              </td>
+              <td class="text-center" style="vertical-align: middle">
+                {{ action.player.role }}
+              </td>
+              <td class="text-center" style="vertical-align: middle">
+                {{ action.selected }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-template>

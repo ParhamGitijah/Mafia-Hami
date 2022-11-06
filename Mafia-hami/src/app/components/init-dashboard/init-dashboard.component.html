@@ -15,7 +15,13 @@
   >
     <div
       class="align-items-center justify-content-center"
-      style="background-color: green; color: aliceblue; border-radius: 25px"
+      style="
+        position: relative;
+        background-color: green;
+        color: aliceblue;
+        border-radius: 25px;
+        z-index: 999;
+      "
     >
       <div class="row text-center">
         <div translate="askJoinGameId"></div>
@@ -125,20 +131,27 @@
         <img [src]="'../../../assets/' + player.role + '.png'" />
       </div>
     </div>
-    <div class="tableClass">
+    <div class="tableClass" *ngIf="this.player.mafia == true">
       <table class="table table-striped">
         <thead>
+          <tr
+            scope="row"
+            class="text-center"
+            style="font-weight: bold; font-size: large"
+            translate="yourmates"
+          ></tr>
           <tr>
-            <th scope="col" class="text-center"> یاران شما:</th>
+            <th scope="col" class="text-center">نام</th>
+            <th scope="col" class="text-center">نقش</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-center" style="vertical-align: middle">
-              
-            </td>
+          <tr *ngFor="let player of this.yourMatesMafia">
             <td class="text-center" style="vertical-align: middle" scope="row">
-             
+              {{ player.name }}
+            </td>
+            <td class="text-center" style="vertical-align: middle">
+              {{ player.role | translate }}
             </td>
           </tr>
         </tbody>

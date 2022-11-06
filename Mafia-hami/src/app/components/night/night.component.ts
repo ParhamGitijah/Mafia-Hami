@@ -83,16 +83,16 @@ export class NightComponent implements OnInit {
       this.playerList.filter((x) => x.alive && x.mafia).length >=
       this.playerList.filter((x) => x.alive && !x.mafia).length
     ) {
-      this.dBService.endGame(this.gameId, 'مافیا');
+      this.dBService.endGame(this.gameId, 'isMafia');
     }
     if (this.playerList.filter((x) => x.alive && x.mafia).length <= 0) {
-      this.dBService.endGame(this.gameId, 'شهروندان');
+      this.dBService.endGame(this.gameId, 'isMedborgare');
     }
   }
 
   startPlayerTurn(player: Player) {
     player.turn = true;
-    console.log('!');
+
     this.dBService.updatePlayer(this.gameId, player);
   }
   updateGameStatus(player: Player, gameSummury: boolean) {

@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { SlideOutComponent } from './../components/slide-out/slide-out.component';
+import { SlideOutComponent } from './../components/slide-out/night/slide-out.component';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 
 import { DBService } from '../db.service';

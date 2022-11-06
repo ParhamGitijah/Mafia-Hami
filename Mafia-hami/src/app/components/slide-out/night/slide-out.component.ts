@@ -18,7 +18,7 @@ export class SlideOutComponent implements AfterViewInit {
   @Input() gameId: any;
   @ViewChild('content') elementRef: ElementRef | undefined;
   @Input() gameSummaryLeft!: number;
-  dir!: string;
+  dir: string = 'rtl';
   audio = new Audio();
 
   constructor(

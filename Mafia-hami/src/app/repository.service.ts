@@ -29,7 +29,7 @@ export class RepositoryService {
     player.turn = false;
     player.hasSelect = true;
     this.dbService.updatePlayer(gameId, player);
-
+    this.dbService.storeActionAtNight(gameId, player, selectedPlayer.name);
     //doctor
     if (player.role == 'doctor') {
       if (selectedPlayer.mafia == false) {

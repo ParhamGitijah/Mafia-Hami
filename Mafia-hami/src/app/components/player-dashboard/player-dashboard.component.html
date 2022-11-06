@@ -10,9 +10,7 @@
             {{ (this.player | async)!.role | translate }}
           </div>
           <div *ngIf="selfRole" class="d-flex justify-content-center">
-            <img
-              [src]="'../../../assets/' + selfRole + '.png'"
-            />
+            <img [src]="'../../../assets/' + selfRole + '.png'" />
           </div>
         </div>
       </div>
@@ -156,7 +154,7 @@
       <div><p class="animP">GAME OVER</p></div>
       <div><p class="animP" translate="winnerIs"></p></div>
       <div>
-        <p class="animP">{{ winner }}</p>
+        <p class="animP" translate="{{ winner }}"></p>
       </div>
       <div class="row justify-content-center">
         <button

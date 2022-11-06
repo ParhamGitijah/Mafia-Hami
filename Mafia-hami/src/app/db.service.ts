@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Game } from './model/game';
 import { Role } from './model/role';
+import { Night } from './model/night';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,6 +26,10 @@ export class DBService {
           }))
         )
       );
+  }
+
+  getNights(gameId: any) {
+    return this.db.list('game/' + gameId + '/nights').valueChanges();
   }
 
   setPlayers(gameId: number, player: Player) {
@@ -67,6 +72,27 @@ export class DBService {
     const itemsRef = this.db.list('game');
     itemsRef.update(gameId.toString(), { gameStarted: true });
   }
+
+  createNewNight(gameId: any) {
+    const itemsRef = this.db.list('game/' + gameId + '/nights');
+    var dateNow = new Date().toISOString().replace('.', '');
+    return itemsRef.set(dateNow, {
+      id: dateNow,
+    });
+  }
+
+  storeActionAtNight(gameId: any, player: Player, action: string) {
+    this.getNights(gameId).subscribe((x: any[]) => {
+      const itemsRef = this.db.list(
+        'game/' + gameId + '/nights/' + this.sortArray(x)[0].id + '/actions'
+      );
+      itemsRef.set(player.id, {
+        player: player,
+        selected: action,
+      });
+    });
+  }
+
   updateGameSummary(
     gameId: any,
     setGameSummary: boolean,
@@ -119,5 +145,8 @@ export class DBService {
   endGame(gameId: string, winner: string) {
     const itemsRef = this.db.list(`game`);
     itemsRef.update(gameId.toString(), { gameOver: true, winner: winner });
+  }
+  sortArray(array: Array<Night>) {
+    return array.sort((a, b) => (a.id > b.id ? -1 : 1));
   }
 }

@@ -68,12 +68,19 @@
         class="col-12 btn btn-primary shadow-lg rounded"
         (click)="startNight()"
       ></button>
+      <button
+        translate="nightraports"
+        [disabled]="this.game.gameOver"
+        class="col-12 btn btn-primary shadow-lg rounded mb-3 mt-3"
+        (click)="showNightsRaport()"
+      ></button>
     </div>
   </div>
   <app-slide-out
     [gameId]="gameId"
     [gameSummaryLeft]="this.game.numberGameSummaryLeft"
   ></app-slide-out>
+  <app-nightraport></app-nightraport>
   <br />
   <br />
   <br />

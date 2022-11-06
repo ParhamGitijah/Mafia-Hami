@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { SlideOutComponent } from './components/slide-out/slide-out.component';
+import { SlideOutComponent } from './components/slide-out/night/slide-out.component';
 import { NewGameComponent } from './forms/new-game/new-game.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InitDashboardComponent } from './components/init-dashboard/init-dashboard.component';
@@ -31,6 +31,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { NightraportComponent } from './components/slide-out/night-raport/nightraport/nightraport.component';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4',
@@ -56,6 +57,7 @@ export const firebaseConfig = {
     SunComponent,
     MafiaPipe,
     CirtyPipe,
+    NightraportComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +88,7 @@ export const firebaseConfig = {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [],

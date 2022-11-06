@@ -39,7 +39,10 @@
             player.role !== 'diehard' &&
             player.role !== 'sniper'
           "
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <button
             *ngIf="player.alive"
@@ -50,7 +53,10 @@
         </div>
         <div
           *ngIf="!player.turn && !player.hasSelect && player.role == 'diehard'"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <button
             *ngIf="player.alive && gameSummaryLeft > 0"
@@ -71,7 +77,10 @@
         </div>
         <div
           *ngIf="!player.turn && !player.hasSelect && player.role == 'sniper'"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <button
             *ngIf="player.alive && gameSummaryLeft > 0"
@@ -93,21 +102,30 @@
         <div
           *ngIf="player.turn && !player.hasSelect && player.alive"
           class="waitningSelect badge bg-primary rounded-pill"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <fa-icon [icon]="faUser"></fa-icon>
         </div>
         <div
           *ngIf="player.hasSelect && player.alive"
           class="hasSelected badge bg-primary rounded-pill"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <fa-icon [icon]="faUser"></fa-icon>
         </div>
         <div
           *ngIf="!player.alive"
           class="dead badge bg-primary rounded-pill"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <fa-icon [icon]="faSkullCrossbones"></fa-icon>
         </div>
@@ -147,7 +165,10 @@
         </div>
         <div
           *ngIf="!player.turn && !player.hasSelect"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <button
             *ngIf="player.alive"
@@ -159,21 +180,30 @@
         <div
           *ngIf="player.turn && !player.hasSelect && player.alive"
           class="waitningSelect badge bg-primary rounded-pill"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <fa-icon [icon]="faUser"></fa-icon>
         </div>
         <div
           *ngIf="player.hasSelect && player.alive"
           class="hasSelected badge bg-primary rounded-pill"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <fa-icon [icon]="faUser"></fa-icon>
         </div>
         <div
           *ngIf="!player.alive"
           class="dead badge bg-primary rounded-pill"
-          style="position: absolute; left: 5%"
+          [ngClass]="{
+            styleRight: this.dir == 'ltr',
+            styleLeft: this.dir != 'ltr'
+          }"
         >
           <fa-icon [icon]="faSkullCrossbones"></fa-icon>
         </div>
@@ -185,9 +215,8 @@
         type="button"
         class="btn btn-outline-dark col-12 mt-3"
         (click)="EndNight()"
-      >
-        اتمام شب
-      </button>
+        translate="endthenight"
+      ></button>
     </div>
   </div>
 </div>
