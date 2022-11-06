@@ -100,9 +100,11 @@ export class NightComponent implements OnInit {
     this.gameSummaryLeft = this.gameSummaryLeft - 1;
     this.dBService.updateGameSummary(this.gameId, true, this.gameSummaryLeft);
     this.dBService.updatePlayer(this.gameId, player);
+    this.dBService.storeActionAtNight(this.gameId, player, 'Yes');
   }
   noSelect(player: Player) {
     player.hasSelect = true;
     this.dBService.updatePlayer(this.gameId, player);
+    this.dBService.storeActionAtNight(this.gameId, player, 'No');
   }
 }

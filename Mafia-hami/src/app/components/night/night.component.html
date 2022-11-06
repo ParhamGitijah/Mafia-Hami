@@ -83,21 +83,17 @@
           }"
         >
           <button
-            *ngIf="player.alive && gameSummaryLeft > 0"
+            *ngIf="player.alive"
             (click)="startPlayerTurn(player)"
             class="btn btn-success m-3"
             translate="shoot"
           ></button>
           <button
-            *ngIf="player.alive && gameSummaryLeft > 0"
+            *ngIf="player.alive"
             (click)="noSelect(player)"
             class="btn btn-secondary"
             translate="no"
           ></button>
-          <div
-            *ngIf="player.alive && gameSummaryLeft <= 0"
-            translate="noUtdragLeft"
-          ></div>
         </div>
         <div
           *ngIf="player.turn && !player.hasSelect && player.alive"
