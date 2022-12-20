@@ -14,7 +14,7 @@ import { Game } from 'src/app/model/game';
 })
 export class DashboardComponent implements OnInit {
   trackByValue: TrackByFunction<string> = (index, value) => value;
-
+  isSlideModalOpen = false;
   gameId!: number;
   showRoles: boolean = false;
   game: Game = new Game();
@@ -52,6 +52,13 @@ export class DashboardComponent implements OnInit {
       this.playerList = x;
     });
     this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
+      if (
+        x.find((c: any) => c.key == 'nightStarted').value == true &&
+        this.isSlideModalOpen != true
+      ) {
+        this.isSlideModalOpen = true;
+        this.slideOutComponent?.open();
+      }
       this.game.gameOver = x.find((c: any) => c.key == 'gameOver').value;
       this.game.hostId = x.find((c: any) => c.key == 'hostId').value;
       if (this.game.hostId !== this.hostId) {
@@ -66,6 +73,7 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
