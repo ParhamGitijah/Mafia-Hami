@@ -59,6 +59,12 @@ export class DashboardComponent implements OnInit {
         this.isSlideModalOpen = true;
         this.slideOutComponent?.open();
       }
+      if (
+        x.find((c: any) => c.key == 'nightStarted').value == false
+      ) {
+        this.isSlideModalOpen = false;
+      }
+
       this.game.gameOver = x.find((c: any) => c.key == 'gameOver').value;
       this.game.hostId = x.find((c: any) => c.key == 'hostId').value;
       if (this.game.hostId !== this.hostId) {
@@ -95,8 +101,21 @@ export class DashboardComponent implements OnInit {
   killPlayer(player: Player) {
     player.alive = false;
     this.dbService.updatePlayer(this.gameId, player);
+    if (
+      this.playerList.filter((x) => x.alive && x.mafia).length >=
+      this.playerList.filter((x) => x.alive && !x.mafia).length
+    ) {
+      this.dbService.endGame(this.gameId.toString(), 'isMafia');
+    }
+    if (this.playerList.filter((x) => x.alive && x.mafia).length <= 0) {
+      this.dbService.endGame(this.gameId.toString(), 'isMedborgare');
+    }
   }
   redirectToStartPage() {
     this.router.navigate(['']);
+  }
+
+  isAnyPlayerDead(){
+    return this.playerList.find(x=>x.alive!=true)!=undefined;
   }
 }

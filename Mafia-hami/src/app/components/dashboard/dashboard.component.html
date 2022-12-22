@@ -1,5 +1,50 @@
 <div [dir]="this.dir">
-  <div class="container p-3" style="width: 100vw">
+  <div *ngIf="this.game.gameOver">
+    <div>
+      <div><p>GAME OVER</p></div>
+      <div><p translate="winnerIs"></p></div>
+      <div>
+        <p>{{ this.game.winner }}</p>
+      </div>
+      <div class="row justify-content-center">
+        <button
+          translate="startNewGame"
+          type="button"
+          (click)="redirectToStartPage()"
+          class="col-6 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg rounded"
+          style="padding: 0; margin: 0px"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-3" *ngIf="game.gameSummury">
+    <div class="d-flex justify-content-center">
+      <img style="width: 80%" src="../../../assets/rapport.png" />
+    </div>
+    <div>
+      <div style="font-size: 34px;text-align: center;" translate="gameRapport"></div>
+
+      <div class="container p-3">
+        <div class="row" *ngIf="isAnyPlayerDead()">
+          <div class="col-12" *ngFor="let player of this.playerList">
+            <div *ngIf="!player.alive">
+              <div class="p-2 m-1 text-center" style="border: 1px solid black">
+                از بازی ما یک {{ player.role | translate }} بیرون است
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="!isAnyPlayerDead()">   
+              <div class="p-2 m-1 text-center" style="border: 1px solid black">
+                از بازی ما کسی بیرون نیست
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container p-3 mt-4" style="width: 100vw">
     <div class="row">
       <table class="table table-striped">
         <thead>
@@ -81,46 +126,4 @@
     [gameSummaryLeft]="this.game.numberGameSummaryLeft"
   ></app-slide-out>
   <app-nightraport></app-nightraport>
-  <br />
-  <br />
-  <br />
-  <br />
-  <div *ngIf="this.game.gameOver">
-    <div>
-      <div><p>GAME OVER</p></div>
-      <div><p translate="winnerIs"></p></div>
-      <div>
-        <p>{{ this.game.winner }}</p>
-      </div>
-      <div class="row justify-content-center">
-        <button
-          translate="startNewGame"
-          type="button"
-          (click)="redirectToStartPage()"
-          class="col-6 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg rounded"
-          style="padding: 0; margin: 0px"
-        ></button>
-      </div>
-    </div>
-  </div>
-  <div class="m-3" *ngIf="game.gameSummury">
-    <div class="d-flex justify-content-center">
-      <img style="width: 80%" src="../../../assets/rapport.png" />
-    </div>
-    <div>
-      <div style="font-size: 34px" translate="gameRapport"></div>
-
-      <div class="container p-3">
-        <div class="row">
-          <div class="col-12" *ngFor="let player of this.playerList">
-            <div *ngIf="!player.alive">
-              <div class="p-3 m-2" style="border: 1px solid black">
-                از بازی ما یک {{ player.role | translate }} بیرون است
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
