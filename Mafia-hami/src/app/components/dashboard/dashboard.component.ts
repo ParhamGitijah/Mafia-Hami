@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/model/player';
 import { SlideOutComponent } from '../slide-out/night/slide-out.component';
 import { Game } from 'src/app/model/game';
-
+import {cloneDeep} from 'lodash';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit {
     | NightraportComponent
     | undefined;
   playerList: Array<Player> = new Array<Player>();
+  playerAliveBeforeNightList: Array<Player> = new Array<Player>();
+  recentlyDeadplayerList: Array<Player> = new Array<Player>();
   constructor(
     private dbService: DBService,
     private activeRoute: ActivatedRoute,
@@ -65,6 +67,8 @@ export class DashboardComponent implements OnInit {
         this.isSlideModalOpen = false;
       }
 
+      this.recentlyDeadplayerList=this.playerAliveBeforeNightList.filter( ( el ) => this.playerList.filter(x=>x.alive==false).includes( el ));
+
       this.game.gameOver = x.find((c: any) => c.key == 'gameOver').value;
       this.game.hostId = x.find((c: any) => c.key == 'hostId').value;
       if (this.game.hostId !== this.hostId) {
@@ -85,6 +89,8 @@ export class DashboardComponent implements OnInit {
   }
 
   startNight() {
+    this.playerAliveBeforeNightList = cloneDeep(this.playerList);
+    this.recentlyDeadplayerList = new Array<Player>();
     this.dbService.updateNight(this.gameId, true);
     this.dbService.updateGameSummary(
       this.gameId,
@@ -92,6 +98,7 @@ export class DashboardComponent implements OnInit {
       this.game.numberGameSummaryLeft
     );
     this.dbService.createNewNight(this.gameId);
+    console.log("!");
     this.slideOutComponent?.open();
   }
 
@@ -100,6 +107,7 @@ export class DashboardComponent implements OnInit {
   }
   killPlayer(player: Player) {
     player.alive = false;
+    this.recentlyDeadplayerList.push(player);
     this.dbService.updatePlayer(this.gameId, player);
     if (
       this.playerList.filter((x) => x.alive && x.mafia).length >=
@@ -117,5 +125,9 @@ export class DashboardComponent implements OnInit {
 
   isAnyPlayerDead(){
     return this.playerList.find(x=>x.alive!=true)!=undefined;
+  }
+
+  isPlayerRecentlyDead(player:Player){
+   return this.recentlyDeadplayerList.filter(x=>x.id==player.id).length>0
   }
 }

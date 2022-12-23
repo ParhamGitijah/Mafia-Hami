@@ -56,7 +56,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let player of this.playerList">
+          <tr *ngFor="let player of this.playerList" [ngClass]="{ recentlyDead: isPlayerRecentlyDead(player)}">
             <td class="text-center" style="vertical-align: middle">
               <button
                 [disabled]="!player.alive || this.game.gameOver"

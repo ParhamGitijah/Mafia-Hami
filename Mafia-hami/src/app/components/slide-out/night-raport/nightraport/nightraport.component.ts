@@ -28,15 +28,8 @@ export class NightraportComponent implements AfterViewInit {
     config.position = 'end';
     config.backdropClass = 'bg-info';
     config.keyboard = true;
-    var night = new Night();
-    night.id = new Date().toISOString();
-    var night2 = new Night();
-    var date2 = new Date();
-    date2.setDate(date2.getDate() + 3);
-    night2.id = date2.toISOString();
-    this.nightList.push(night);
-    this.nightList.push(night2);
   }
+
   @ViewChild('nightraport') elementRef: ElementRef | undefined;
   ngAfterViewInit(): void {
     if (this.translate.currentLang == 'fa') {
@@ -45,6 +38,7 @@ export class NightraportComponent implements AfterViewInit {
       this.dir = 'ltr';
     }
   }
+  
   open(gameId: string) {
     this.dbService
       .getNights(gameId)

@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
   userName: string | undefined;
   player: Player = new Player();
   dir!: string;
+  gameStartedError:boolean=false;
+  playerExistError:boolean=false;
   constructor(
     private dbService: DBService,
     private router: Router,
@@ -57,7 +59,8 @@ export class HomeComponent implements OnInit {
       .getGame(this.newGameId)
       .pipe(take(1))
       .subscribe((x: Array<any>) => {
-        if (x.length > 0) {
+        if (x.length > 0 && x.find((c: any) => c.key == 'gameStarted').value==false) {
+          
           // for (let index = 0; index < 7; index++) {
           //   this.player.id = crypto.randomUUID();
           //   // this.player.name = this.userName!;
@@ -65,6 +68,7 @@ export class HomeComponent implements OnInit {
           //   this.dbService.setPlayers(this.newGameId!, this.player);
           //   this.router.navigate(['/init-dashboard', this.newGameId]);
           // }
+          
           this.player.id = crypto.randomUUID();
           this.player.name = this.userName!;
 
@@ -77,6 +81,7 @@ export class HomeComponent implements OnInit {
         } else {
           //show error
           this.newGameId = undefined;
+          this.gameStartedError=true;
         }
       });
   }

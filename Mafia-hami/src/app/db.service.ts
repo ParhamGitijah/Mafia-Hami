@@ -12,9 +12,11 @@ export class DBService {
   constructor(private db: AngularFireDatabase) {}
 
   getPlayers(gameId: any): Observable<Array<any>> {
+    console.log("getPlayers");
     return this.db.list('game/' + gameId + '/players').valueChanges();
   }
   getGame(gameId: any): Observable<any> {
+    console.log("getGame");
     return this.db
       .list('game/' + gameId)
       .snapshotChanges()
@@ -105,6 +107,7 @@ export class DBService {
     });
   }
   updateNight(gameId: any, night: boolean) {
+    console.log("updateNight");
     const itemsRef = this.db.list(`game/`);
     itemsRef.update(gameId.toString(), {
       nightStarted: night,

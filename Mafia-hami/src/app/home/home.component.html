@@ -1,7 +1,7 @@
 <div>
   <div class="image" style="background-image: url('../../assets/Mafia.jpg')">
     <div
-      class="row align-items-center justify-content-center"
+      class="row align-items-center justify-content-center m-0 p-0"
       style="height: 100vh; width: 100vw"
     >
       <div class="row justify-content-center" *ngIf="!showJoin">
@@ -39,6 +39,12 @@
         </div>
       </div>
       <div class="row justify-content-center" *ngIf="showJoin">
+        <div *ngIf="this.gameStartedError" class="d-flex alert alert-danger justify-content-center" role="alert">
+          این بازی شروع شده است. یک شماره ی دیگر وارد کنید
+        </div>
+        <div *ngIf="this.playerExistError" class="d-flex alert alert-danger justify-content-center" role="alert">
+          این بازی شروع شده است. یک شماره ی دیگر وارد کنید
+        </div>
         <div class="m-3 d-flex justify-content-center">
           <div class="input-group has-validation">
             <span
