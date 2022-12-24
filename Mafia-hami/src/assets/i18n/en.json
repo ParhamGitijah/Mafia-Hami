@@ -23,6 +23,8 @@
   "uSureKick": "Do you want to kick the player?",
   "doKick": "Kick",
   "no": "No",
+  "No": "No",
+  "Yes": "Yes",
   "alive": "Alive",
   "dead": "Killed",
   "hideRoles": "Hide players roles",

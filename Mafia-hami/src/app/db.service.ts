@@ -1,4 +1,4 @@
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { Player } from './model/player';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
@@ -12,11 +12,11 @@ export class DBService {
   constructor(private db: AngularFireDatabase) {}
 
   getPlayers(gameId: any): Observable<Array<any>> {
-    console.log("getPlayers");
+    console.log('getPlayers');
     return this.db.list('game/' + gameId + '/players').valueChanges();
   }
   getGame(gameId: any): Observable<any> {
-    console.log("getGame");
+    console.log('getGame');
     return this.db
       .list('game/' + gameId)
       .snapshotChanges()
@@ -84,15 +84,32 @@ export class DBService {
   }
 
   storeActionAtNight(gameId: any, player: Player, action: string) {
-    this.getNights(gameId).subscribe((x: any[]) => {
-      const itemsRef = this.db.list(
-        'game/' + gameId + '/nights/' + this.sortArray(x)[0].id + '/actions'
-      );
-      itemsRef.set(player.id, {
-        player: player,
-        selected: action,
+    this.getNights(gameId)
+      .pipe(take(1))
+      .subscribe((x: any[]) => {
+        const itemsRef = this.db.list(
+          'game/' + gameId + '/nights/' + this.sortArray(x)[0].id + '/actions'
+        );
+        itemsRef.set(player.id, {
+          player: player,
+          selected: action,
+        });
       });
-    });
+  }
+
+  storeKilledPlayersForNight(gameId: any, player: Player) {
+    this.getNights(gameId)
+      .pipe(take(1))
+      .subscribe((x: any[]) => {
+        const itemsRef = this.db.list(
+          'game/' +
+            gameId +
+            '/nights/' +
+            this.sortArray(x)[0].id +
+            '/killedPlayers'
+        );
+        itemsRef.push(player);
+      });
   }
 
   updateGameSummary(
@@ -107,7 +124,7 @@ export class DBService {
     });
   }
   updateNight(gameId: any, night: boolean) {
-    console.log("updateNight");
+    console.log('updateNight');
     const itemsRef = this.db.list(`game/`);
     itemsRef.update(gameId.toString(), {
       nightStarted: night,

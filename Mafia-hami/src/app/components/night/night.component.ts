@@ -70,9 +70,11 @@ export class NightComponent implements OnInit {
         player.life = 1;
       }
       if (player.life == 0 && player.isSaved == false) {
+        this.dBService.storeKilledPlayersForNight(this.gameId, player);
         player.alive = false;
       }
       if (player.life < 0) {
+        this.dBService.storeKilledPlayersForNight(this.gameId, player);
         player.alive = false;
       }
       player.isSaved = false;

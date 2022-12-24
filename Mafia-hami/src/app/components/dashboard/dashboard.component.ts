@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/model/player';
 import { SlideOutComponent } from '../slide-out/night/slide-out.component';
 import { Game } from 'src/app/model/game';
-import {cloneDeep} from 'lodash';
+import { cloneDeep } from 'lodash';
+import { Night } from 'src/app/model/night';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -31,6 +32,7 @@ export class DashboardComponent implements OnInit {
   playerList: Array<Player> = new Array<Player>();
   playerAliveBeforeNightList: Array<Player> = new Array<Player>();
   recentlyDeadplayerList: Array<Player> = new Array<Player>();
+  lastNightDeadplayerList: Array<Player> = new Array<Player>();
   constructor(
     private dbService: DBService,
     private activeRoute: ActivatedRoute,
@@ -53,7 +55,12 @@ export class DashboardComponent implements OnInit {
     this.dbService.getPlayers(this.gameId).subscribe((x) => {
       this.playerList = x;
     });
+
     this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
+      console.log(x);
+      if (x.find((c: any) => c.key == 'nightStarted').value == false) {
+        this.isSlideModalOpen = false;
+      }
       if (
         x.find((c: any) => c.key == 'nightStarted').value == true &&
         this.isSlideModalOpen != true
@@ -61,13 +68,6 @@ export class DashboardComponent implements OnInit {
         this.isSlideModalOpen = true;
         this.slideOutComponent?.open();
       }
-      if (
-        x.find((c: any) => c.key == 'nightStarted').value == false
-      ) {
-        this.isSlideModalOpen = false;
-      }
-
-      this.recentlyDeadplayerList=this.playerAliveBeforeNightList.filter( ( el ) => this.playerList.filter(x=>x.alive==false).includes( el ));
 
       this.game.gameOver = x.find((c: any) => c.key == 'gameOver').value;
       this.game.hostId = x.find((c: any) => c.key == 'hostId').value;
@@ -84,13 +84,14 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  sortArray(array: Array<Night>) {
+    return array.sort((a, b) => (a.id > b.id ? 1 : -1));
+  }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
   startNight() {
-    this.playerAliveBeforeNightList = cloneDeep(this.playerList);
-    this.recentlyDeadplayerList = new Array<Player>();
     this.dbService.updateNight(this.gameId, true);
     this.dbService.updateGameSummary(
       this.gameId,
@@ -98,7 +99,7 @@ export class DashboardComponent implements OnInit {
       this.game.numberGameSummaryLeft
     );
     this.dbService.createNewNight(this.gameId);
-    console.log("!");
+    this.isSlideModalOpen = true;
     this.slideOutComponent?.open();
   }
 
@@ -123,11 +124,13 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  isAnyPlayerDead(){
-    return this.playerList.find(x=>x.alive!=true)!=undefined;
+  isAnyPlayerDead() {
+    return this.playerList.find((x) => x.alive != true) != undefined;
   }
 
-  isPlayerRecentlyDead(player:Player){
-   return this.recentlyDeadplayerList.filter(x=>x.id==player.id).length>0
+  isPlayerRecentlyDead(player: Player) {
+    return (
+      this.recentlyDeadplayerList.filter((x) => x.id == player.id).length > 0
+    );
   }
 }

@@ -146,7 +146,7 @@ export class InitDashboardComponent implements OnInit {
       this.dbService.updatePlayerRole(this.gameId, x.id, rolesToAssign[i++]);
     });
     this.dbService.startGame(this.gameId);
-    this.router.navigate(['dashboard', this.gameId,this.hostId]);
+    this.router.navigate(['dashboard', this.gameId, this.hostId]);
   }
 
   playerExit() {

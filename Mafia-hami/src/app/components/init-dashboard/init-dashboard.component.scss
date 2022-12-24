@@ -6,8 +6,6 @@
 }
 
 .cardRole {
-  position: absolute;
-  top: 20px;
   background-color: antiquewhite;
   border-radius: 65px;
   width: 75vw;
@@ -16,23 +14,23 @@
   //   -o-filter: blur(5px);
   //   -ms-filter: blur(5px);
   //   filter: blur(5px);
-  animation: mymove 5s;
+  // animation: mymove 5s;
   img {
-    animation: mymove 5s;
-    top: 20px;
+    // animation: mymove 5s;
+    // top: 20px;
     width: 75vw;
   }
-  p {
-    font-size: 30px;
-    font-weight: bold;
+  // p {
+  //   font-size: 30px;
+  //   font-weight: bold;
 
-    animation: text 5s;
-  }
+  //   animation: text 5s;
+  // }
 }
-.tableClass {
-  position: absolute;
-  top: 65%;
-}
+// .tableClass {
+//   position: absolute;
+//   top: 65%;
+// }
 
 @keyframes gameId {
   0% {
@@ -43,26 +41,26 @@
   }
 }
 
-@keyframes mymove {
-  0% {
-    top: 0px;
-    width: 15vw;
-  }
+// @keyframes mymove {
+//   0% {
+//     top: 0px;
+//     width: 15vw;
+//   }
 
-  100% {
-    top: 20px;
-    width: 75vw;
-  }
-}
+//   100% {
+//     top: 20px;
+//     width: 75vw;
+//   }
+// }
 
-@keyframes text {
-  0% {
-    font-size: 10px;
-    font-weight: 100;
-  }
+// @keyframes text {
+//   0% {
+//     font-size: 10px;
+//     font-weight: 100;
+//   }
 
-  100% {
-    font-weight: bold;
-    font-size: 30px;
-  }
-}
+//   100% {
+//     font-weight: bold;
+//     font-size: 30px;
+//   }
+// }

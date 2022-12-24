@@ -122,16 +122,8 @@
       {{ timeLeft }}
     </div>
   </div>
-  <div *ngIf="this.showPlayerRole" class="anim d-flex justify-content-center">
-    <div class="cardRole row mt-3">
-      <p class="d-flex justify-content-center mt-5">
-        {{ player.role | translate }}
-      </p>
-      <div class="d-flex justify-content-center">
-        <img [src]="'../../../assets/' + player.role + '.png'" />
-      </div>
-    </div>
-    <div class="tableClass" *ngIf="this.player.mafia == true">
+  <div *ngIf="this.showPlayerRole" class="row p-0 justify-content-center">
+    <div class="col-10 p-0 mt-5" *ngIf="this.player.mafia == true">
       <table class="table table-striped">
         <thead>
           <tr
@@ -156,6 +148,14 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="cardRole col-5 mt-3">
+      <p class="d-flex justify-content-center mt-4">
+        {{ player.role | translate }}
+      </p>
+      <div class="d-flex justify-content-center">
+        <img [src]="'../../../assets/' + player.role + '.png'" />
+      </div>
     </div>
   </div>
 </div>
