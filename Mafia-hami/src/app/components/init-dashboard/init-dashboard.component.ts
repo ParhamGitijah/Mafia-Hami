@@ -2,7 +2,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DBService } from './../../db.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 import { Player } from 'src/app/model/player';
 import { Cards, randomEnum } from 'src/app/helper/randomCards-helper';
 import { ThisReceiver } from '@angular/compiler';
@@ -68,10 +68,10 @@ export class InitDashboardComponent implements OnInit {
         if (this.isUserHost) {
           this.router.navigate(['dashboard', this.gameId, this.hostId]);
         } else {
-          this.dbService.getPlayers(this.gameId).subscribe((x) => {
+          this.dbService.getPlayers(this.gameId).pipe(take(1)).subscribe((x) => {
             this.playerList = x;
             this.playerList.forEach((player) => {
-              if (player.mafia && player.id != this.player.id) {
+              if (player.mafia && player.id != this.player.id && this.yourMatesMafia.filter(x=>x.id==player.id).length==0) {
                 this.yourMatesMafia.push(player);
               }
             });
