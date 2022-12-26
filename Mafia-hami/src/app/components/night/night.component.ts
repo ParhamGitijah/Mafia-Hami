@@ -8,6 +8,8 @@ import {
   faSkullCrossbones,
 } from '@fortawesome/free-solid-svg-icons';
 import { CirtyPipe } from 'src/app/pipes/city-pipe';
+import { take } from 'rxjs';
+import { Night } from 'src/app/model/night';
 
 @Component({
   selector: 'app-night',
@@ -22,6 +24,7 @@ export class NightComponent implements OnInit {
   faUser = faUserCheck;
   faSkullCrossbones = faSkullCrossbones;
   hasAllPlayersMoved: boolean = false;
+  hasAnyPlayerMoved: boolean=false;
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
   @Input() gameSummaryLeft!: number;
   constructor(
@@ -37,6 +40,12 @@ export class NightComponent implements OnInit {
     }
     this.dBService.getPlayers(this.gameId).subscribe((x) => {
       this.playerList = x;
+      this.playerList.forEach(player => {
+        console.log(player);
+        if(player.hasSelect==true){
+          this.hasAnyPlayerMoved=true;
+        } 
+      });
       var diehard = this.playerList.find((x) => x.role == 'diehard');
       if (
         this.playerList.filter(
@@ -108,5 +117,16 @@ export class NightComponent implements OnInit {
     player.hasSelect = true;
     this.dBService.updatePlayer(this.gameId, player);
     this.dBService.storeActionAtNight(this.gameId, player, 'No');
+  }
+
+  CloseNight(){
+    var lastNight=new Night();
+    this.dBService.getNights(this.gameId).pipe(take(1)).subscribe((x:any)=>{
+      lastNight.id=x[x.length-1].id;
+      this.dBService.removeNight(this.gameId,lastNight.id);
+    }
+      );
+    
+    this.closeModal.emit();
   }
 }

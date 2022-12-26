@@ -213,6 +213,13 @@
         (click)="EndNight()"
         translate="endthenight"
       ></button>
+      <button
+        [disabled]="hasAnyPlayerMoved"
+        type="button"
+        class="btn btn-outline-danger col-12 mt-3"
+        (click)="CloseNight()"
+        translate="endthenight"
+      >حذف شب</button>
     </div>
   </div>
 </div>

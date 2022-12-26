@@ -1,5 +1,5 @@
-<div [dir]="this.dir">
-  <div *ngIf="this.game.gameOver">
+<div [dir]="this.dir" style="padding-left: 12px; padding-right:12px">
+  <div *ngIf="this.game.gameOver" class="mb-5">
     <div>
       <div><p>GAME OVER</p></div>
       <div><p translate="winnerIs"></p></div>
@@ -12,13 +12,13 @@
           type="button"
           (click)="redirectToStartPage()"
           class="col-6 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg rounded"
-          style="padding: 0; margin: 0px"
+          style="padding: 0; margin: 0px; margin-top: 15px;"
         ></button>
       </div>
     </div>
   </div>
 
-  <div class="m-3" *ngIf="game.gameSummury">
+  <div *ngIf="game.gameSummury" class="mb-3">
     <div class="d-flex justify-content-center">
       <img style="width: 80%" src="../../../assets/rapport.png" />
     </div>
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <div class="container p-3 mt-4" style="width: 100vw">
+  <div class="container mt-2">
     <div class="row">
       <table class="table table-striped">
         <thead>

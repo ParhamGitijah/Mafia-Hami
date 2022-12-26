@@ -83,6 +83,10 @@ export class DBService {
     });
   }
 
+  removeNight(gameId: any,nightId:any) {
+    this.db.list('game/' + gameId + '/nights').remove(nightId);
+  }
+
   storeActionAtNight(gameId: any, player: Player, action: string) {
     this.getNights(gameId)
       .pipe(take(1))

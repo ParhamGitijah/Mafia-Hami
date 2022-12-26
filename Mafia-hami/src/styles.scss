@@ -19,3 +19,17 @@
     --bs-offcanvas-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
+html{
+padding: 0px 0px 0px 0px;
+margin: 0px 0px 0px 0px;
+}
+
+body {
+  height: 100%;
+  padding-top: env(safe-area-inset-top);
+}
+
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
