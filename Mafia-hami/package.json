@@ -21,7 +21,7 @@
     "@angular/pwa": "^14.2.6",
     "@angular/router": "^14.0.0",
     "@angular/service-worker": "^14.0.0",
-    "@capacitor/android": "^4.3.0",
+    "@capacitor/android": "^4.6.1",
     "@capacitor/angular": "^2.0.3",
     "@capacitor/core": "^4.3.0",
     "@capacitor/ios": "^4.3.0",
