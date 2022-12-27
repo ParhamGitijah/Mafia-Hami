@@ -21,6 +21,7 @@ export class PlayerDashboardComponent implements OnInit {
   ) {}
 
   showPlayerRole = false;
+  godFatherSelectReq=false;
   playerList: Array<Player> = new Array();
   playerId!: string;
   isMafia: boolean | undefined;
@@ -130,5 +131,16 @@ export class PlayerDashboardComponent implements OnInit {
   }
   redirectToStartPage() {
     this.router.navigate(['']);
+  }
+  isGodfatherAlive(){
+    if(this.playerList.filter(x=>x.role=='godfather' && x.alive==true).length>0){
+      this.godFatherSelectReq=false;
+      return true;
+    }else{
+      this.godFatherSelectReq=true;
+return false;
+    }
+  
+    
   }
 }

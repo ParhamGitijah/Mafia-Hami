@@ -72,5 +72,6 @@
   "selectedplayer": "انتخاب این بازیکن",
   "nightraports": "گزارشات شب",
   "close": "بستن",
-  "yourrole": "نقش شما"
+  "yourrole": "نقش شما",
+  "removeNight":"حذف شب"
 }

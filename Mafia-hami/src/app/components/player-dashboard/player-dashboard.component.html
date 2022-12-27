@@ -1,6 +1,6 @@
 <div [dir]="this.dir">
   <div *ngIf="!this.isGameFinished && this.playerAlive">
-    <div class="container" *ngIf="this.turn">
+    <div class="container m-0 p-0" *ngIf="this.turn">
       <div class="d-flex justify-content-center">
         <div class="row mt-3">
           <div
@@ -34,6 +34,22 @@
           </div>
         </div>
         <div *ngIf="selfRole == 'doctorLekter'" style="display: contents">
+          <div class="m-0 mb-3 p-4 row justify-content-center" *ngIf="!isGodfatherAlive()">
+          <div class="d-flex justify-content-center alert alert-info m-0">
+           گادفادر کشته شده است. شما شلیک شب را انجام میدهید. چه کسی را میکشید؟ (انتخاب در لیست زیر)
+          </div>
+          <div
+          *ngFor="let player of this.playerList"
+          (click)="selectPlayer(player)"
+          class="col-5 selectDiv text-center m-2 p-3"
+          [ngClass]="{ select: !player.selected }"
+        >
+          {{ player.name }}
+        </div>
+        </div>
+          <div class="row col-10 justify-content-center alert alert-info m-0">
+           چه کسی را نجات میدهید؟ (انتخاب در لیست زیر)
+          </div>
           <div
             *ngFor="let player of this.doctoLekterList"
             (click)="selectPlayerDocLek(player)"
@@ -48,7 +64,7 @@
             class="btn m-3 btn-primary col-7"
             (click)="sumbitSelect()"
           >
-            بازیکنی برای نجات وجود ندارد. برای کلیک کنید
+            بازیکنی برای نجات وجود ندارد. برای ادامه کلیک کنید
           </button>
         </div>
         <div *ngIf="selfRole == 'doctor'" style="display: contents">

@@ -72,5 +72,6 @@
   "selectedplayer": "Valde",
   "nightraports": "Utdrag över nätter",
   "close": "stäng",
-  "yourrole": "din roll"
+  "yourrole": "din roll",
+  "removeNight":"Radera natten"
 }
