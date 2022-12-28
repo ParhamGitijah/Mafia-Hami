@@ -68,14 +68,22 @@ export class InitDashboardComponent implements OnInit {
         if (this.isUserHost) {
           this.router.navigate(['dashboard', this.gameId, this.hostId]);
         } else {
-          this.dbService.getPlayers(this.gameId).pipe(take(1)).subscribe((x) => {
-            this.playerList = x;
-            this.playerList.forEach((player) => {
-              if (player.mafia && player.id != this.player.id && this.yourMatesMafia.filter(x=>x.id==player.id).length==0) {
-                this.yourMatesMafia.push(player);
-              }
+          this.dbService
+            .getPlayers(this.gameId)
+            .pipe(take(1))
+            .subscribe((x) => {
+              this.playerList = x;
+              this.playerList.forEach((player) => {
+                if (
+                  player.mafia &&
+                  player.id != this.player.id &&
+                  this.yourMatesMafia.filter((x) => x.id == player.id).length ==
+                    0
+                ) {
+                  this.yourMatesMafia.push(player);
+                }
+              });
             });
-          });
           var promise = new Promise((resolve) => {
             this.interval = setInterval(() => {
               if (this.timeLeft > 0) {

@@ -1,10 +1,11 @@
 import { TranslateService } from '@ngx-translate/core';
-import { interval, Observable, of, startWith, switchMap } from 'rxjs';
+import { interval, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player } from 'src/app/model/player';
 import { Component, OnInit } from '@angular/core';
 import { DBService } from 'src/app/db.service';
 import { RepositoryService } from 'src/app/repository.service';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-player-dashboard',
@@ -21,11 +22,12 @@ export class PlayerDashboardComponent implements OnInit {
   ) {}
 
   showPlayerRole = false;
-  godFatherSelectReq=false;
+  playerToKillSelectReq = false;
   playerList: Array<Player> = new Array();
   playerId!: string;
   isMafia: boolean | undefined;
   playerSelected: Player | undefined;
+  playerToKillSelect: Player | undefined;
   player: Observable<Player> = new Observable<Player>();
   playerAlive: boolean = true;
   gameId!: number;
@@ -33,6 +35,7 @@ export class PlayerDashboardComponent implements OnInit {
   isGameFinished!: boolean;
   turn: boolean = false;
   doctoLekterList!: Array<Player>;
+  emptyList = false;
   selfRole: string | undefined;
   winner!: string;
   dir!: string;
@@ -51,7 +54,10 @@ export class PlayerDashboardComponent implements OnInit {
         this.gameId = +params['id']; // (+) converts string 'id' to a number
         this.playerId = params['playerId'];
         this.dbService.getGame(this.gameId).subscribe((x: Array<any>) => {
-          if (this.playerSelected === undefined) {
+          if (!this.playerSelected) {
+            if (this.playerToKillSelectReq && this.playerToKillSelect) {
+              return;
+            }
             if (x.length !== 0) {
               this.isNight = x.find((c: any) => c.key == 'nightStarted').value;
               this.isGameFinished = x.find(
@@ -69,9 +75,12 @@ export class PlayerDashboardComponent implements OnInit {
                     (x) => x.alive == true && x.id != this.playerId
                   );
                 }
-                this.doctoLekterList = x.filter(
-                  (x) => x.alive == true && x.mafia && !x.selfsaved
+                this.doctoLekterList = cloneDeep(
+                  x.filter((x) => x.alive == true && x.mafia && !x.selfsaved)
                 );
+                if (this.doctoLekterList.length <= 0) {
+                  this.emptyList = true;
+                }
                 this.playerAlive = player.alive;
                 this.selfRole = player.role;
                 this.turn = player.turn;
@@ -94,6 +103,17 @@ export class PlayerDashboardComponent implements OnInit {
     }
   }
 
+  selectPlayerToKill(player: Player) {
+    this.playerToKillSelect = player;
+    for (let index = 0; index < this.playerList.length; index++) {
+      if (this.playerList[index].id != player.id) {
+        this.playerList[index].selected = false;
+      } else {
+        this.playerList[index].selected = true;
+      }
+    }
+  }
+
   selectPlayerDocLek(player: Player) {
     this.playerSelected = player;
     for (let index = 0; index < this.doctoLekterList.length; index++) {
@@ -106,12 +126,15 @@ export class PlayerDashboardComponent implements OnInit {
   }
 
   sumbitSelect() {
-    this.player.subscribe((player) => {
-      this.isMafia = this.repo.submitSelect({
+    this.player.pipe(take(1)).subscribe((player) => {
+      this.isMafia = this.repo.submitSelect(
         player,
-        selectedPlayer: this.playerSelected!,
-        gameId: this.gameId,
-      });
+        this.playerSelected!,
+        this.gameId
+      );
+      if (this.playerToKillSelectReq) {
+        this.repo.killPlayer(player, this.playerToKillSelect!, this.gameId);
+      }
       if (this.isMafia != undefined) {
         var timer = 0;
         if (this.selfRole == 'detectiv') {
@@ -127,20 +150,23 @@ export class PlayerDashboardComponent implements OnInit {
         });
       }
       this.playerSelected = undefined;
+      this.playerToKillSelect = undefined;
     });
   }
   redirectToStartPage() {
     this.router.navigate(['']);
   }
-  isGodfatherAlive(){
-    if(this.playerList.filter(x=>x.role=='godfather' && x.alive==true).length>0){
-      this.godFatherSelectReq=false;
+
+  isGodfatherAlive() {
+    if (
+      this.playerList.filter((x) => x.role == 'godfather' && x.alive == true)
+        .length > 0
+    ) {
+      this.playerToKillSelectReq = false;
       return true;
-    }else{
-      this.godFatherSelectReq=true;
-return false;
+    } else {
+      this.playerToKillSelectReq = true;
+      return false;
     }
-  
-    
   }
 }

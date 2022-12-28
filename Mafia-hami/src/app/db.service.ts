@@ -83,7 +83,7 @@ export class DBService {
     });
   }
 
-  removeNight(gameId: any,nightId:any) {
+  removeNight(gameId: any, nightId: any) {
     this.db.list('game/' + gameId + '/nights').remove(nightId);
   }
 
@@ -94,7 +94,7 @@ export class DBService {
         const itemsRef = this.db.list(
           'game/' + gameId + '/nights/' + this.sortArray(x)[0].id + '/actions'
         );
-        itemsRef.set(player.id, {
+        itemsRef.set(player.id + action, {
           player: player,
           selected: action,
         });

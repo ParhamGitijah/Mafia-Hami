@@ -17,18 +17,13 @@ export class RepositoryService {
 
   constructor(private dbService: DBService) {}
 
-  submitSelect({
-    player,
-    selectedPlayer,
-    gameId,
-  }: {
-    player: Player;
-    selectedPlayer: Player;
-    gameId: any;
-  }) {
+  submitSelect(player: Player, selectedPlayer: Player, gameId: any) {
     player.turn = false;
     player.hasSelect = true;
     this.dbService.updatePlayer(gameId, player);
+    if (!selectedPlayer) {
+      return selectedPlayer;
+    }
     this.dbService.storeActionAtNight(gameId, player, selectedPlayer.name);
     //doctor
     if (player.role == 'doctor') {
@@ -99,6 +94,31 @@ export class RepositoryService {
           this.dbService.updatePlayer(gameId, selectedPlayer);
         }
       }
+    }
+  }
+
+  //use this metod only when godfather is dead
+  killPlayer(player: Player, selectedPlayer: Player, gameId: any) {
+    if (!selectedPlayer) {
+      return selectedPlayer;
+    }
+    this.dbService.storeActionAtNight(gameId, player, selectedPlayer.name);
+    //need to be mafia
+    if (player.mafia == true) {
+      if (selectedPlayer.role == 'diehard') {
+        if (selectedPlayer.life > 1) {
+          selectedPlayer.life = selectedPlayer.life - 1;
+        } else {
+          if (selectedPlayer.isSaved == false) {
+            selectedPlayer.life = selectedPlayer.life - 1;
+          }
+        }
+      } else {
+        if (selectedPlayer.isSaved == false) {
+          selectedPlayer.life = selectedPlayer.life - 1;
+        }
+      }
+      this.dbService.updatePlayer(gameId, selectedPlayer);
     }
   }
 }

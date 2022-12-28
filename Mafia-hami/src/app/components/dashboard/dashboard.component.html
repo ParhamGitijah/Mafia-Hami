@@ -1,18 +1,18 @@
-<div [dir]="this.dir" style="padding-left: 12px; padding-right:12px">
+<div [dir]="this.dir" style="padding-left: 12px; padding-right: 12px">
   <div *ngIf="this.game.gameOver" class="mb-5">
     <div>
       <div><p>GAME OVER</p></div>
       <div><p translate="winnerIs"></p></div>
       <div>
-        <p>{{ this.game.winner }}</p>
+        <p translate="{{ this.game.winner }}"></p>
       </div>
       <div class="row justify-content-center">
         <button
           translate="startNewGame"
           type="button"
           (click)="redirectToStartPage()"
-          class="col-6 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg rounded"
-          style="padding: 0; margin: 0px; margin-top: 15px;"
+          class="col-6 pt-2 pb-2 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg rounded"
+          style="padding: 0; margin: 0px; margin-top: 15px"
         ></button>
       </div>
     </div>
@@ -23,7 +23,10 @@
       <img style="width: 80%" src="../../../assets/rapport.png" />
     </div>
     <div>
-      <div style="font-size: 34px;text-align: center;" translate="gameRapport"></div>
+      <div
+        style="font-size: 34px; text-align: center"
+        translate="gameRapport"
+      ></div>
 
       <div class="container p-3">
         <div class="row" *ngIf="isAnyPlayerDead()">
@@ -35,9 +38,9 @@
             </div>
           </div>
         </div>
-        <div class="row" *ngIf="!isAnyPlayerDead()">   
-              <div class="p-2 m-1 text-center" style="border: 1px solid black">
-                از بازی ما کسی بیرون نیست
+        <div class="row" *ngIf="!isAnyPlayerDead()">
+          <div class="p-2 m-1 text-center" style="border: 1px solid black">
+            از بازی ما کسی بیرون نیست
           </div>
         </div>
       </div>
@@ -56,7 +59,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let player of this.playerList" [ngClass]="{ recentlyDead: isPlayerRecentlyDead(player)}">
+          <tr
+            *ngFor="let player of this.playerList"
+            [ngClass]="{ recentlyDead: isPlayerRecentlyDead(player) }"
+          >
             <td class="text-center" style="vertical-align: middle">
               <button
                 [disabled]="!player.alive || this.game.gameOver"
@@ -115,7 +121,6 @@
       ></button>
       <button
         translate="nightraports"
-        [disabled]="this.game.gameOver"
         class="col-12 btn btn-primary shadow-lg rounded mb-3 mt-3"
         (click)="showNightsRaport()"
       ></button>

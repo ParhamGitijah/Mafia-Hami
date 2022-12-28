@@ -19,7 +19,11 @@
         style="position: relative; z-index: 999"
       >
         <div
-          *ngIf="selfRole != 'doctorLekter' && selfRole != 'doctor'"
+          *ngIf="
+            selfRole != 'doctorLekter' &&
+            selfRole != 'doctor' &&
+            selfRole != 'mafia'
+          "
           style="display: contents"
         >
           <div
@@ -34,21 +38,25 @@
           </div>
         </div>
         <div *ngIf="selfRole == 'doctorLekter'" style="display: contents">
-          <div class="m-0 mb-3 p-4 row justify-content-center" *ngIf="!isGodfatherAlive()">
-          <div class="d-flex justify-content-center alert alert-info m-0">
-           گادفادر کشته شده است. شما شلیک شب را انجام میدهید. چه کسی را میکشید؟ (انتخاب در لیست زیر)
-          </div>
           <div
-          *ngFor="let player of this.playerList"
-          (click)="selectPlayer(player)"
-          class="col-5 selectDiv text-center m-2 p-3"
-          [ngClass]="{ select: !player.selected }"
-        >
-          {{ player.name }}
-        </div>
-        </div>
-          <div class="row col-10 justify-content-center alert alert-info m-0">
-           چه کسی را نجات میدهید؟ (انتخاب در لیست زیر)
+            class="m-0 mb-5 row col-10 justify-content-center"
+            *ngIf="!isGodfatherAlive()"
+          >
+            <div class="d-flex justify-content-center alert alert-info m-4">
+              پدرخوانده کشته شده است. شما شلیک شب را انجام میدهید. چه کسی را
+              میکشید؟ (انتخاب در لیست زیر)
+            </div>
+            <div
+              *ngFor="let player of this.playerList"
+              (click)="selectPlayerToKill(player)"
+              class="col-5 selectDiv text-center m-2 p-3"
+              [ngClass]="{ select: !player.selected }"
+            >
+              {{ player.name }}
+            </div>
+          </div>
+          <div class="row col-10 justify-content-center alert alert-info m-4">
+            چه کسی را نجات میدهید؟ (انتخاب در لیست زیر)
           </div>
           <div
             *ngFor="let player of this.doctoLekterList"
@@ -59,13 +67,12 @@
             {{ player.name }}
           </div>
 
-          <button
+          <div
             *ngIf="this.doctoLekterList.length <= 0"
-            class="btn m-3 btn-primary col-7"
-            (click)="sumbitSelect()"
+            class="row col-10 justify-content-center alert alert-info m-0"
           >
             بازیکنی برای نجات وجود ندارد. برای ادامه کلیک کنید
-          </button>
+          </div>
         </div>
         <div *ngIf="selfRole == 'doctor'" style="display: contents">
           <div
@@ -81,10 +88,34 @@
             </div>
           </div>
         </div>
+        <div *ngIf="selfRole == 'mafia'" style="display: contents">
+          <div
+            class="m-0 mb-5 row col-10 justify-content-center"
+            *ngIf="!isGodfatherAlive()"
+          >
+            <div class="d-flex justify-content-center alert alert-info m-4">
+              پدرخوانده کشته شده است. شما شلیک شب را انجام میدهید. چه کسی را
+              میکشید؟ (انتخاب در لیست زیر)
+            </div>
+            <div
+              *ngFor="let player of this.playerList"
+              (click)="selectPlayerToKill(player)"
+              class="col-5 selectDiv text-center m-2 p-3"
+              [ngClass]="{ select: !player.selected }"
+            >
+              {{ player.name }}
+            </div>
+          </div>
+        </div>
         <div class="row justify-content-center">
           <button
             translate="choosePlayer"
-            [disabled]="!this.playerSelected"
+            [disabled]="
+              (!this.playerSelected &&
+                this.emptyList != true &&
+                selfRole != 'mafia') ||
+              (!this.playerToKillSelect && this.playerToKillSelectReq)
+            "
             class="btn m-3 btn-primary col-4 shadow-lg p-2 mb-5 rounded"
             (click)="sumbitSelect()"
           ></button>
@@ -177,7 +208,7 @@
           translate="startNewGame"
           type="button"
           (click)="redirectToStartPage()"
-          class="col-12 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg m-3 p-3 bg-white rounded"
+          class="col-12 pt-2 pb-2 align-self-center btn btn-outline-danger btn-lg btn-block shadow-lg m-3 p-3 bg-white rounded"
           style="padding: 0; margin: 0px"
         ></button>
       </div>
