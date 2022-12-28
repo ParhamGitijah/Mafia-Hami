@@ -73,5 +73,12 @@
   "nightraports": "Night Raports",
   "close": "close",
   "yourrole": "Your role",
-  "removeNight":"Remove Night"
+  "removeNight": "Remove Night",
+  "bodyguard": "Bodyguard",
+  "alertgodfatherkilled": "The godfather has been killed. You do the night shooting. Who do you kill? (Choose from the list below)",
+  "whotosave": "Who do you save? (Choose from the list below)",
+  "noonetosave": "There is no player to save. Click to continue",
+  "sniperactionmessage": "Who do you shoot at? If you accidentally shoot a citizen. You will be eliminated/killed yourself. (Choose from the list below)",
+  "detectivactionmessage": "Who do you want to ask about? Note that the result of the godfather will be negative! (Choose from the list below)",
+  "godfatheractionmessage": "You do the night shooting. Who do you kill? (Choose from the list below)"
 }

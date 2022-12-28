@@ -22,6 +22,9 @@ export class RepositoryService {
     player.hasSelect = true;
     this.dbService.updatePlayer(gameId, player);
     if (!selectedPlayer) {
+      player.turn = false;
+      player.hasSelect = true;
+      this.dbService.updatePlayer(gameId, player);
       return selectedPlayer;
     }
     this.dbService.storeActionAtNight(gameId, player, selectedPlayer.name);
@@ -29,9 +32,9 @@ export class RepositoryService {
     if (player.role == 'doctor') {
       if (selectedPlayer.mafia == false) {
         if (player.role == selectedPlayer.role && player.selfsaved != true) {
-          selectedPlayer.isSaved = true;
-          selectedPlayer.selfsaved = true;
-          this.dbService.updatePlayer(gameId, selectedPlayer);
+          player.isSaved = true;
+          player.selfsaved = true;
+          this.dbService.updatePlayer(gameId, player);
         }
         if (player.role !== selectedPlayer.role) {
           selectedPlayer.isSaved = true;
@@ -53,6 +56,9 @@ export class RepositoryService {
 
     //detectiv
     if (player.role == 'detectiv') {
+      player.turn = false;
+      player.hasSelect = true;
+      this.dbService.updatePlayer(gameId, player);
       if (selectedPlayer.role == 'godfather' || selectedPlayer.mafia == false) {
         return false;
       } else {
@@ -85,9 +91,9 @@ export class RepositoryService {
           player.role == selectedPlayer.role &&
           selectedPlayer.selfsaved == false
         ) {
-          selectedPlayer.isSaved = true;
-          selectedPlayer.selfsaved = true;
-          this.dbService.updatePlayer(gameId, selectedPlayer);
+          player.isSaved = true;
+          player.selfsaved = true;
+          this.dbService.updatePlayer(gameId, player);
         }
         if (player.role !== selectedPlayer.role) {
           selectedPlayer.isSaved = true;

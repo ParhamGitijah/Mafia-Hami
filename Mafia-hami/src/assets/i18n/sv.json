@@ -73,5 +73,12 @@
   "nightraports": "Utdrag över nätter",
   "close": "stäng",
   "yourrole": "din roll",
-  "removeNight":"Radera natten"
+  "removeNight": "Radera natten",
+  "bodyguard": "Bodyguard",
+  "alertgodfatherkilled": "Gudfadern har dödats. Du utför nattskjutningen. Vem dödar du? (Välj från listan nedan)",
+  "whotosave": "Vem räddar du? (Välj från listan nedan)",
+  "noonetosave": "Det finns ingen spelare att kunna rädda. Klicka för att fortsätta",
+  "sniperactionmessage": "Vem skjuter du? Om du av misstag skjuter en medborgare. Du kommer att dödas själv. (Välj från listan nedan)",
+  "detectivactionmessage": "Vem vill du fråga om? Observera att gudfaderns förfrågan kommer att vara negativ! (Välj från listan nedan)",
+  "godfatheractionmessage": "Du utför nattskjutningen. Vem dödar du? (Välj från listan nedan)"
 }

@@ -2,10 +2,15 @@
   <div *ngIf="!this.isGameFinished && this.playerAlive">
     <div class="container m-0 p-0" *ngIf="this.turn">
       <div class="d-flex justify-content-center">
-        <div class="row mt-3">
+        <div class="row mt-3 justify-content-center">
           <div
-            class="d-flex justify-content-center"
-            style="font-size: 20px; padding-right: 30px"
+            class="d-flex justify-content-center alert alert-primary"
+            style="
+              font-size: 20px;
+              width: 150px;
+              border-radius: 10px;
+              font-weight: bold;
+            "
           >
             {{ (this.player | async)!.role | translate }}
           </div>
@@ -22,10 +27,15 @@
           *ngIf="
             selfRole != 'doctorLekter' &&
             selfRole != 'doctor' &&
-            selfRole != 'mafia'
+            selfRole != 'mafia' &&
+            selfRole != 'bodyguard'
           "
           style="display: contents"
         >
+          <div
+            class="row col-10 justify-content-center alert alert-info m-3"
+            translate="{{ selfRole + 'actionmessage' }}"
+          ></div>
           <div
             *ngFor="let player of this.playerList"
             (click)="selectPlayer(player)"
@@ -37,15 +47,17 @@
             </div>
           </div>
         </div>
+
+        <!-- Doctor lekter -->
         <div *ngIf="selfRole == 'doctorLekter'" style="display: contents">
           <div
             class="m-0 mb-5 row col-10 justify-content-center"
             *ngIf="!isGodfatherAlive()"
           >
-            <div class="d-flex justify-content-center alert alert-info m-4">
-              پدرخوانده کشته شده است. شما شلیک شب را انجام میدهید. چه کسی را
-              میکشید؟ (انتخاب در لیست زیر)
-            </div>
+            <div
+              class="d-flex justify-content-center alert alert-info m-3"
+              translate="alertgodfatherkilled"
+            ></div>
             <div
               *ngFor="let player of this.playerList"
               (click)="selectPlayerToKill(player)"
@@ -55,9 +67,10 @@
               {{ player.name }}
             </div>
           </div>
-          <div class="row col-10 justify-content-center alert alert-info m-4">
-            چه کسی را نجات میدهید؟ (انتخاب در لیست زیر)
-          </div>
+          <div
+            class="row col-10 justify-content-center alert alert-info m-3"
+            translate="whotosave"
+          ></div>
           <div
             *ngFor="let player of this.doctoLekterList"
             (click)="selectPlayerDocLek(player)"
@@ -69,12 +82,17 @@
 
           <div
             *ngIf="this.doctoLekterList.length <= 0"
-            class="row col-10 justify-content-center alert alert-info m-0"
-          >
-            بازیکنی برای نجات وجود ندارد. برای ادامه کلیک کنید
-          </div>
+            class="row col-10 justify-content-center alert alert-light m-0"
+            translate="noonetosave"
+          ></div>
         </div>
+
+        <!-- Doctor medborgare -->
         <div *ngIf="selfRole == 'doctor'" style="display: contents">
+          <div
+            class="row col-10 justify-content-center alert alert-info m-0 mb-3"
+            translate="whotosave"
+          ></div>
           <div
             *ngFor="let player of this.playerList"
             (click)="selectPlayer(player)"
@@ -88,15 +106,20 @@
             </div>
           </div>
         </div>
-        <div *ngIf="selfRole == 'mafia'" style="display: contents">
+
+        <!-- Mafia or bodyguard shoot instead godfather -->
+        <div
+          *ngIf="selfRole == 'mafia' || selfRole == 'bodyguard'"
+          style="display: contents"
+        >
           <div
             class="m-0 mb-5 row col-10 justify-content-center"
             *ngIf="!isGodfatherAlive()"
           >
-            <div class="d-flex justify-content-center alert alert-info m-4">
-              پدرخوانده کشته شده است. شما شلیک شب را انجام میدهید. چه کسی را
-              میکشید؟ (انتخاب در لیست زیر)
-            </div>
+            <div
+              class="d-flex justify-content-center alert alert-info m-4"
+              translate="alertgodfatherkilled"
+            ></div>
             <div
               *ngFor="let player of this.playerList"
               (click)="selectPlayerToKill(player)"
@@ -113,7 +136,8 @@
             [disabled]="
               (!this.playerSelected &&
                 this.emptyList != true &&
-                selfRole != 'mafia') ||
+                selfRole != 'mafia' &&
+                selfRole != 'bodyguard') ||
               (!this.playerToKillSelect && this.playerToKillSelectReq)
             "
             class="btn m-3 btn-primary col-4 shadow-lg p-2 mb-5 rounded"

@@ -24,7 +24,8 @@ export class NightComponent implements OnInit {
   faUser = faUserCheck;
   faSkullCrossbones = faSkullCrossbones;
   hasAllPlayersMoved: boolean = false;
-  hasAnyPlayerMoved: boolean=false;
+  hasAnyPlayerMoved: boolean = false;
+  hasAnyPlayerTurnOn: boolean = false;
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
   @Input() gameSummaryLeft!: number;
   constructor(
@@ -40,11 +41,13 @@ export class NightComponent implements OnInit {
     }
     this.dBService.getPlayers(this.gameId).subscribe((x) => {
       this.playerList = x;
-      this.playerList.forEach(player => {
-        console.log(player);
-        if(player.hasSelect==true){
-          this.hasAnyPlayerMoved=true;
-        } 
+      this.playerList.forEach((player) => {
+        if (player.hasSelect == true) {
+          this.hasAnyPlayerMoved = true;
+        }
+        if (player.turn) {
+          this.hasAnyPlayerTurnOn = true;
+        }
       });
       var diehard = this.playerList.find((x) => x.role == 'diehard');
       if (
@@ -52,6 +55,7 @@ export class NightComponent implements OnInit {
           (x) =>
             x.hasSelect == false &&
             x.role != 'mafia' &&
+            x.role != 'bodyguard' &&
             x.alive &&
             x.role != 'medborgare' &&
             x.role != 'diehard'
@@ -72,6 +76,21 @@ export class NightComponent implements OnInit {
 
   EndNight() {
     this.dBService.updateNight(this.gameId, false);
+    var godfather = this.playerList.filter((x) => x.role == 'godfather');
+    var bodygurd = this.playerList.filter((x) => x.role == 'bodyguard');
+    if (
+      godfather[0].life <= 0 &&
+      godfather[0].alive == true &&
+      godfather[0].isSaved == false &&
+      bodygurd[0] !== undefined &&
+      bodygurd[0].alive == true
+    ) {
+      bodygurd[0].life = 0;
+      bodygurd[0].alive = false;
+      godfather[0].life = 1;
+      godfather[0].alive = true;
+    }
+
     this.playerList.forEach((player) => {
       player.hasSelect = false;
       player.turn = false;
@@ -89,6 +108,7 @@ export class NightComponent implements OnInit {
       player.isSaved = false;
       this.dBService.updatePlayer(this.gameId, player);
     });
+
     this.closeModal.emit();
     if (
       this.playerList.filter((x) => x.alive && x.mafia).length >=
@@ -119,14 +139,16 @@ export class NightComponent implements OnInit {
     this.dBService.storeActionAtNight(this.gameId, player, 'No');
   }
 
-  CloseNight(){
-    var lastNight=new Night();
-    this.dBService.getNights(this.gameId).pipe(take(1)).subscribe((x:any)=>{
-      lastNight.id=x[x.length-1].id;
-      this.dBService.removeNight(this.gameId,lastNight.id);
-    }
-      );
-    
+  CloseNight() {
+    var lastNight = new Night();
+    this.dBService
+      .getNights(this.gameId)
+      .pipe(take(1))
+      .subscribe((x: any) => {
+        lastNight.id = x[x.length - 1].id;
+        this.dBService.removeNight(this.gameId, lastNight.id);
+      });
+
     this.closeModal.emit();
   }
 }

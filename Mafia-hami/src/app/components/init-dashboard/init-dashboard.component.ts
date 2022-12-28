@@ -114,13 +114,13 @@ export class InitDashboardComponent implements OnInit {
     this.hostId = crypto.randomUUID();
     this.gameId = this.dbService.initGame(this.hostId);
 
-    for (let index = 0; index < 6; index++) {
-      var player = new Player();
-      player.id = crypto.randomUUID();
-      // player.name = this.userName!;
-      player.name = this.randomString(4);
-      this.dbService.setPlayers(this.gameId!, player);
-    }
+    // for (let index = 0; index < 6; index++) {
+    //   var player = new Player();
+    //   player.id = crypto.randomUUID();
+    //   // player.name = this.userName!;
+    //   player.name = this.randomString(4);
+    //   this.dbService.setPlayers(this.gameId!, player);
+    // }
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -150,7 +150,8 @@ export class InitDashboardComponent implements OnInit {
 
     let rolesToAssign = this.shuffleCards(array);
     let i = 0;
-    this.playerList.forEach((x) => {
+    let shuffledPlayerList = this.shuffleCards(this.playerList);
+    shuffledPlayerList.forEach((x) => {
       this.dbService.updatePlayerRole(this.gameId, x.id, rolesToAssign[i++]);
     });
     this.dbService.startGame(this.gameId);
@@ -178,7 +179,7 @@ export class InitDashboardComponent implements OnInit {
     ];
     for (let index = 6; index < this.playerList.length; index++) {
       if (index == 8) {
-        array.push({ role: 'mafia', mafia: true, life: 1 });
+        array.push({ role: 'bodyguard', mafia: true, life: 2 });
       } else {
         if (index == 11) {
           array.push({ role: 'mafia', mafia: true, life: 1 });
@@ -194,7 +195,7 @@ export class InitDashboardComponent implements OnInit {
     return array;
   }
 
-  shuffleCards(array: Array<Role>) {
+  shuffleCards(array: Array<any>) {
     var m = array.length,
       t,
       i;

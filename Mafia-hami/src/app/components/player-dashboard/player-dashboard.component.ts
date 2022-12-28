@@ -65,28 +65,31 @@ export class PlayerDashboardComponent implements OnInit {
               ).value;
               this.winner = x.find((c: any) => c.key == 'winner').value;
             }
-            this.dbService.getPlayers(this.gameId).subscribe((x: Player[]) => {
-              let player = x.find((x) => x.id == this.playerId);
-              if (player) {
-                if (player.role == 'doctor' && !player.selfsaved) {
-                  this.playerList = x.filter((x) => x.alive == true);
-                } else {
-                  this.playerList = x.filter(
-                    (x) => x.alive == true && x.id != this.playerId
+            this.dbService
+              .getPlayers(this.gameId)
+              .pipe(take(1))
+              .subscribe((x: Player[]) => {
+                let player = x.find((x) => x.id == this.playerId);
+                if (player) {
+                  if (player.role == 'doctor' && !player.selfsaved) {
+                    this.playerList = x.filter((x) => x.alive == true);
+                  } else {
+                    this.playerList = x.filter(
+                      (x) => x.alive == true && x.id != this.playerId
+                    );
+                  }
+                  this.doctoLekterList = cloneDeep(
+                    x.filter((x) => x.alive == true && x.mafia && !x.selfsaved)
                   );
+                  if (this.doctoLekterList.length <= 0) {
+                    this.emptyList = true;
+                  }
+                  this.playerAlive = player.alive;
+                  this.selfRole = player.role;
+                  this.turn = player.turn;
+                  this.player = of(player);
                 }
-                this.doctoLekterList = cloneDeep(
-                  x.filter((x) => x.alive == true && x.mafia && !x.selfsaved)
-                );
-                if (this.doctoLekterList.length <= 0) {
-                  this.emptyList = true;
-                }
-                this.playerAlive = player.alive;
-                this.selfRole = player.role;
-                this.turn = player.turn;
-                this.player = of(player);
-              }
-            });
+              });
           }
         });
       });
@@ -116,6 +119,7 @@ export class PlayerDashboardComponent implements OnInit {
 
   selectPlayerDocLek(player: Player) {
     this.playerSelected = player;
+    console.log('1');
     for (let index = 0; index < this.doctoLekterList.length; index++) {
       if (this.doctoLekterList[index].id != player.id) {
         this.doctoLekterList[index].selected = false;

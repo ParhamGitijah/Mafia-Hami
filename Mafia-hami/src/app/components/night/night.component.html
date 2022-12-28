@@ -1,5 +1,5 @@
 <div [dir]="this.dir">
-  <div style="overflow: scroll; height: 100vh;">
+  <div style="overflow: scroll; height: 100vh">
     <div
       translate="cityGroup"
       class="d-flex justify-content-center align-items-center mb-3 p-3"
@@ -214,7 +214,7 @@
         translate="endthenight"
       ></button>
       <button
-        [disabled]="hasAnyPlayerMoved"
+        [disabled]="hasAnyPlayerMoved || hasAnyPlayerTurnOn"
         type="button"
         class="btn btn-outline-danger col-12 mt-3"
         (click)="CloseNight()"

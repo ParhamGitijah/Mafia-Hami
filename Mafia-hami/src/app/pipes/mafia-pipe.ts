@@ -4,10 +4,13 @@ import { Player } from '../model/player';
 @Pipe({ name: 'mafia' })
 export class MafiaPipe implements PipeTransform {
   transform(allPlayers: Player[]) {
+    if (allPlayers.length <= 0) {
+      return allPlayers;
+    }
     if (
       allPlayers.filter(
         (player: Player) =>
-          player.alive &&
+          player.alive == true &&
           (player.role == 'godfather' || player.role == 'doctorLekter')
       ).length <= 0
     ) {
@@ -20,10 +23,14 @@ export class MafiaPipe implements PipeTransform {
       if (simpleMafia !== undefined) {
         result.push(simpleMafia);
       }
-      return result;
+      var resultToReturn = new Array<Player>();
+      resultToReturn.push(result[0]);
+      return resultToReturn;
     } else {
       return allPlayers.filter(
-        (player: Player) => player.mafia && player.role !== 'mafia'
+        (player: Player) =>
+          player.mafia &&
+          (player.role == 'godfather' || player.role == 'doctorLekter')
       );
     }
   }
