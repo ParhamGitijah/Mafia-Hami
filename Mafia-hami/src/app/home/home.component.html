@@ -1,109 +1,156 @@
-<div>
-  <div class="image" style="background-image: url('../../assets/Mafia.jpg')">
-    <div
-      class="row align-items-center justify-content-center m-0 p-0"
-      style="height: 100vh; width: 100vw"
-    >
-      <div class="row justify-content-center" *ngIf="!showJoin">
-        <div class="m-3 d-flex justify-content-center">
-          <button
-            class="btn btn-primary btn-lg"
-            (click)="createNewGame()"
-            translate="startNewGame"
-          ></button>
-        </div>
-        <div class="m-3 d-flex justify-content-center">
-          <button
-            type="button"
-            class="btn btn-secondary btn-lg"
-            (click)="showJoinInput()"
-            translate="joinGame"
-          ></button>
-        </div>
-        <div class="input-group m-3 d-flex justify-content-center">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01"
-              >Language</label
+<ion-content>
+  <div class="mainContainer" *ngIf="!cameraActive">
+    <div class="image" style="background-image: url('../../assets/Mafia.jpg')">
+      <div
+        class="row align-items-center justify-content-center m-0 p-0"
+        style="height: 100vh; width: 100vw"
+      >
+        <div class="row justify-content-center" *ngIf="!showJoin">
+          <div class="m-3 d-flex justify-content-center">
+            <button
+              class="btn btn-primary btn-lg"
+              (click)="createNewGame()"
+              translate="startNewGame"
+            ></button>
+          </div>
+          <div class="m-3 d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn btn-secondary btn-lg"
+              (click)="showJoinInput()"
+              translate="joinGame"
+            ></button>
+          </div>
+          <div class="input-group m-3 d-flex justify-content-center">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01"
+                >Language</label
+              >
+            </div>
+            <select
+              ngModel="fa"
+              (ngModelChange)="langChoosed($event)"
+              class="custom-select"
+              id="inputGroupSelect01"
             >
+              <option value="fa">فارسی</option>
+              <option value="en">English</option>
+              <option value="sv">Svenska</option>
+            </select>
           </div>
-          <select
-            ngModel="fa"
-            (ngModelChange)="langChoosed($event)"
-            class="custom-select"
-            id="inputGroupSelect01"
+        </div>
+        <div class="row justify-content-center" *ngIf="showJoin">
+          <div
+            *ngIf="this.gameStartedError"
+            class="d-flex alert alert-danger justify-content-center"
+            role="alert"
           >
-            <option value="fa">فارسی</option>
-            <option value="en">English</option>
-            <option value="sv">Svenska</option>
-          </select>
-        </div>
-      </div>
-      <div class="row justify-content-center" *ngIf="showJoin">
-        <div *ngIf="this.gameStartedError" class="d-flex alert alert-danger justify-content-center" role="alert">
-          این بازی شروع شده است. یک شماره ی دیگر وارد کنید
-        </div>
-        <div *ngIf="this.playerExistError" class="d-flex alert alert-danger justify-content-center" role="alert">
-          این بازی شروع شده است. یک شماره ی دیگر وارد کنید
-        </div>
-        <div class="m-3 d-flex justify-content-center">
-          <div class="input-group has-validation">
-            <span
-              class="input-group-text"
-              style="width: auto"
-              translate="gameId"
-            ></span>
-            <div class="form-floating">
-              <input
-                [(ngModel)]="newGameId"
-                type="text"
-                class="form-control"
-                id="floatingInputGroup2"
-                placeholder="GameId"
-                required
-              />
-              <label
-                for="floatingInputGroup2"
-                style="font-size: 14px; color: grey"
-                translate="enterGameId"
-              ></label>
+            این بازی شروع شده است. یک شماره ی دیگر وارد کنید
+          </div>
+          <div
+            *ngIf="this.playerExistError"
+            class="d-flex alert alert-danger justify-content-center"
+            role="alert"
+          >
+            این بازی شروع شده است. یک شماره ی دیگر وارد کنید
+          </div>
+          <div class="m-3 d-flex justify-content-center">
+            <div class="input-group has-validation">
+              <span
+                class="input-group-text"
+                style="width: auto"
+                translate="gameId"
+              ></span>
+              <div class="form-floating">
+                <input
+                  [(ngModel)]="newGameId"
+                  type="text"
+                  class="form-control"
+                  id="floatingInputGroup2"
+                  placeholder="GameId"
+                  required
+                />
+                <label
+                  for="floatingInputGroup2"
+                  style="font-size: 14px; color: grey"
+                  translate="enterGameId"
+                ></label>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="m-3 d-flex justify-content-center">
-          <div class="input-group has-validation">
-            <span
-              class="input-group-text"
-              style="width: auto"
-              translate="yourName"
-            ></span>
-            <div class="form-floating">
-              <input
-                [(ngModel)]="userName"
-                type="text"
-                class="form-control"
-                id="floatingInputGroup2"
-                placeholder="Username"
-                required
-              />
-              <label
-                for="floatingInputGroup2"
-                style="font-size: 14px; color: grey"
-                translate="enterName"
-              ></label>
+          <div class="m-3 d-flex justify-content-center">
+            <div class="input-group has-validation">
+              <span
+                class="input-group-text"
+                style="width: auto"
+                translate="yourName"
+              ></span>
+              <div class="form-floating">
+                <input
+                  [(ngModel)]="userName"
+                  type="text"
+                  class="form-control"
+                  id="floatingInputGroup2"
+                  placeholder="Username"
+                  required
+                />
+                <label
+                  for="floatingInputGroup2"
+                  style="font-size: 14px; color: grey"
+                  translate="enterName"
+                ></label>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="m-3 d-flex justify-content-center">
-          <button
-            type="button"
-            class="btn btn-primary btn-lg col-12"
-            (click)="joinGame()"
-            [disabled]="!(newGameId && userName)"
-            translate="joinGame"
-          ></button>
+          <div
+            class="m-3 d-flex flex-column justify-content-center align-items-center"
+          >
+            <img
+              *ngIf="image == null"
+              src="./assets/emptyprofile.png"
+              class="img-preview m-3"
+            />
+            <img *ngIf="image != null" class="img-preview m-3" [src]="image" />
+            <button
+              type="button"
+              class="btn btn-primary btn-lg col-12 m-3"
+              (click)="openCamera()"
+            >
+              عکس پروفایل بگیرید
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary btn-lg col-12"
+              (click)="joinGame()"
+              [disabled]="!(newGameId && userName)"
+              translate="joinGame"
+            ></button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<app-player-dashboard></app-player-dashboard>
+  <app-player-dashboard></app-player-dashboard>
+
+  <div id="cameraPreview" class="cameraPreview p-0 m-0">
+    <div *ngIf="cameraActive">
+      <img src="./assets/facelayout.png" class="image-overlay" />
+      <ion-button
+        color="danger"
+        (click)="stopCamera()"
+        expand="block"
+        id="close"
+      >
+        <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="captureImage()" expand="block" id="capture">
+        <ion-icon name="camera" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="flipCamera()" expand="block" id="flip">
+        <ion-icon name="camera-reverse" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -47,6 +47,7 @@ export class DBService {
       hasSelect: false,
       isSaved: false,
       selfsaved: false,
+      image: player.image,
     });
   }
 

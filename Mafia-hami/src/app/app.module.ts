@@ -32,7 +32,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NightraportComponent } from './components/slide-out/night-raport/nightraport/nightraport.component';
-
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 export const firebaseConfig = {
   apiKey: 'AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4',
   authDomain: 'mafiahami.firebaseapp.com',
@@ -62,6 +62,7 @@ export const firebaseConfig = {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    IonicModule.forRoot(),
     HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,

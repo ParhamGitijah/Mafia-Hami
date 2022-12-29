@@ -7,6 +7,11 @@ import { Router } from '@angular/router';
 import { Player } from '../model/player';
 import { take } from 'rxjs';
 
+import {
+  CameraPreview,
+  CameraPreviewOptions,
+  CameraPreviewPictureOptions,
+} from '@capacitor-community/camera-preview';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -22,8 +27,10 @@ export class HomeComponent implements OnInit {
   userName: string | undefined;
   player: Player = new Player();
   dir!: string;
-  gameStartedError:boolean=false;
-  playerExistError:boolean=false;
+  cameraActive = false;
+  image: any = null;
+  gameStartedError: boolean = false;
+  playerExistError: boolean = false;
   constructor(
     private dbService: DBService,
     private router: Router,
@@ -59,8 +66,10 @@ export class HomeComponent implements OnInit {
       .getGame(this.newGameId)
       .pipe(take(1))
       .subscribe((x: Array<any>) => {
-        if (x.length > 0 && x.find((c: any) => c.key == 'gameStarted').value==false) {
-          
+        if (
+          x.length > 0 &&
+          x.find((c: any) => c.key == 'gameStarted').value == false
+        ) {
           // for (let index = 0; index < 7; index++) {
           //   this.player.id = crypto.randomUUID();
           //   // this.player.name = this.userName!;
@@ -68,10 +77,10 @@ export class HomeComponent implements OnInit {
           //   this.dbService.setPlayers(this.newGameId!, this.player);
           //   this.router.navigate(['/init-dashboard', this.newGameId]);
           // }
-          
+
           this.player.id = crypto.randomUUID();
           this.player.name = this.userName!;
-
+          this.player.image = this.image;
           this.dbService.setPlayers(this.newGameId!, this.player);
           this.router.navigate([
             '/init-dashboard',
@@ -81,7 +90,7 @@ export class HomeComponent implements OnInit {
         } else {
           //show error
           this.newGameId = undefined;
-          this.gameStartedError=true;
+          this.gameStartedError = true;
         }
       });
   }
@@ -100,5 +109,33 @@ export class HomeComponent implements OnInit {
 
   langChoosed(lang: string) {
     this.ngZone.run(() => this.translate.use(lang));
+  }
+
+  async openCamera() {
+    const cameraPreviewOptions: CameraPreviewOptions = {
+      position: 'rear',
+      parent: 'cameraPreview',
+      className: 'cameraPreview',
+    };
+    await CameraPreview.start(cameraPreviewOptions);
+    this.cameraActive = true;
+  }
+
+  async flipCamera() {
+    await CameraPreview.flip();
+  }
+
+  async stopCamera() {
+    await CameraPreview.stop();
+    this.cameraActive = false;
+  }
+  async captureImage() {
+    const cameraPreviewPicOptions: CameraPreviewPictureOptions = {
+      quality: 90,
+    };
+
+    const result = await CameraPreview.capture(cameraPreviewPicOptions);
+    this.image = `data:image/jpeg;base64,${result.value}`;
+    await this.stopCamera();
   }
 }

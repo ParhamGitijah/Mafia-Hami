@@ -34,72 +34,83 @@
   </div>
 
   <div *ngIf="!this.gameStarted" style="margin-top: 150px; text-align: center">
-    <div *ngIf="!this.newGameStart">
+    <div
+      *ngIf="!this.newGameStart"
+      class="d-flex flex-row justify-content-center flex-wrap gap-3"
+    >
       <div
-        class="mt-3 row d-flex align-items-center justify-content-center"
-        style="
-          border-radius: 15px;
-          background-color: rgb(0, 139, 177);
-          color: white;
-          font-size: 16px;
-          width: 75%;
-          font-weight: bold;
-          height: 50px;
-          margin-left: auto;
-          margin-right: auto;
-        "
         *ngFor="let item of this.playerList"
+        class="d-inline-flex flex-column gap-0 mb-3"
+        style="
+          width: 45%;
+          background: linear-gradient(150deg, #0ff0b3, #036ed9 100%);
+
+          border-radius: 10px;
+        "
       >
-        {{ item.name }}
+        <div>
+          <img *ngIf="item.image" [src]="item.image" class="image-avatar" />
+          <img
+            *ngIf="!item.image"
+            src="./assets/emptyprofile.png"
+            class="image-avatar"
+          />
+        </div>
+        <p
+          class="flex-wrap"
+          style="
+            font-size: 16px;
+            font-weight: bold;
+            min-width: 0;
+            margin-top: -15px;
+          "
+        >
+          {{ item.name }}
+        </p>
+      </div>
+      <div
+        *ngIf="!isUserHost"
+        class="d-flex align-items-center col-12 justify-content-center"
+        style="color: rgb(0, 0, 0); font-size: 22px; font-weight: bold"
+        translate="waitingForHost"
+      ></div>
+      <div
+        *ngIf="isUserHost && this.playerList.length > 0"
+        class="row col-12 align-items-center justify-content-center"
+      >
+        <div
+          class="d-flex col-12 align-items-center justify-content-center m-3"
+          *ngIf="this.playerList.length < 6"
+          style="color: rgb(0, 0, 0)"
+          translate="minPlayersReq"
+        ></div>
+        <button
+          [disabled]="this.playerList.length < 6"
+          class="btn col-5 btn-primary m-3"
+          style="text-align: center"
+          (click)="startTheGame(playerList)"
+          translate="dealRolesSlump"
+        ></button>
       </div>
     </div>
     <div
-      *ngIf="!isUserHost"
-      class="d-flex align-items-center justify-content-center"
-      style="color: rgb(0, 0, 0); font-size: 22px; font-weight: bold"
-      translate="waitingForHost"
-    ></div>
-    <div
-      *ngIf="isUserHost && this.playerList.length > 0"
-      class="row align-items-center justify-content-center"
+      class="row d-flex align-items-center justify-content-center mt-3 p-0"
+      *ngIf="!this.gameStarted"
     >
-      <div
-        class="d-flex align-items-center justify-content-center m-3"
-        *ngIf="this.playerList.length < 6"
-        style="color: rgb(0, 0, 0)"
-        translate="minPlayersReq"
-      ></div>
       <button
-        [disabled]="this.playerList.length < 6"
-        class="btn btn-primary m-3"
-        style="
-          width: 45%;
-          margin-left: auto;
-          margin-right: auto;
-          left: 0;
-          right: 0;
-          text-align: center;
-        "
-        (click)="startTheGame(playerList)"
-        translate="dealRolesSlump"
+        (click)="playerExit()"
+        class="btn btn-danger p-2 m-0"
+        style="text-align: center; width: 22%"
+        translate="exit"
       ></button>
     </div>
   </div>
-  <div class="row d-flex align-items-center justify-content-center mt-3 p-0">
-    <button
-      *ngIf="!this.gameStarted"
-      (click)="playerExit()"
-      class="btn btn-danger p-2 m-0"
-      style="text-align: center; width: 22%"
-      translate="exit"
-    ></button>
-  </div>
   <div
     *ngIf="!this.showPlayerRole && this.gameStarted"
-    class="d-flex flex-column justify-content-center align-items-center"
+    class="d-inline-flex flex-column justify-content-center align-items-center"
     style="height: 100vh; font-size: 25px"
   >
-    <div translate="yourRoleWillShow"></div>
+    <div class="text-center mb-3" translate="yourRoleWillShow"></div>
     <div style="font-weight: bold">
       {{ timeLeft }}
     </div>

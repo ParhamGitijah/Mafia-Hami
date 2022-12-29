@@ -1,34 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap";
-
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
 .offcanvas,
 .offcanvas-xxl,
 .offcanvas-xl,
 .offcanvas-lg,
 .offcanvas-md,
 .offcanvas-sm {
-    --bs-offcanvas-zindex: 1045;
-    --bs-offcanvas-width: 400px;
-    --bs-offcanvas-height: 100vh !important;
-    --bs-offcanvas-padding-x: 1rem;
-    --bs-offcanvas-padding-y: 1rem;
-    --bs-offcanvas-color: ;
-    --bs-offcanvas-bg: #fff;
-    --bs-offcanvas-border-width: 1px;
-    --bs-offcanvas-border-color: var(--bs-border-color-translucent);
-    --bs-offcanvas-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --bs-offcanvas-zindex: 1045;
+  --bs-offcanvas-width: 400px;
+  --bs-offcanvas-height: 100vh !important;
+  --bs-offcanvas-padding-x: 1rem;
+  --bs-offcanvas-padding-y: 1rem;
+  --bs-offcanvas-color: ;
+  --bs-offcanvas-bg: #fff;
+  --bs-offcanvas-border-width: 1px;
+  --bs-offcanvas-border-color: var(--bs-border-color-translucent);
+  --bs-offcanvas-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
-html{
-padding: 0px 0px 0px 0px;
-margin: 0px 0px 0px 0px;
+html {
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
 }
 
 body {
   height: 100%;
   padding-top: env(safe-area-inset-top);
 }
-
 
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;

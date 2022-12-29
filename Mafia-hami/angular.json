@@ -41,9 +41,7 @@
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.js"
-            ],
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.js"],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"
           },
@@ -70,15 +68,17 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
+              "outputHashing": "all",
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "budgets": []
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -111,9 +111,7 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }

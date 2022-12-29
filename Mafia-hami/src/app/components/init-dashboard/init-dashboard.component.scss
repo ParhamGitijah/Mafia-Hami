@@ -5,6 +5,19 @@
   animation-fill-mode: forwards;
 }
 
+.image-avatar {
+  object-fit: cover;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  position: relative;
+  top: -25%;
+}
+//   vertical-align: middle;
+//   object-fit: cover;
+//   width: 250px;
+//   height: 250px;
+//   border-radius: 50%;
 .cardRole {
   background-color: antiquewhite;
   border-radius: 65px;
