@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@capacitor-community/camera-preview": "^4.0.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
