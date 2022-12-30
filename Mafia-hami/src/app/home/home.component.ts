@@ -12,6 +12,8 @@ import {
   CameraPreviewOptions,
   CameraPreviewPictureOptions,
 } from '@capacitor-community/camera-preview';
+import { Camera, CameraResultType } from '@capacitor/camera';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -112,10 +114,17 @@ export class HomeComponent implements OnInit {
   }
 
   async openCamera() {
+    // const image = await Camera.getPhoto({
+    //   quality: 90,
+    //   allowEditing: true,
+    //   resultType: CameraResultType.Uri
+    // });
     const cameraPreviewOptions: CameraPreviewOptions = {
-      position: 'rear',
+      position: 'front',
       parent: 'cameraPreview',
       className: 'cameraPreview',
+      disableAudio:true,
+      toBack:true
     };
     await CameraPreview.start(cameraPreviewOptions);
     this.cameraActive = true;

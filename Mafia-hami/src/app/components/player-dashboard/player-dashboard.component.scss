@@ -79,6 +79,32 @@ img {
   color: white;
 }
 
+.image-avatar {
+  object-fit: cover;
+  width: auto;
+  height: 100;
+  border-radius: 100%;
+  position: relative;
+  top: -25%;
+  right: -20%;
+}
+
+.playerSelectItem{
+  margin: 16px;
+  width: 40%;      
+  border-radius: 10px;
+  justify-content: center;
+}
+
+.namePlayer{
+  font-size: 16px;
+  font-weight: bold;
+  min-width: 0;
+  color: black;
+  position: relative;
+  right: -10px;
+}
+
 // .selectDiv:focus{
 //     color: white;
 //     background-color: rgb(235, 148, 8);
@@ -177,5 +203,42 @@ img {
   100% {
     color: lime;
     text-shadow: none;
+  }
+}
+
+.roleStyleClass{
+justify-content:center;
+}
+
+@media screen and (min-width:500px) {
+  .playerSelectItem{
+    width: 20%;    
+    margin: 16px;
+    border-radius: 10px;
+  }
+  .roleStyleClass{
+    justify-content:center;
+  }
+}
+
+@media screen and (max-width:380px) {
+  .playerSelectItem{
+    width: 80%; 
+    height: 100px;   
+    margin: 16px;
+    border-radius: 10px;
+    justify-content:center;
+  }
+  .roleStyleClass{
+    justify-content:center;
+  }
+  .image-avatar {
+    object-fit: cover;
+    width: auto;
+    height: 60%;
+    border-radius: 50%;
+    position: relative;
+    top: -40%;
+    right: -18%;
   }
 }

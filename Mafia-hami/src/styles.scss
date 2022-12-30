@@ -41,3 +41,117 @@ body {
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+html, body {
+  background-color: transparent;
+}
+
+body.camera-transparent, .camera-transparent ion-nav-view, .camera-transparent ion-view { background-color: transparent !important; } 
+
+
+
+ion-content {
+  --background: transparent!important;
+}
+.overlay{
+position:absolute;
+height: 100%;
+width: 100%;
+z-index: 10;
+}
+.image {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  position: absolute;
+  background-size: contain;
+}
+
+ion-col {
+  background-color: #135d54;
+  border: solid 1px #fff;
+  color: #fff;
+  text-align: center;
+}
+
+.image-overlay {
+  position: absolute;
+  background: transparent;
+  top: 30%;
+  left: 17%;
+  width: 65%;
+  height: 30%;
+  z-index: 1;
+}
+
+.cameraPreview {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+  position: absolute;
+}
+
+.someStyle{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100;
+}
+
+.mainContainer {
+  position: absolute;
+  z-index: 1000;
+}
+#capture {
+  position: absolute;
+  bottom: 30px;
+  left: calc(50% - 25px);
+  width: 50px;
+  height: 50px;
+  z-index: 11;
+}
+
+#close {
+  position: absolute;
+  bottom: 30px;
+  left: calc(50% - 175px);
+  width: 50px;
+  height: 50px;
+  z-index: 11;
+}
+
+#flip {
+  position: absolute;
+  bottom: 30px;
+  left: calc(50% + 125px);
+  width: 50px;
+  height: 50px;
+  z-index: 200;
+}
+
+#close::part(native) {
+  border-radius: 30px;
+  background-color: darkred;
+}
+#capture::part(native) {
+  border-radius: 30px;
+}
+#flip::part(native) {
+  border-radius: 30px;
+}
+.circular-square {
+  border-radius: 50%;
+  background-color: red;
+}
+
+.img-preview {
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+}
+
+body { background: transparent !important;background-color: transparent !important; }
+ion-content { --background: transparent !important; background-color: transparent !important; }

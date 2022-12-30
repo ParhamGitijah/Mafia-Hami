@@ -1,4 +1,4 @@
-<div [dir]="this.dir">
+<div [dir]="this.dir" style="overflow-y:scroll; height: 100%;">
   <div *ngIf="!this.isGameFinished && this.playerAlive">
     <div class="container m-0 p-0" *ngIf="this.turn">
       <div class="d-flex justify-content-center">
@@ -39,45 +39,90 @@
           <div
             *ngFor="let player of this.playerList"
             (click)="selectPlayer(player)"
-            class="col-5 selectDiv text-center m-2 p-3"
-            [ngClass]="{ select: !player.selected }"
+            class="d-flex col-4 flex-row gap-2 align-items-center playerSelectItem"
+            [style.background-color]="!player.selected?'rgb(203, 240, 252)':'rgb(93, 214, 255)'"
           >
-            <div *ngIf="player.alive && player.id != playerId">
-              {{ player.name }}
+              <img *ngIf="player.image" [src]="player.image" class="image-avatar" />
+            <img
+              *ngIf="!player.image"
+              src="./assets/emptyprofile.png"
+              class="image-avatar"
+            />
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name={{player.id}} id={{player.id}} [checked]="player.selected">
+              <label class="form-check-label" for={{player.id}}>
+                <p
+                class="flex-wrap m-0 namePlayer"
+              >
+                {{ player.name }}
+              </p>
+              </label>
             </div>
           </div>
         </div>
 
         <!-- Doctor lekter -->
-        <div *ngIf="selfRole == 'doctorLekter'" style="display: contents">
+        <div *ngIf="selfRole == 'doctorLekter'" class="row col-12 roleStyleClass">
           <div
             class="m-0 mb-5 row col-10 justify-content-center"
             *ngIf="!isGodfatherAlive()"
           >
             <div
-              class="d-flex justify-content-center alert alert-info m-3"
+              class="d-flex alert justify-content-center alert-info m-3"
               translate="alertgodfatherkilled"
             ></div>
             <div
               *ngFor="let player of this.playerList"
               (click)="selectPlayerToKill(player)"
-              class="col-5 selectDiv text-center m-2 p-3"
-              [ngClass]="{ select: !player.selected }"
+              class="d-flex col-4 flex-row gap-2 align-items-center playerSelectItem"
+              [style.background-color]="!player.selected?'rgb(203, 240, 252)':'rgb(93, 214, 255)'"
             >
-              {{ player.name }}
+            <img *ngIf="player.image" [src]="player.image" class="image-avatar" />
+            <img
+              *ngIf="!player.image"
+              src="./assets/emptyprofile.png"
+              class="image-avatar"
+            />
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name={{player.id}} id={{player.id}} [checked]="player.selected">
+              <label class="form-check-label" for={{player.id}}>
+                <p
+                class="flex-wrap m-0 namePlayer"
+              >
+                {{ player.name }}
+              </p>
+              </label>
+            </div>
             </div>
           </div>
           <div
-            class="row col-10 justify-content-center alert alert-info m-3"
+            class="row col-10 justify-content-center alert alert-info"
             translate="whotosave"
           ></div>
           <div
             *ngFor="let player of this.doctoLekterList"
             (click)="selectPlayerDocLek(player)"
-            class="col-5 selectDiv text-center m-2 p-3"
-            [ngClass]="{ select: !player.selected }"
+            class="d-flex col-4 flex-row gap-2 align-items-center playerSelectItem"
+            [style.background-color]="!player.selected?'rgb(203, 240, 252)':'rgb(93, 214, 255)'"
           >
-            {{ player.name }}
+
+            <img *ngIf="player.image" [src]="player.image" class="image-avatar" />
+            <img
+              *ngIf="!player.image"
+              src="./assets/emptyprofile.png"
+              class="image-avatar"
+            />
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name={{player.id}} id={{player.id}} [checked]="player.selected">
+              <label class="form-check-label" for={{player.id}}>
+                <p
+                class="flex-wrap m-0 namePlayer"
+              >
+                {{ player.name }}
+              </p>
+              </label>
+            </div>
+
           </div>
 
           <div
@@ -96,14 +141,27 @@
           <div
             *ngFor="let player of this.playerList"
             (click)="selectPlayer(player)"
-            class="col-5 selectDiv text-center m-2 p-3"
-            [ngClass]="{ select: !player.selected }"
+            class="d-flex col-4 flex-row gap-2 align-items-center playerSelectItem"
+              [style.background-color]="!player.selected?'rgb(203, 240, 252)':'rgb(93, 214, 255)'"
           >
-            <div *ngIf="player.alive == true">
-              <div *ngIf="!(player.role == 'doctor' && player.selfsaved)">
+              <ng-container *ngIf="!(player.role == 'doctor' && player.selfsaved)">
+                <img *ngIf="player.image" [src]="player.image" class="image-avatar" />
+            <img
+              *ngIf="!player.image"
+              src="./assets/emptyprofile.png"
+              class="image-avatar"
+            />
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name={{player.id}} id={{player.id}} [checked]="player.selected">
+              <label class="form-check-label" for={{player.id}}>
+                <p
+                class="flex-wrap m-0 namePlayer"
+              >
                 {{ player.name }}
-              </div>
+              </p>
+              </label>
             </div>
+              </ng-container>
           </div>
         </div>
 
@@ -123,10 +181,25 @@
             <div
               *ngFor="let player of this.playerList"
               (click)="selectPlayerToKill(player)"
-              class="col-5 selectDiv text-center m-2 p-3"
-              [ngClass]="{ select: !player.selected }"
+              class="d-flex col-4 flex-row gap-2 align-items-center playerSelectItem"
+              [style.background-color]="!player.selected?'rgb(203, 240, 252)':'rgb(93, 214, 255)'"
             >
-              {{ player.name }}
+            <img *ngIf="player.image" [src]="player.image" class="image-avatar" />
+            <img
+              *ngIf="!player.image"
+              src="./assets/emptyprofile.png"
+              class="image-avatar"
+            />
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name={{player.id}} id={{player.id}} [checked]="player.selected">
+              <label class="form-check-label" for={{player.id}}>
+                <p
+                class="flex-wrap m-0 namePlayer"
+              >
+                {{ player.name }}
+              </p>
+              </label>
+            </div>
             </div>
           </div>
         </div>
