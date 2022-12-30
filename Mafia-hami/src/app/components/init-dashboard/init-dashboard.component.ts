@@ -114,14 +114,14 @@ export class InitDashboardComponent implements OnInit {
     this.hostId = crypto.randomUUID();
     this.gameId = this.dbService.initGame(this.hostId);
 
-    for (let index = 0; index < 9; index++) {
-      var player = new Player();
-      player.id = crypto.randomUUID();
-      // player.name = this.userName!;
-      player.name = this.randomString(15);
-      player.image = new Array();
-      this.dbService.setPlayers(this.gameId!, player);
-    }
+    // for (let index = 0; index < 9; index++) {
+    //   var player = new Player();
+    //   player.id = crypto.randomUUID();
+    //   player.name = this.userName!;
+    //   player.name = this.randomString(15);
+    //   player.image = new Array();
+    //   this.dbService.setPlayers(this.gameId!, player);
+    // }
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
