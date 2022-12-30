@@ -35,6 +35,7 @@ import { NightraportComponent } from './components/slide-out/night-raport/nightr
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyCc4biSDcyMoscTSYU8v9N-5_KZbvxgfd4',
   authDomain: 'mafiahami.firebaseapp.com',
@@ -59,7 +60,7 @@ export const firebaseConfig = {
     SunComponent,
     MafiaPipe,
     CirtyPipe,
-    NightraportComponent,
+    NightraportComponent
   ],
   imports: [
     BrowserModule,

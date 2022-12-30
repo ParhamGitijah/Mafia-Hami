@@ -1,8 +1,8 @@
 <div [dir]="this.dir">
-  <div style="overflow: scroll; height: 100vh">
+  <div>
     <div
       translate="cityGroup"
-      class="d-flex justify-content-center align-items-center mb-3 p-3"
+      class="d-flex justify-content-center align-items-center mb-3 p-3 cityLable"
       style="
         border: 1px solid grey;
         height: 35px;
@@ -19,12 +19,12 @@
         class="list-group-item d-flex justify-content-start align-items-center"
       >
         <div class="p-0 m-0">
-          <div class="fw-bold" style="font-size: 16px">
+          <div class="fw-bold wakeUppPlayerName" style="font-size: 16px">
             {{ player.role | translate }} {{ "cityWakeUp" | translate }}
           </div>
           <div>
             {{ "playerName" | translate }}
-            <span style="font-weight: bold">{{ player.name }}</span>
+            <span class="playerNameText" style="font-weight: bold">{{ player.name }}</span>
             <span
               class="deadText"
               *ngIf="player.alive == false"
@@ -47,7 +47,7 @@
           <button
             *ngIf="player.alive"
             (click)="startPlayerTurn(player)"
-            class="btn btn-primary"
+            class="btn btn-primary wakeUppBtn"
             translate="wakeUpp"
           ></button>
         </div>
@@ -61,13 +61,13 @@
           <button
             *ngIf="player.alive && gameSummaryLeft > 0"
             (click)="updateGameStatus(player, true)"
-            class="btn btn-success m-3"
+            class="btn btn-success m-3 btnUtdrag"
             translate="utdrag"
           ></button>
           <button
             *ngIf="player.alive && gameSummaryLeft > 0"
             (click)="noSelect(player)"
-            class="btn btn-secondary"
+            class="btn btn-secondary btnUtdrag"
             translate="no"
           ></button>
           <div
@@ -85,13 +85,13 @@
           <button
             *ngIf="player.alive"
             (click)="startPlayerTurn(player)"
-            class="btn btn-success m-3"
+            class="btn btn-success m-3 btnUtdrag"
             translate="shoot"
           ></button>
           <button
             *ngIf="player.alive"
             (click)="noSelect(player)"
-            class="btn btn-secondary"
+            class="btn btn-secondary btnUtdrag"
             translate="no"
           ></button>
         </div>
@@ -128,7 +128,7 @@
       </li>
     </ol>
     <div
-      class="d-flex justify-content-center align-items-center mt-3 p-3"
+      class="d-flex justify-content-center align-items-center mt-3 p-3 mafiaLable"
       style="
         border: 1px solid gray(147, 0, 0);
         height: 35px;
@@ -146,12 +146,12 @@
         class="list-group-item d-flex justify-content-start align-items-center"
       >
         <div class="p-0 m-0">
-          <div class="fw-bold" style="font-size: 16px">
+          <div class="fw-bold wakeUppPlayerName" style="font-size: 16px">
             {{ player.role | translate }} {{ "choose" | translate }}
           </div>
           <div>
             {{ "playerName" | translate }}
-            <span style="font-weight: bold">{{ player.name }}</span>
+            <span class="playerNameText" style="font-weight: bold">{{ player.name }}</span>
             <span
               class="deadText"
               *ngIf="player.alive == false"
@@ -169,7 +169,7 @@
           <button
             *ngIf="player.alive"
             (click)="startPlayerTurn(player)"
-            class="btn btn-primary"
+            class="btn btn-primary wakeUppBtn"
             translate="wakeUpp"
           ></button>
         </div>

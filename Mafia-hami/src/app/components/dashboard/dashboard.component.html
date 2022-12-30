@@ -1,4 +1,4 @@
-<div [dir]="this.dir" style="padding-left: 12px; padding-right: 12px">
+<div [dir]="this.dir" style="padding-left: 12px; padding-right: 12px; overflow: auto; max-height: 100vh;">
   <div *ngIf="this.game.gameOver" class="mb-5">
     <div>
       <div><p>GAME OVER</p></div>
@@ -66,7 +66,7 @@
             <td class="text-center" style="vertical-align: middle">
               <button
                 [disabled]="!player.alive || this.game.gameOver"
-                class="btn btn-danger"
+                class="btn btn-danger kickBtn"
                 mwlConfirmationPopover
                 popoverTitle="{{ 'uSure' | translate }}"
                 popoverMessage="{{ 'uSureKick' | translate }}"
@@ -102,9 +102,9 @@
   </div>
 
   <div class="container" style="width: 80vw">
-    <div class="row">
+    <div class="row d-flex justify-content-center">
       <button
-        class="col-12 btn btn-primary mb-3 mt-3"
+        class="col-12 btn btn-primary mb-3 mt-3 btnSelect"
         (click)="showRoles = !showRoles"
       >
         {{
@@ -116,12 +116,12 @@
       <button
         translate="startNight"
         [disabled]="this.game.gameOver"
-        class="col-12 btn btn-primary shadow-lg rounded"
+        class="col-12 btn btn-primary shadow-lg rounded btnSelect"
         (click)="startNight()"
       ></button>
       <button
         translate="nightraports"
-        class="col-12 btn btn-primary shadow-lg rounded mb-3 mt-3"
+        class="col-12 btn btn-primary shadow-lg rounded mb-3 mt-3 btnSelect"
         (click)="showNightsRaport()"
       ></button>
     </div>

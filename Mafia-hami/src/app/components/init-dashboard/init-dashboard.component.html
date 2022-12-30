@@ -1,6 +1,6 @@
 <div
   [dir]="this.dir"
-  style="width: 100%; padding-left: 12px; padding-right: 12px"
+  style="width: 100%; padding-left: 12px; padding-right: 12px; overflow: auto; max-height: 100vh;"
 >
   <div
     *ngIf="!this.gameStarted"
@@ -99,7 +99,7 @@
     >
       <button
         (click)="playerExit()"
-        class="btn btn-danger p-2 m-0"
+        class="btn btn-danger p-2 m-2 mb-4"
         style="text-align: center; width: 22%"
         translate="exit"
       ></button>
@@ -107,7 +107,7 @@
   </div>
   <div
     *ngIf="!this.showPlayerRole && this.gameStarted"
-    class="d-inline-flex flex-column justify-content-center align-items-center"
+    class="d-flex flex-column justify-content-center align-items-center"
     style="height: 100vh; font-size: 25px"
   >
     <div class="text-center mb-3" translate="yourRoleWillShow"></div>
@@ -115,7 +115,7 @@
       {{ timeLeft }}
     </div>
   </div>
-  <div *ngIf="this.showPlayerRole" class="row p-0 justify-content-center">
+  <div *ngIf="this.showPlayerRole" class="row d-flex p-0 justify-content-center">
     <div class="col-10 p-0 mt-5" *ngIf="this.player.mafia == true">
       <table class="table table-striped">
         <thead>

@@ -15,10 +15,11 @@ export class MafiaPipe implements PipeTransform {
       ).length <= 0
     ) {
       var result = allPlayers.filter(
-        (player: Player) => player.mafia && player.role !== 'mafia'
+        (player: Player) => player.mafia && player.role !== 'mafia' && player.alive
       );
+      
       var simpleMafia = allPlayers.find(
-        (player: Player) => player.mafia && player.alive
+        (player: Player) => player.mafia && player.alive && player.role == 'mafia'
       )!;
       if (simpleMafia !== undefined) {
         result.push(simpleMafia);

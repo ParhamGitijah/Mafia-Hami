@@ -78,4 +78,43 @@ p {
     }
 }
 
+.btnSelect{
+    box-shadow: 0px 1px 15px rgba(0, 0, 0,0.1) !important;
+}
 
+@media screen and (max-width:380px) {
+ .container{
+    overflow: scroll;
+ }
+ .kickBtn{
+
+    font-size: 10px;
+    padding: 4px;
+ }
+ td{
+    padding: 4px;
+    font-size: 12px;
+ }
+ th{
+    font-size: 12px;
+ }
+ .alive{
+    background-color: rgb(50, 165, 50);
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .dead{
+    background-color: rgb(232, 12, 52);
+        color: rgb(255, 255, 255);
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .btnSelect{
+        font-size: 12px;
+        width: 80%;
+        box-shadow: 0px 1px 15px rgba(0, 0, 0,0.1) !important;
+    }
+  }
