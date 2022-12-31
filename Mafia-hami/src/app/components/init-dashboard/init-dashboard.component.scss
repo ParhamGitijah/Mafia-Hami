@@ -9,6 +9,8 @@
   object-fit: cover;
   width: 75px;
   height: 75px;
+  background-color: #ffffff;
+  border: 2px solid #71b5df;
   border-radius: 50%;
   position: relative;
   top: -25%;
@@ -54,6 +56,14 @@
   }
 }
 
+.staticBtnAbsolute {
+  position: absolute;
+  bottom: 200px;
+}
+
+.staticBtnRelative {
+  position: relative;
+}
 // @keyframes mymove {
 //   0% {
 //     top: 0px;
@@ -77,4 +87,3 @@
 //     font-size: 30px;
 //   }
 // }
-
